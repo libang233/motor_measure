@@ -14,6 +14,7 @@
 #include "LED_buzzer.h"
 #include "screen.h"
 #include "newtype.h"
+#include "message_analysis.h"
 
 union whole_Evnt myEvnt;				//全局事件标志位实例化
 
@@ -54,7 +55,7 @@ void sys_manager_handle(void)
 {
 	if(myEvnt.Bit.IsSerialMessageAnaly == 1)				//进入数据分析
 	{
-		
+		Serial_analysis();
 	}
 	
 	if(myEvnt.Bit.IsTest == 1)								//进入检测

@@ -98,6 +98,6 @@ typedef struct
 }pass_Information;
 
 
-void data_init();
+void data_init(void);
 
 #endif

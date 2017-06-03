@@ -14,7 +14,7 @@
  
 #if EN_USART1_RX   //如果使能接收
 
-extern int a;
+
 //串口1中断服务程序
 	
 u8 USART_RX_BUF[USART_REC_LEN];     //接收缓冲

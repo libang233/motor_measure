@@ -2,6 +2,8 @@
 ".\objects\main.o"
 ".\objects\sys_manager.o"
 ".\objects\newtype.o"
+".\objects\message_analysis.o"
+".\objects\message_send.o"
 ".\objects\stm32f10x_it.o"
 ".\objects\stm32f10x_rcc.o"
 ".\objects\stm32f10x_gpio.o"

@@ -427,6 +427,16 @@
               <FileType>1</FileType>
               <FilePath>..\USER\newtype.c</FilePath>
             </File>
+            <File>
+              <FileName>message_analysis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\message_analysis.c</FilePath>
+            </File>
+            <File>
+              <FileName>message_send.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\message_send.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

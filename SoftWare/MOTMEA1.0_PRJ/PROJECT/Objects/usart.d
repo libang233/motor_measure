@@ -15,3 +15,5 @@
 .\objects\usart.o: ..\USER\config.h
 .\objects\usart.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\usart.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\string.h
+.\objects\usart.o: ..\USER\newtype.h
+.\objects\usart.o: ..\USER\extern.h
