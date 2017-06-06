@@ -7,7 +7,7 @@
 //
 //全局事件标志位
 //
-union whole_Evnt
+union whole_Evnt_TypeDef
 {
 	u32 ALL;
 	struct
@@ -39,7 +39,7 @@ typedef struct
 	u16 finishSpeed;				//测试完成时显示的转速值
 	u16 finishCurrent;				//测试完成时显示的电流值
 	
-}Part_Information;
+}Part_Information_TypeDef;
 
 //
 //测试数据结构体定义
@@ -57,7 +57,7 @@ typedef struct
 	u8 resultOK;					//测试结束时，测试结果显示OK部分
 	u8 reasultNG;					//测试结束时，测试结果显示NG部分
 	
-}testing_Information;
+}testing_Information_TypeDef;
 
 //
 //校准界面数据结构定义
@@ -67,7 +67,7 @@ typedef struct
 	u16 nowCurrent;					//校准是测量到的电流值
 	u16 testCurrent;				//输入实际测量的标准电流值
 	
-}adjust_Information;
+}adjust_Information_TypeDef;
 
 //
 //配置数据结构定义
@@ -82,7 +82,7 @@ typedef struct
 	u16 testCurrent;				//系统判定是否插入风扇的临界电流值
 	u8 PWM;							//pwm调速信号频率
 	
-}config_Information;
+}config_Information_TypeDef;
 
 //
 //密码界面数据结构定义
@@ -95,9 +95,9 @@ typedef struct
 	
 	
 	
-}pass_Information;
+}pass_Information_TypeDef;
 
 
-void data_init(void);
+
 
 #endif

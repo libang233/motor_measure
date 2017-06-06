@@ -14,9 +14,10 @@
 #include "LED_buzzer.h"
 #include "screen.h"
 #include "newtype.h"
+#include "data_init.h"
 #include "message_analysis.h"
 
-union whole_Evnt myEvnt;				//全局事件标志位实例化
+union whole_Evnt_TypeDef myEvnt;				//全局事件标志位实例化
 
 /**
 * @ Function Name : sys_manager_init
@@ -53,10 +54,9 @@ void sys_manager_init(void)
  **/
 void sys_manager_handle(void)
 {
-	if(myEvnt.Bit.IsSerialMessageAnaly == 1)				//进入数据分析
-	{
-		Serial_analysis();
-	}
+
+	Serial_analysis_handle();								//串口数据控制器线程
+
 	
 	if(myEvnt.Bit.IsTest == 1)								//进入检测
 	{

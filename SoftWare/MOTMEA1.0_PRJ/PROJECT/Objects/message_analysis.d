@@ -18,3 +18,4 @@
 .\objects\message_analysis.o: ..\USER\newtype.h
 .\objects\message_analysis.o: ..\USER\extern.h
 .\objects\message_analysis.o: ..\USER\message_analysis.h
+.\objects\message_analysis.o: ..\USER\IDnum.h

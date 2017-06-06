@@ -19,4 +19,6 @@
 .\objects\sys_manager.o: ..\HARDWARE\screen.h
 .\objects\sys_manager.o: ..\USER\newtype.h
 .\objects\sys_manager.o: ..\USER\extern.h
+.\objects\sys_manager.o: ..\USER\data_init.h
 .\objects\sys_manager.o: ..\USER\message_analysis.h
+.\objects\sys_manager.o: ..\USER\IDnum.h
