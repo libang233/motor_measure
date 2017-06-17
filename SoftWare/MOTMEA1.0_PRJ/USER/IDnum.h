@@ -63,7 +63,7 @@
 #define TESTCURRENT			110
 #define CONFIGPWM			197
 
-//测试界面数据定义
+//测试界面
 #define FINISHPART1PWM		154
 #define FINISHPART2PWM		155
 #define FINISHPART3PWM		156

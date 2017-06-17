@@ -17,5 +17,3 @@
 .\objects\usart.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\string.h
 .\objects\usart.o: ..\USER\newtype.h
 .\objects\usart.o: ..\USER\extern.h
-.\objects\usart.o: ..\USER\message_analysis.h
-.\objects\usart.o: ..\USER\IDnum.h

@@ -13,11 +13,39 @@
 #include "usart.h"
 #include "LED_buzzer.h"
 #include "screen.h"
-#include "newtype.h"
 #include "data_init.h"
 #include "message_analysis.h"
 
-union whole_Evnt_TypeDef myEvnt;				//全局事件标志位实例化
+//全局事件标志位实例化
+union whole_Evnt_TypeDef myEvnt;
+
+//测试段数据实例化
+part_Information_TypeDef part1Information;
+
+part_Information_TypeDef part2Information;
+
+part_Information_TypeDef part3Information;
+
+part_Information_TypeDef part4Information;
+
+part_Information_TypeDef part5Information;
+
+part_Information_TypeDef part6Information;
+
+//测试界面数据实例化
+testing_Information_TypeDef testingInformation;
+
+//校准界面数据实例化
+adjust_Information_TypeDef adjustInformation;
+
+//配置界面数据实例化
+config_Information_TypeDef configInformation;
+
+//密码界面数据实例化
+password_Information_TypeDef passwordInformation;
+
+//调试界面数据实例化
+debug_Information_TypeDef debugInformation;
 
 /**
 * @ Function Name : sys_manager_init
@@ -55,7 +83,7 @@ void sys_manager_init(void)
 void sys_manager_handle(void)
 {
 
-	Serial_analysis_handle();								//串口数据控制器线程
+	Serial_message_handle();								//串口数据控制器线程
 
 	
 	if(myEvnt.Bit.IsTest == 1)								//进入检测
@@ -82,19 +110,5 @@ void sys_manager_handle(void)
 	{
 		
 	}
-	
-//	u16 t;
-//	u16 len;
-//	if(USART_RX_STA & 0x8000)
-//	{					   
-//		len = USART_RX_STA & 0x3fff;
-//		for(t = 0; t < len; t++)
-//		{
-//			
-//			USART_SendData(USART1, USART_RX_BUF[t]);				//
-//			while(USART_GetFlagStatus(USART1, USART_FLAG_TC) != SET);	//
-//		}
-//		USART_RX_STA=0;
-//	}
 }
  

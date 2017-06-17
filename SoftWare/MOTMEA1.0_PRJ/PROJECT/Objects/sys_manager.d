@@ -13,12 +13,12 @@
 .\objects\sys_manager.o: ..\USER\config.h
 .\objects\sys_manager.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\sys_manager.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\string.h
+.\objects\sys_manager.o: ..\USER\newtype.h
+.\objects\sys_manager.o: ..\USER\extern.h
 .\objects\sys_manager.o: ..\HARDWARE\usart.h
 .\objects\sys_manager.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\sys_manager.o: ..\HARDWARE\LED_buzzer.h
 .\objects\sys_manager.o: ..\HARDWARE\screen.h
-.\objects\sys_manager.o: ..\USER\newtype.h
-.\objects\sys_manager.o: ..\USER\extern.h
 .\objects\sys_manager.o: ..\USER\data_init.h
 .\objects\sys_manager.o: ..\USER\message_analysis.h
 .\objects\sys_manager.o: ..\USER\IDnum.h

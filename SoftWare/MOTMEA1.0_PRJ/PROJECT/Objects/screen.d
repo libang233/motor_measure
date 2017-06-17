@@ -13,3 +13,5 @@
 .\objects\screen.o: ..\USER\config.h
 .\objects\screen.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\screen.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\string.h
+.\objects\screen.o: ..\USER\newtype.h
+.\objects\screen.o: ..\USER\extern.h

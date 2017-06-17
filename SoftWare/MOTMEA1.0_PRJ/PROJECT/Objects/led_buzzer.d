@@ -13,3 +13,5 @@
 .\objects\led_buzzer.o: ..\USER\config.h
 .\objects\led_buzzer.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\led_buzzer.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\string.h
+.\objects\led_buzzer.o: ..\USER\newtype.h
+.\objects\led_buzzer.o: ..\USER\extern.h

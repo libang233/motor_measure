@@ -65,8 +65,10 @@ void usart_init(void)
 	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);			//开启串口接收终端
 	USART_Cmd(USART1, ENABLE);                    			//使能串口1 
 	
-	memset(&UsartRxBuffer, 0 , sizeof(UsartRxBuffer));		//串口缓冲初始化
-	
+	memset(&UsartRxBuffer, 0, sizeof(UsartRxBuffer));		//串口缓冲初始化
+
+	UsartRxBuffer.AddIdx = 0;
+	UsartRxBuffer.GetIdx = 0;
 }
 
 
@@ -84,7 +86,7 @@ void USART1_IRQHandler(void)
 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)  		
 	{
 		Res = USART_ReceiveData(USART1);						//读取接收到的数据
-		
+
 		if(UsartRxBuffer.AddIdx < USART_REC_LEN)
 		{
 			UsartRxBuffer.Buff[UsartRxBuffer.AddIdx++] = Res;	//填充至缓存
@@ -93,7 +95,7 @@ void USART1_IRQHandler(void)
 		{
 			UsartRxBuffer.AddIdx = 0;
 			UsartRxBuffer.Buff[UsartRxBuffer.AddIdx++] = Res;
-		} 		 
+		} 	
      } 
 } 
 #endif	

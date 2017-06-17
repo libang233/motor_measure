@@ -18,6 +18,7 @@ union whole_Evnt_TypeDef
 		volatile u8 IsResearch					:1;		//查阅程序标志位
 		volatile u8 IsDebug                     :1;		//调试程序标志位
 		volatile u8 IsAdjust					:1;		//校准程序标志位
+		volatile u8 IsTestUsart					:1;		//校准程序标志位
 		
 		
 	}Bit;
@@ -35,22 +36,38 @@ typedef struct
 	u16 testSpeedDownLimit;			//测试转速范围的下限，单位RPM
 	u16 testCurrentUpLimit;			//第一段测试电流范围的上限，单位毫安
 	u16 testCurrentDownLimit;		//第一段测试电流范围的下限，单位毫安
-	u8 finishPWM;					//测试完成时显示的占空比值
-	u16 finishSpeed;				//测试完成时显示的转速值
-	u16 finishCurrent;				//测试完成时显示的电流值
 	
-}Part_Information_TypeDef;
+}part_Information_TypeDef;
+
+//
+//段测试完成时显示的数据结构定义
+//
+typedef struct
+{
+	u8  PWM;						//测试完成时显示的占空比值
+	u16 speed;						//测试完成时显示的转速值
+	u16 current;					//测试完成时显示的电流值
+	
+}part_Finish_Value_TypeDef;
 
 //
 //测试数据结构体定义
 //
 typedef struct
 {
+	//段测试完成时显示的数据
+	part_Finish_Value_TypeDef part1FinishValule;
+	part_Finish_Value_TypeDef part2FinishValule;
+	part_Finish_Value_TypeDef part3FinishValule;
+	part_Finish_Value_TypeDef part4FinishValule;
+	part_Finish_Value_TypeDef part5FinishValule;
+	part_Finish_Value_TypeDef part6FinishValule;
+	
 	u8 PWMProgressbar;				//测试时显示当前pwm信号占空比值
 	u8 nowPWM;						//测试时pwm信号占空比即时显示
 	u16 nowSpeed;					//测试时显示当前测试风扇转速值，单位rpm
 	u16 nowCrurrent;				//测试时显示当前测试风扇电流值，单位ma
-	u8 nowTestMessage[20];			//显示当前测试信息 格式为“正在测试第N段，共M段”
+	u8 nowTestMessage[20];			//显示当前测试信息 格式为“正在测试第N段，共M段
 	u8 finishPWM;					//测试完成时占空比显示项表头
 	u16 finishSpeed;				//测试完成时转速显示项表头
 	u16 finishCurrent;				//测试完成时电流显示项表头
@@ -93,11 +110,20 @@ typedef struct
 	u8 oldPassword[20];				//密码更新时，输入原始密码
 	u8 newPassword[20];				//密码更新时，输入新密码
 	
+}password_Information_TypeDef;
+
+//
+//调试界面数据结构定义
+//
+typedef struct
+{
+	u8 button;						//删除料号按键
+	u16 speed[20];					//调试界面转速显示
+	u8 current[20];					//调试界面电流显示		
+	u32 inputPoles;					//调试界面风扇极数输入
+	u32 inputPWMFrequen;			//调试界面pwm信号频率输入
+	u8 inputPWM;					//调试界面pwm信号占空比输入
 	
-	
-}pass_Information_TypeDef;
-
-
-
+}debug_Information_TypeDef;
 
 #endif

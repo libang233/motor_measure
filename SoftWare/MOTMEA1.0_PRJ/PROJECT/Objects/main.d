@@ -13,3 +13,5 @@
 .\objects\main.o: ..\USER\config.h
 .\objects\main.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\main.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\string.h
+.\objects\main.o: ..\USER\newtype.h
+.\objects\main.o: ..\USER\extern.h

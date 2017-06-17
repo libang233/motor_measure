@@ -13,9 +13,9 @@
 .\objects\message_analysis.o: ..\USER\config.h
 .\objects\message_analysis.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\message_analysis.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\string.h
-.\objects\message_analysis.o: ..\HARDWARE\usart.h
-.\objects\message_analysis.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\message_analysis.o: ..\USER\newtype.h
 .\objects\message_analysis.o: ..\USER\extern.h
+.\objects\message_analysis.o: ..\HARDWARE\usart.h
+.\objects\message_analysis.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\message_analysis.o: ..\USER\message_analysis.h
 .\objects\message_analysis.o: ..\USER\IDnum.h

@@ -9,10 +9,10 @@
  * Modifier                                    Data                                             Brief
  * -------------------------------------------------------------------------------------------------------------*/
  
+#include "sys_manager.h"
 #include "newtype.h"
 #include "data_init.h"
 #include "message_analysis.h"
-
 
 /**
 * @ Function Name : parser_init
@@ -26,7 +26,7 @@ void parser_init(void)
 	u16 i;
 
 	//清除缓冲
-	for(i = 0; i < SERIAL_FRAME_BUFFER_NUM_MAX; i++)
+	for(i = 0; i < FRAME_BUFFER_NUM_MAX; i++)
 	{
 		memset(&ParserMoniter.Frame_Buffers[i], 0, sizeof(ParserMoniter.Frame_Buffers[i]));
 	}
@@ -56,5 +56,8 @@ void data_init(void)
 	
 	//解析器初始化
 	parser_init();
+	
+	//测试数据初始化；
+	memset(&testingInformation, 0, sizeof(testingInformation));
 	
 }
