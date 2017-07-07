@@ -14,8 +14,37 @@
 #include "newtype.h"
 #include "message_analysis.h"
 
+
 //解析器实例化
 Serial_Parser_Moniter_TypeDef ParserMoniter;
+
+/**
+* @ Function Name : parser_init
+* @ Author        : hlb
+* @ Brief         : 解析器初始化
+* @ Date          : 2017.06.5
+* @ Modify        : ...
+ **/
+void parser_init(void)
+{
+	u16 i;
+
+	//清除缓冲
+	for(i = 0; i < FRAME_BUFFER_NUM_MAX; i++)
+	{
+		memset(&ParserMoniter.Frame_Buffers[i], 0, sizeof(ParserMoniter.Frame_Buffers[i]));
+	}
+	
+    // 初始化缓冲索引
+    ParserMoniter.AddIdx = 0;
+    ParserMoniter.GetIdx = 0;
+
+    // 缓冲指示标志
+    ParserMoniter.IsFrameBuffersEmpty = true;
+    ParserMoniter.IsFrmaeBuffersFull = false;
+	
+	
+}
 
 /**
 * @ Function Name : get_Usart_buffer_length
@@ -57,16 +86,16 @@ void parser_moniter_add_buff(void)
 			UsartRxBuffer.GetIdx = 0;
 		}
 		Res = UsartRxBuffer.Buff[UsartRxBuffer.GetIdx++];
-		if(ParserMoniter.IsBuffer_Add == false)
+		if(ParserMoniter.IsBufferAdd == false)
 		{
 			if(Res == FRAME_HEAD_DEF)																	
 			{
 				//接收到帧头，开始接收数据
-				ParserMoniter.IsBuffer_Add = true;
+				ParserMoniter.IsBufferAdd = true;
 			}
 		}
 		
-		if(ParserMoniter.IsBuffer_Add == true)
+		if(ParserMoniter.IsBufferAdd == true)
 		{
 			if(ParserMoniter.Frame_Buffers[ParserMoniter.AddIdx].Idx < SERIAL_BUFFER_MAX_VAL)
 			{
@@ -78,7 +107,7 @@ void parser_moniter_add_buff(void)
 			{
 				//超出最大范围，丢弃数据
 				ParserMoniter.Frame_Buffers[ParserMoniter.AddIdx].Idx = 0;
-				ParserMoniter.IsBuffer_Add = false;						
+				ParserMoniter.IsBufferAdd = false;						
 			}
 			
 			//缓冲项索引长度大于最小帧长度
@@ -102,7 +131,7 @@ void parser_moniter_add_buff(void)
 							ParserMoniter.AddIdx = 0;
 						}
 						//恢复缓冲区接收标志
-						ParserMoniter.IsBuffer_Add = false;
+						ParserMoniter.IsBufferAdd = false;
 						//恢复缓冲项索引
 						ParserMoniter.Frame_Buffers[ParserMoniter.AddIdx].Idx = 0;
 					}
@@ -110,7 +139,7 @@ void parser_moniter_add_buff(void)
 					{
 						//丢弃数据
 						ParserMoniter.Frame_Buffers[ParserMoniter.AddIdx].Idx = 0;
-						ParserMoniter.IsBuffer_Add = false;		
+						ParserMoniter.IsBufferAdd = false;		
 					}
 				}				
 			}
@@ -153,6 +182,7 @@ void parser_rec_int_data_deal(u16 IDNum)
 {
 	u32 data;
 	
+	//读取数值
 	data = (ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_INT_VALUE_ADDRESS_HIHG] << 24) + \
 			(ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_INT_VALUE_ADDRESS_HIHG + 1] << 16) + \
 			(ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_INT_VALUE_ADDRESS_HIHG + 2] << 8) + \
@@ -160,175 +190,175 @@ void parser_rec_int_data_deal(u16 IDNum)
 
 	switch(IDNum)
 	{
-		case PART1PWM:
-			part1Information.testPWM = data;
+		case ID_PART1_PWM:
+			configInformation.part1Information.testPWM = data;
 			break;
 		
-		case PART1TIME:
-			part1Information.testTime = data;
+		case ID_PART1_TIME:
+			configInformation.part1Information.testTime = data;
 			break;
 		
-		case PART1UPSPEED:
-			part1Information.testSpeedUpLimit = data;
+		case ID_PART1_UP_SPEED:
+			configInformation.part1Information.testSpeedUpLimit = data;
 			break;
 		
-		case PART1DOWNSPEED:
-			part1Information.testSpeedDownLimit = data;
+		case ID_PART1_DOWN_SPEED:
+			configInformation.part1Information.testSpeedDownLimit = data;
 			break;
 		
-		case PART1UPCURRENT:
-			part1Information.testCurrentUpLimit = data;
+		case ID_PART1_UP_CURRENT:
+			configInformation.part1Information.testCurrentUpLimit = data;
 			break;
 		
-		case PART1DOWNCURRENT:
-			part1Information.testCurrentDownLimit = data;
+		case ID_PART1_DOWN_CURRENT:
+			configInformation.part1Information.testCurrentDownLimit = data;
 			break;
 
-		case PART2PWM:
-			part2Information.testPWM = data;
+		case ID_PART2_PWM:
+			configInformation.part2Information.testPWM = data;
 			break;
 		
-		case PART2TIME:
-			part2Information.testTime = data;
+		case ID_PART2_TIME:
+			configInformation.part2Information.testTime = data;
 			break;
 		
-		case PART2UPSPEED:
-			part2Information.testSpeedUpLimit = data;
+		case ID_PART2_UP_SPEED:
+			configInformation.part2Information.testSpeedUpLimit = data;
 			break;
 		
-		case PART2DOWNSPEED:
-			part2Information.testSpeedDownLimit = data;
+		case ID_PART2_DOWN_SPEED:
+			configInformation.part2Information.testSpeedDownLimit = data;
 			break;
 		
-		case PART2UPCURRENT:
-			part2Information.testCurrentUpLimit = data;
+		case ID_PART2_UP_CURRENT:
+			configInformation.part2Information.testCurrentUpLimit = data;
 			break;
 		
-		case PART2DOWNCURRENT:
-			part2Information.testCurrentDownLimit = data;
+		case ID_PART2_DOWN_CURRENT:
+			configInformation.part2Information.testCurrentDownLimit = data;
 			break;
 		
-		case PART3PWM:
-			part3Information.testPWM = data;
+		case ID_PART3_PWM:
+			configInformation.part3Information.testPWM = data;
 			break;
 		
-		case PART3TIME:
-			part3Information.testTime = data;
+		case ID_PART3_TIME:
+			configInformation.part3Information.testTime = data;
 			break;
 		
-		case PART3UPSPEED:
-			part3Information.testSpeedUpLimit = data;
+		case ID_PART3_UP_SPEED:
+			configInformation.part3Information.testSpeedUpLimit = data;
 			break;
 		
-		case PART3DOWNSPEED:
-			part3Information.testSpeedDownLimit = data;
+		case ID_PART3_DOWN_SPEED:
+			configInformation.part3Information.testSpeedDownLimit = data;
 			break;
 		
-		case PART3UPCURRENT:
-			part3Information.testCurrentUpLimit = data;
+		case ID_PART3_UP_CURRENT:
+			configInformation.part3Information.testCurrentUpLimit = data;
 			break;
 		
-		case PART3DOWNCURRENT:
-			part3Information.testCurrentDownLimit = data;
+		case ID_PART3_DOWN_CURRENT:
+			configInformation.part3Information.testCurrentDownLimit = data;
 			break;
 		
-		case PART4PWM:
-			part4Information.testPWM = data;
+		case ID_PART4_PWM:
+			configInformation.part4Information.testPWM = data;
 			break;
 		
-		case PART4TIME:
-			part4Information.testTime = data;
+		case ID_PART4_TIME:
+			configInformation.part4Information.testTime = data;
 			break;
 		
-		case PART4UPSPEED:
-			part4Information.testSpeedUpLimit = data;
+		case ID_PART4_UP_SPEED:
+			configInformation.part4Information.testSpeedUpLimit = data;
 			break;
 		
-		case PART4DOWNSPEED:
-			part4Information.testSpeedDownLimit = data;
+		case ID_PART4_DOWN_SPEED:
+			configInformation.part4Information.testSpeedDownLimit = data;
 			break;
 		
-		case PART4UPCURRENT:
-			part4Information.testCurrentUpLimit = data;
+		case ID_PART4_UP_CURRENT:
+			configInformation.part4Information.testCurrentUpLimit = data;
 			break;
 		
-		case PART4DOWNCURRENT:
-			part4Information.testCurrentDownLimit = data;
+		case ID_PART4_DOWN_CURRENT:
+			configInformation.part4Information.testCurrentDownLimit = data;
 			break;
 		
-		case PART5PWM:
-			part5Information.testPWM = data;
+		case ID_PART5_PWM:
+			configInformation.part5Information.testPWM = data;
 			break;
 		
-		case PART5TIME:
-			part5Information.testTime = data;
+		case ID_PART5_TIME:
+			configInformation.part5Information.testTime = data;
 			break;
 		
-		case PART5UPSPEED:
-			part5Information.testSpeedUpLimit = data;
+		case ID_PART5_UP_SPEED:
+			configInformation.part5Information.testSpeedUpLimit = data;
 			break;
 		
-		case PART5DOWNSPEED:
-			part5Information.testSpeedDownLimit = data;
+		case ID_PART5_DOWN_SPEED:
+			configInformation.part5Information.testSpeedDownLimit = data;
 			break;
 		
-		case PART5UPCURRENT:
-			part5Information.testCurrentUpLimit = data;
+		case ID_PART5_UP_CURRENT:
+			configInformation.part5Information.testCurrentUpLimit = data;
 			break;
 		
-		case PART5DOWNCURRENT:
-			part5Information.testCurrentDownLimit = data;
+		case ID_PART5_DOWN_CURRENT:
+			configInformation.part5Information.testCurrentDownLimit = data;
 			break;
 		
-		case PART6PWM:
-			part6Information.testPWM = data;
+		case ID_PART6_PWM:
+			configInformation.part6Information.testPWM = data;
 			break;
 		
-		case PART6TIME:
-			part6Information.testTime = data;
+		case ID_PART6_TIME:
+			configInformation.part6Information.testTime = data;
 			break;
 		
-		case PART6UPSPEED:
-			part6Information.testSpeedUpLimit = data;
+		case ID_PART6_UP_SPEED:
+			configInformation.part6Information.testSpeedUpLimit = data;
 			break;
 		
-		case PART6DOWNSPEED:
-			part6Information.testSpeedDownLimit = data;
+		case ID_PART6_DOWN_SPEED:
+			configInformation.part6Information.testSpeedDownLimit = data;
 			break;
 		
-		case PART6UPCURRENT:
-			part6Information.testCurrentUpLimit = data;
+		case ID_PART6_UP_CURRENT:
+			configInformation.part6Information.testCurrentUpLimit = data;
 			break;
 		
-		case PART6DOWNCURRENT:
-			part6Information.testCurrentDownLimit = data;
+		case ID_PART6_DOWN_CURRENT:
+			configInformation.part6Information.testCurrentDownLimit = data;
 			break;
 		
-		case POLESNUMBER:
+		case ID_POLES_NUMBER:
 			configInformation.polesNum = data;
 			break;
 		
-		case PAETNUMBER:
+		case ID_PAET_NUMBER:
 			configInformation.partNum = data;
 			break;
 		
-		case TESTCURRENT:
+		case ID_TEST_CURRENT:
 			configInformation.testCurrent = data;
 			break;
 		
-		case CONFIGPWM:
+		case ID_CONFIG_PWM:
 			configInformation.PWM = data;
 			break;
 		
-		case DEBUGINPUTPOLES:
+		case ID_DEBUG_INPUT_POLES:
 			debugInformation.inputPoles = data;
 			break;
 		
-		case DEBUGINPUTPWMFREQ:
+		case ID_DEBUG_INPUT_PWM_FREQ:
 			debugInformation.inputPWMFrequen = data;
 			break;
 		
-		case DEBUGINPUTPWEMDUTY:
+		case ID_DEBUG_INPUT_PWM_DUTY:
 			debugInformation.inputPWM = data;
 			break;
 		
@@ -337,11 +367,37 @@ void parser_rec_int_data_deal(u16 IDNum)
 	}
 }
 
-//读字符串控件返回数据包处理函数
-void parser_rec_string_data_deal(u16 IDNum);
+/**
+* @ Function Name : parser_rec_string_data_deal
+* @ Author        : hlb
+* @ Brief         : 读字符串控件返回数据包处理函数
+* @ Date          : 2017.06.18
+* @ Input         : u16							数据ID号
+* @ Modify        : ...
+**/
+void parser_rec_string_data_deal(u16 IDNum)
+{
+	u8 i;
+	u8 byteNum;
+	
+	//读取字符串数据字节数
+	byteNum = ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_BYTE_NUM_ADDRESS];
+	
+	switch(IDNum)
+	{
+		case ID_PART1_EXPLAIN:
+//			configInformation.part1Information.explain
+			break;
+	}
+	
+	
+}
 
 //读位图控件返回数据包处理函数
-void parser_rec_status_data_deal(u16 IDNum);
+void parser_rec_status_data_deal(u16 IDNum)
+{
+	
+}
 
 //读下拉列表控件返回数据包处理函数
 void parser_rec_selec_data_deal(u16 IDNum);
@@ -356,7 +412,10 @@ void parser_rec_time_data_deal(u16 IDNum);
 void parser_rec_date_data_deal(u16 IDNum);
 
 //读页面返回数据包处理函数
-void parser_rec_page_data_deal(u16 IDNum);
+void parser_rec_page_data_deal(void)
+{
+	
+}
 
 
 /**
@@ -402,6 +461,7 @@ bool serial_parser_comm_analysis(void)
 				break;
 			
 			case FRAME_REC_DATA_STRING_DEF:
+				parser_rec_string_data_deal(IDNum);
 				break;
 			
 			case FRAME_REC_DATA_STATUES_DEF:
@@ -422,22 +482,6 @@ bool serial_parser_comm_analysis(void)
 			default:
 				return false;
 		}
-			
-//		//接收到整型数据
-//		if((controlID >= 204 && controlID <= 206) || (controlID >= 112 && controlID <= 147) \
-//			|| controlID == 107 || controlID == 108 || controlID == 110 || controlID == 197)
-//		{
-//			intData = (ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_INT_VALUE_ADDRESS_HIHG] << 24) + \
-//				(ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_INT_VALUE_ADDRESS_HIHG + 1] << 16) + \
-//				(ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_INT_VALUE_ADDRESS_HIHG + 2] << 8) + \
-//				(ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_INT_VALUE_ADDRESS_HIHG + 3]);
-//			
-//			switch(controlID)
-//			{		
-//					
-//					
-//			}
-//		}
 	}
 	
 	return true;

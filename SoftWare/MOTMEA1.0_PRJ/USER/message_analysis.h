@@ -26,6 +26,7 @@
 #define FRAME_DATA_ID_ADDRESS_LOW				4					//数据帧ID低字节地址
 #define FRAME_DATA_TYPE_ADDRESS					5					//数据帧数据类型字节地址
 #define FRAME_DATA_INT_VALUE_ADDRESS_HIHG		6					//数据帧整型数值高字节地址
+#define FRAME_DATA_STRING_BYTE_NUM_ADDRESS		6					//数据帧字符串型数据字节数字节地址
 
 //缓冲项最大长度定义
 #define SERIAL_BUFFER_MAX_VAL					128
@@ -37,7 +38,8 @@
 typedef struct 
 {
 	u8   Buff[SERIAL_BUFFER_MAX_VAL];								//缓冲内容
-	u16  Idx;														//缓冲索引，指示长度											
+	u16  Idx;														//缓冲索引，指示长度	
+	
 }Usart_BuffItem;
 
 //解析器定义
@@ -45,9 +47,9 @@ typedef struct
 {
 	void (*ParseStateFunc)(void);									//解析器解析函数指针
 	Usart_BuffItem Frame_Buffers[FRAME_BUFFER_NUM_MAX];				//默认缓冲
-	bool IsFrame_Buffers_Empty;										//缓冲区是否为空
-	bool IsFrmae_Buffers_Full;										//缓冲区是否已满
-	bool IsBuffer_Add;												//缓冲区字符接收标志
+	bool IsFrameBuffersEmpty;										//缓冲区是否为空
+	bool IsFrmaeBuffersFull;										//缓冲区是否已满
+	bool IsBufferAdd;												//缓冲区字符接收标志
 	u16  AddIdx;													//添加索引
 	u16  GetIdx;													//取出索引
 	
@@ -87,12 +89,15 @@ void parser_rec_time_data_deal(u16 IDNum);
 void parser_rec_date_data_deal(u16 IDNum);
 
 //读页面返回数据包处理函数
-void parser_rec_page_data_deal(u16 IDNum);
+void parser_rec_page_data_deal(void);
 
 //串口帧分析函数
 bool serial_parser_comm_analysis(void);
 	
 //串口数据控制器线程
 void Serial_message_handle(void);
+
+//解析器初始化
+void parser_init(void);
 
 #endif

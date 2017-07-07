@@ -19,19 +19,6 @@
 //全局事件标志位实例化
 union whole_Evnt_TypeDef myEvnt;
 
-//测试段数据实例化
-part_Information_TypeDef part1Information;
-
-part_Information_TypeDef part2Information;
-
-part_Information_TypeDef part3Information;
-
-part_Information_TypeDef part4Information;
-
-part_Information_TypeDef part5Information;
-
-part_Information_TypeDef part6Information;
-
 //测试界面数据实例化
 testing_Information_TypeDef testingInformation;
 
@@ -46,6 +33,9 @@ password_Information_TypeDef passwordInformation;
 
 //调试界面数据实例化
 debug_Information_TypeDef debugInformation;
+
+//开始界面数据实例化
+begin_Information_TypeDef beginInformation;
 
 /**
 * @ Function Name : sys_manager_init
