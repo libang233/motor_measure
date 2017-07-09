@@ -56,7 +56,7 @@
 #define ID_CONFIG_SAVE			150
 
 #define ID_PN_NUMBER     		105
-#define ID_PN_EXPLAIN			106
+#define ID_PN_DESCRIP			106
 #define ID_POLES_NUMBER         107
 #define ID_PAET_NUMBER			108
 #define ID_TRIGGER				109

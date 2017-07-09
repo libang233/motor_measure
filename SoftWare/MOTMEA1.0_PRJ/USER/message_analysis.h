@@ -25,14 +25,15 @@
 #define FRAME_DATA_ID_ADDRESS_HIGH				3					//数据帧ID高字节地址
 #define FRAME_DATA_ID_ADDRESS_LOW				4					//数据帧ID低字节地址
 #define FRAME_DATA_TYPE_ADDRESS					5					//数据帧数据类型字节地址
-#define FRAME_DATA_INT_VALUE_ADDRESS_HIHG		6					//数据帧整型数值高字节地址
+#define FRAME_DATA_INT_VALUE_ADDRESS_HIGH		6					//数据帧整型数值高字节地址
 #define FRAME_DATA_STRING_BYTE_NUM_ADDRESS		6					//数据帧字符串型数据字节数字节地址
+#define FRAME_DATA_STRING_VALUE_ADDRESS_HIGH	7					//数据帧字符串数据高字节地址
 
 //缓冲项最大长度定义
 #define SERIAL_BUFFER_MAX_VAL					128
 
 //最大缓冲数量定义
-#define FRAME_BUFFER_NUM_MAX					8
+#define FRAME_BUFFER_NUM_MAX					4
 
 //串口缓冲项定义
 typedef struct 
@@ -68,10 +69,10 @@ void parser_moniter_add_buff(void);
 u8 get_parser_buffers_length(void);
 
 //读数值控件返回数据包处理函数
-void parser_rec_int_data_deal(u16 IDNum);
+bool parser_rec_int_data_deal(u16 IDNum);
 
 //读字符串控件返回数据包处理函数
-void parser_rec_string_data_deal(u16 IDNum);
+bool parser_rec_string_data_deal(u16 IDNum);
 
 //读位图控件返回数据包处理函数
 void parser_rec_status_data_deal(u16 IDNum);

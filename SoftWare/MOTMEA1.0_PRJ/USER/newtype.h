@@ -4,7 +4,7 @@
 #include "config.h"
 #include "extern.h"
 
-#define MAX_BYTE_NUM_SPECIF_EXPLAI				20					//规格项说明字节数
+#define MAX_BYTE_NUM_SPECIF_EXPLAIN				20					//规格项说明字节数
 #define MAX_BYTE_NUM_PN_NUM						20					//PN号字节数
 #define MAX_BYTE_NUM_PN_NUM_DESCRIP				20					//PN号补充描述字节数
 #define MAX_BYTE_NUM_DISPLAY_SPEED 				20					//显示的转速字节数
@@ -41,7 +41,8 @@ union whole_Evnt_TypeDef
 //
 typedef struct
 {
-	u8 explain[MAX_BYTE_NUM_SPECIF_EXPLAI];		//规格项说明
+	u8 explain[MAX_BYTE_NUM_SPECIF_EXPLAIN];		//规格项说明
+	u8 explainStringIdx;						//说明数据字符数
 	u8 testPWM;									//测试pwm信号占空比值
 	u8 testTime;								//测试时间，单位为秒
 	u16 testSpeedUpLimit;						//测试转速范围的上限，单位RPM
@@ -64,8 +65,10 @@ typedef struct
 	part_Information_TypeDef part5Information;
 	part_Information_TypeDef part6Information;
 
-	u8 materialNum[MAX_BYTE_NUM_PN_NUM];						//也称为PN号，区别不同规格的唯一识别码
-	u8 description[MAX_BYTE_NUM_PN_NUM_DESCRIP];				//PN号的补充描述
+	u8 PNNum[MAX_BYTE_NUM_PN_NUM];								//也称为PN号，区别不同规格的唯一识别码
+	u8 PNNumStringIdx;											//PN号字符串索引				
+	u8 PNNumDescription[MAX_BYTE_NUM_PN_NUM_DESCRIP];				//PN号的补充描述
+	u8 descriptionStringIdx;									//描述字符串索引
 	u8 polesNum;												//风扇的极数
 	u8 partNum;													//设置的测试段数
 	u8 trigger;													//触发选择，1 = 触发，0 = 不触发
@@ -82,7 +85,9 @@ typedef struct
 {
 	u8  PWM[MAX_BYTE_NUM_DISPLAY_PWM];							//测试完成时显示的占空比值
 	u16 speed[MAX_BYTE_NUM_DISPLAY_SPEED];						//测试完成时显示的转速值
+	u8  speedStringIdx;											//转速值字符串索引
 	u16 current[MAX_BYTE_NUM_DISPLAY_CURRENT];					//测试完成时显示的电流值
+	u8  currentStringIdx;										//电流字符串索引
 	
 }part_Finish_Value_TypeDef;
 
@@ -99,16 +104,23 @@ typedef struct
 	part_Finish_Value_TypeDef part5FinishValule;
 	part_Finish_Value_TypeDef part6FinishValule;
 	
-	u8 PWMProgressbar;											//测试时显示当前pwm信号占空比值进度条
-	u8 nowPWM[MAX_BYTE_NUM_DISPLAY_PWM];						//测试时pwm信号占空比即时显示
+	u8  PWMProgressbar;											//测试时显示当前pwm信号占空比值进度条
+	u8  nowPWM[MAX_BYTE_NUM_DISPLAY_PWM];						//测试时pwm信号占空比即时显示
+	u8  nowPWMStringIdx;										//前一项字符串索引	
 	u16 nowSpeed[MAX_BYTE_NUM_DISPLAY_SPEED];					//测试时显示当前测试风扇转速值，单位rpm
-	u16 nowCrurrent[MAX_BYTE_NUM_DISPLAY_CURRENT];				//测试时显示当前测试风扇电流值，单位ma
-	u8 nowTestMessage[MAX_BYTE_NUM_NOW_TEST_MES];				//显示当前测试信息 格式为“正在测试第N段，共M段
-	u8 finishPWM[MAX_BYTE_NUM_DISPLAY_PWM];						//测试完成时占空比显示项表头
+	u8  nowSpeedStringIdx;										//前一项字符串索引
+	u16 nowCurrent[MAX_BYTE_NUM_DISPLAY_CURRENT];				//测试时显示当前测试风扇电流值，单位ma
+	u8  nowCurrentStringIdx;									//前一项字符串索引
+	u8  nowTestMessage[MAX_BYTE_NUM_NOW_TEST_MES];				//显示当前测试信息 格式为“正在测试第N段，共M段
+	u8  nowTestMessageStringIdx;								//前一项字符串索引
+	u8  finishPWM[MAX_BYTE_NUM_DISPLAY_PWM];					//测试完成时占空比显示项表头
+	u8  finishPWMStringIdx;										//前一项字符串索引
 	u16 finishSpeed[MAX_BYTE_NUM_DISPLAY_SPEED];				//测试完成时转速显示项表头
+	u8  finishSpeedStringIdx;									//前一项字符串索引
 	u16 finishCurrent[MAX_BYTE_NUM_DISPLAY_CURRENT];			//测试完成时电流显示项表头
-	u8 resultOK;												//测试结束时，测试结果显示OK部分
-	u8 reasultNG;												//测试结束时，测试结果显示NG部分
+	u8  finishCurrentStringIdx;									//前一项字符串索引
+	u8  resultOK;												//测试结束时，测试结果显示OK部分
+	u8  reasultNG;												//测试结束时，测试结果显示NG部分
 	
 }testing_Information_TypeDef;
 
@@ -118,7 +130,9 @@ typedef struct
 typedef struct
 {
 	u16 nowCurrent[MAX_BYTE_NUM_DISPLAY_CURRENT];				//校准是测量到的电流值
+	u8  nowCurrentStringIdx;									//前一项字符串索引
 	u16 testCurrent[MAX_BYTE_NUM_DISPLAY_CURRENT];				//输入实际测量的标准电流值
+	u8  testCurrentStringIdx;									//前一项字符串索引
 	u8  autoZeroButton;											//电流自动校零按键
 	
 }adjust_Information_TypeDef;
@@ -130,10 +144,15 @@ typedef struct
 typedef struct 
 {
 	u8 inputPassword[MAX_BYTE_NUM_PASSWORD];			//进入配置界面时输入的密码
+	u8 inputPasswordStringIdx;							//前一项字符串索引
 	u8 oldPassword[MAX_BYTE_NUM_PASSWORD];				//密码更新时，输入原始密码
+	u8 oldPasswordStringIdx;							//前一项字符串索引
 	u8 newPassword[MAX_BYTE_NUM_PASSWORD];				//密码更新时，输入新密码
+	u8 newPasswordStringIdx;							//前一项字符串索引
 	u8 oldPasswordTip[MAX_BYTE_NUM_PASSWORD_TIP];		//旧密码输入提示字符
+	u8 oldPasswordTipStringIdx;							//前一项字符串索引
 	u8 newPasswrodTip[MAX_BYTE_NUM_PASSWORD_TIP];		//新密码输入提示字符
+	u8 newPasswrodTipStringIdx;
 	
 }password_Information_TypeDef;
 
@@ -142,12 +161,14 @@ typedef struct
 //
 typedef struct
 {
-	u8  button;						//删除料号按键
-	u16 speed[20];					//调试界面转速显示
-	u8  current[20];				//调试界面电流显示		
-	u32 inputPoles;					//调试界面风扇极数输入
-	u32 inputPWMFrequen;			//调试界面pwm信号频率输入
-	u8  inputPWM;					//调试界面pwm信号占空比输入
+	u8  button;												//删除料号按键
+	u16 speed[MAX_BYTE_NUM_DISPLAY_SPEED];					//调试界面转速显示
+	u8  speedStringIdx;										//前一项字符串索引
+	u8  current[MAX_BYTE_NUM_DISPLAY_CURRENT];				//调试界面电流显示	
+	u8  currentStringIdx;									//前一项字符串索引
+	u32 inputPoles;											//调试界面风扇极数输入
+	u32 inputPWMFrequen;									//调试界面pwm信号频率输入
+	u8  inputPWM;											//调试界面pwm信号占空比输入
 	
 }debug_Information_TypeDef;
 

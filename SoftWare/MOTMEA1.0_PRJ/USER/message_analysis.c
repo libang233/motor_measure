@@ -176,17 +176,18 @@ u8 get_parser_buffers_length(void)
 * @ Brief         : 读数值控件返回数据包处理函数
 * @ Date          : 2017.06.17
 * @ Input         : u16							数据ID号
+* @ Output        : bool						是否接收成功
 * @ Modify        : ...
 **/
-void parser_rec_int_data_deal(u16 IDNum)
+bool parser_rec_int_data_deal(u16 IDNum)
 {
 	u32 data;
 	
 	//读取数值
-	data = (ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_INT_VALUE_ADDRESS_HIHG] << 24) + \
-			(ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_INT_VALUE_ADDRESS_HIHG + 1] << 16) + \
-			(ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_INT_VALUE_ADDRESS_HIHG + 2] << 8) + \
-			(ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_INT_VALUE_ADDRESS_HIHG + 3]);
+	data = (ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_INT_VALUE_ADDRESS_HIGH] << 24) + \
+			(ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_INT_VALUE_ADDRESS_HIGH + 1] << 16) + \
+			(ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_INT_VALUE_ADDRESS_HIGH + 2] << 8) + \
+			(ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_INT_VALUE_ADDRESS_HIGH + 3]);
 
 	switch(IDNum)
 	{
@@ -365,17 +366,19 @@ void parser_rec_int_data_deal(u16 IDNum)
 		default:
 			break;
 	}
+	
 }
 
 /**
 * @ Function Name : parser_rec_string_data_deal
 * @ Author        : hlb
 * @ Brief         : 读字符串控件返回数据包处理函数
-* @ Date          : 2017.06.18
+* @ Date          : 2017.07.08
 * @ Input         : u16							数据ID号
+* @ Output        : bool						是否接收成功
 * @ Modify        : ...
 **/
-void parser_rec_string_data_deal(u16 IDNum)
+bool parser_rec_string_data_deal(u16 IDNum)
 {
 	u8 i;
 	u8 byteNum;
@@ -386,11 +389,137 @@ void parser_rec_string_data_deal(u16 IDNum)
 	switch(IDNum)
 	{
 		case ID_PART1_EXPLAIN:
-//			configInformation.part1Information.explain
+			configInformation.part1Information.explainStringIdx = 0;
+			for(i = 0; i < byteNum; i++)
+			{
+				if(configInformation.part1Information.explainStringIdx < MAX_BYTE_NUM_SPECIF_EXPLAIN)
+				{
+					configInformation.part1Information.explain[configInformation.part1Information.explainStringIdx++] =  \
+						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
+				}
+				else
+				{
+					break;
+				}
+			}
 			break;
+		
+		case ID_PART2_EXPLAIN:
+			configInformation.part2Information.explainStringIdx = 0;
+			for(i = 0; i < byteNum; i++)
+			{
+				if(configInformation.part2Information.explainStringIdx < MAX_BYTE_NUM_SPECIF_EXPLAIN)
+				{
+					configInformation.part2Information.explain[configInformation.part2Information.explainStringIdx++] =  \
+						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
+				}
+				else
+				{
+					break;
+				}
+			}
+			break;
+			
+		case ID_PART3_EXPLAIN:
+			configInformation.part3Information.explainStringIdx = 0;
+			for(i = 0; i < byteNum; i++)
+			{
+				if(configInformation.part3Information.explainStringIdx < MAX_BYTE_NUM_SPECIF_EXPLAIN)
+				{
+					configInformation.part3Information.explain[configInformation.part3Information.explainStringIdx++] =  \
+						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
+				}
+				else
+				{
+					break;
+				}
+			}
+			break;
+			
+		case ID_PART4_EXPLAIN:
+			configInformation.part4Information.explainStringIdx = 0;
+			for(i = 0; i < byteNum; i++)
+			{
+				if(configInformation.part4Information.explainStringIdx < MAX_BYTE_NUM_SPECIF_EXPLAIN)
+				{
+					configInformation.part4Information.explain[configInformation.part4Information.explainStringIdx++] =  \
+						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
+				}
+				else
+				{
+					break;
+				}
+			}
+			break;
+			
+		case ID_PART5_EXPLAIN:
+			configInformation.part5Information.explainStringIdx = 0;
+			for(i = 0; i < byteNum; i++)
+			{
+				if(configInformation.part5Information.explainStringIdx < MAX_BYTE_NUM_SPECIF_EXPLAIN)
+				{
+					configInformation.part5Information.explain[configInformation.part5Information.explainStringIdx++] =  \
+						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
+				}
+				else
+				{
+					break;
+				}
+			}
+			break;
+			
+		case ID_PART6_EXPLAIN:
+			configInformation.part6Information.explainStringIdx = 0;
+			for(i = 0; i < byteNum; i++)
+			{
+				if(configInformation.part6Information.explainStringIdx < MAX_BYTE_NUM_SPECIF_EXPLAIN)
+				{
+					configInformation.part6Information.explain[configInformation.part6Information.explainStringIdx++] =  \
+						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
+				}
+				else
+				{
+					break;
+				}
+			}
+			break;
+			
+		case ID_PN_NUMBER:
+			configInformation.PNNumStringIdx = 0;
+			for(i = 0; i < byteNum; i++)
+			{
+				if(configInformation.PNNumStringIdx < MAX_BYTE_NUM_PN_NUM)
+				{
+					configInformation.PNNum[configInformation.PNNumStringIdx++] = \
+						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
+				}
+				else
+				{
+					break;
+				}
+			}
+			break;
+			
+		case ID_PN_DESCRIP:
+			configInformation.descriptionStringIdx = 0;
+			for(i = 0; i < byteNum; i++)
+			{
+				if(configInformation.descriptionStringIdx < MAX_BYTE_NUM_PN_NUM_DESCRIP)
+				{
+					configInformation.PNNumDescription[configInformation.descriptionStringIdx++] = \
+						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
+				}
+				else
+				{
+					break;
+				}
+			}
+			break;
+			
+			
+			
+			
 	}
-	
-	
 }
 
 //读位图控件返回数据包处理函数
@@ -511,8 +640,13 @@ void Serial_message_handle(void)
 		
 		if(serial_parser_comm_analysis() == true)
 		{
-			
+			ParserMoniter.GetIdx++;
 		}
+		else
+		{
+			ParserMoniter.GetIdx++;
+		}
+		
 	}
 	
 	t = ParserMoniter.Frame_Buffers[ParserMoniter.AddIdx].Idx;
