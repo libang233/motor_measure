@@ -10,7 +10,7 @@
 //帧相关定义
 #define FRAME_HEAD_DEF							0x55				//数据帧头字符
 #define FRAME_END_DEF							0xaa				//数据帧尾字符
-#define FRAME_REC_MES_INSTRUCTION_DEF			0xe0				//数据帧返回数据包读控件数据包头字符
+#define FRAME_REC_MES_INSTRUCTION_DEF			0xe5				//数据帧返回数据包读控件数据包头字符
 #define FRAME_REC_PAGE_INSTRUCTION_DEF			0xe9				//数据帧返回数据包读页码数据包头字符
 #define FRAME_REC_DATA_INT_DEF					0x22				//数据帧返回数据包整型数据类型字符
 #define FRAME_REC_DATA_STRING_DEF				0x23				//数据帧返回数据包字符串数据类型字符
@@ -28,9 +28,11 @@
 #define FRAME_DATA_INT_VALUE_ADDRESS_HIGH		6					//数据帧整型数值高字节地址
 #define FRAME_DATA_STRING_BYTE_NUM_ADDRESS		6					//数据帧字符串型数据字节数字节地址
 #define FRAME_DATA_STRING_VALUE_ADDRESS_HIGH	7					//数据帧字符串数据高字节地址
+#define FRAME_DATA_PICTURE_STATUS_ADDRESS       6					//数据帧位图控件状态字节地址
+#define FRAME_DATA_SELECT_ADDRESS				6					//数据帧下拉列表数据字节地址
 
 //缓冲项最大长度定义
-#define SERIAL_BUFFER_MAX_VAL					128
+#define USART_BUFFER_MAX_VAL					128
 
 //最大缓冲数量定义
 #define FRAME_BUFFER_NUM_MAX					4
@@ -38,7 +40,7 @@
 //串口缓冲项定义
 typedef struct 
 {
-	u8   Buff[SERIAL_BUFFER_MAX_VAL];								//缓冲内容
+	u8   Buff[USART_BUFFER_MAX_VAL];								//缓冲内容
 	u16  Idx;														//缓冲索引，指示长度	
 	
 }Usart_BuffItem;
@@ -75,22 +77,22 @@ bool parser_rec_int_data_deal(u16 IDNum);
 bool parser_rec_string_data_deal(u16 IDNum);
 
 //读位图控件返回数据包处理函数
-void parser_rec_status_data_deal(u16 IDNum);
+bool parser_rec_picture_data_deal(u16 IDNum);
 
 //读下拉列表控件返回数据包处理函数
-void parser_rec_selec_data_deal(u16 IDNum);
+bool parser_rec_select_data_deal(u16 IDNum);
 
 //读进度条控件返回数据包处理函数
-void parser_rec_bar_data_deal(u16 IDNum);
+bool parser_rec_bar_data_deal(u16 IDNum);
 
 //读时间控件返回数据包处理函数
-void parser_rec_time_data_deal(u16 IDNum);
+bool parser_rec_time_data_deal(u16 IDNum);
 
 //读日期控件返回数据包处理函数
-void parser_rec_date_data_deal(u16 IDNum);
+bool parser_rec_date_data_deal(u16 IDNum);
 
 //读页面返回数据包处理函数
-void parser_rec_page_data_deal(void);
+bool parser_rec_page_data_deal(void);
 
 //串口帧分析函数
 bool serial_parser_comm_analysis(void);

@@ -41,7 +41,7 @@ union whole_Evnt_TypeDef
 //
 typedef struct
 {
-	u8 explain[MAX_BYTE_NUM_SPECIF_EXPLAIN];		//规格项说明
+	u8 explain[MAX_BYTE_NUM_SPECIF_EXPLAIN];	//规格项说明
 	u8 explainStringIdx;						//说明数据字符数
 	u8 testPWM;									//测试pwm信号占空比值
 	u8 testTime;								//测试时间，单位为秒
@@ -67,13 +67,15 @@ typedef struct
 
 	u8 PNNum[MAX_BYTE_NUM_PN_NUM];								//也称为PN号，区别不同规格的唯一识别码
 	u8 PNNumStringIdx;											//PN号字符串索引				
-	u8 PNNumDescription[MAX_BYTE_NUM_PN_NUM_DESCRIP];				//PN号的补充描述
+	u8 PNNumDescription[MAX_BYTE_NUM_PN_NUM_DESCRIP];			//PN号的补充描述
 	u8 descriptionStringIdx;									//描述字符串索引
 	u8 polesNum;												//风扇的极数
 	u8 partNum;													//设置的测试段数
 	u8 trigger;													//触发选择，1 = 触发，0 = 不触发
 	u16 testCurrent;											//系统判定是否插入风扇的临界电流值
 	u8 PWM;														//pwm调速信号频率
+	u8 PNNumSelect;												//料号选择
+	u8 powerSelect;												//电源选择														
 	
 }config_Information_TypeDef;
 
@@ -84,10 +86,11 @@ typedef struct
 typedef struct
 {
 	u8  PWM[MAX_BYTE_NUM_DISPLAY_PWM];							//测试完成时显示的占空比值
+	u8  PWMStringIdx;											//前一项字符串索引	
 	u16 speed[MAX_BYTE_NUM_DISPLAY_SPEED];						//测试完成时显示的转速值
-	u8  speedStringIdx;											//转速值字符串索引
+	u8  speedStringIdx;											//前一项字符串索引	
 	u16 current[MAX_BYTE_NUM_DISPLAY_CURRENT];					//测试完成时显示的电流值
-	u8  currentStringIdx;										//电流字符串索引
+	u8  currentStringIdx;										//前一项字符串索引	
 	
 }part_Finish_Value_TypeDef;
 
@@ -129,10 +132,10 @@ typedef struct
 //
 typedef struct
 {
-	u16 nowCurrent[MAX_BYTE_NUM_DISPLAY_CURRENT];				//校准是测量到的电流值
-	u8  nowCurrentStringIdx;									//前一项字符串索引
-	u16 testCurrent[MAX_BYTE_NUM_DISPLAY_CURRENT];				//输入实际测量的标准电流值
-	u8  testCurrentStringIdx;									//前一项字符串索引
+	u16 measureCurrent[MAX_BYTE_NUM_DISPLAY_CURRENT];			//校准是测量到的电流值
+	u8  measureCurrentStringIdx;									//前一项字符串索引
+	u16 inputCurrent[MAX_BYTE_NUM_DISPLAY_CURRENT];				//输入实际测量的标准电流值
+	u8  inputCurrentStringIdx;									//前一项字符串索引
 	u8  autoZeroButton;											//电流自动校零按键
 	
 }adjust_Information_TypeDef;

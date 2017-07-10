@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\MOTORMEASURE_PRJ.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\MOTORMEASURE_PRJ.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060183: Last Updated: Fri Jul 07 22:51:37 2017
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060183: Last Updated: Mon Jul 10 08:25:42 2017
 <BR><P>
 <H3>Maximum Stack Usage =        108 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -491,8 +491,8 @@ Global Symbols
 <P><STRONG><a name="[9]"></a>SVC_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.SVC_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_md.o(RESET)
 </UL>
-<P><STRONG><a name="[54]"></a>Serial_message_handle</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, message_analysis.o(i.Serial_message_handle))
-<BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = Serial_message_handle &rArr; serial_parser_comm_analysis &rArr; parser_rec_int_data_deal
+<P><STRONG><a name="[54]"></a>Serial_message_handle</STRONG> (Thumb, 72 bytes, Stack size 4 bytes, message_analysis.o(i.Serial_message_handle))
+<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = Serial_message_handle &rArr; serial_parser_comm_analysis &rArr; parser_rec_string_data_deal
 </UL>
 <BR>[Calls]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;serial_parser_comm_analysis
 <LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parser_moniter_add_buff
@@ -511,7 +511,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_md.o(.text)
 </UL>
-<P><STRONG><a name="[32]"></a>USART1_IRQHandler</STRONG> (Thumb, 88 bytes, Stack size 8 bytes, usart.o(i.USART1_IRQHandler))
+<P><STRONG><a name="[32]"></a>USART1_IRQHandler</STRONG> (Thumb, 90 bytes, Stack size 8 bytes, usart.o(i.USART1_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = USART1_IRQHandler &rArr; USART_GetITStatus
 </UL>
 <BR>[Calls]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ReceiveData
@@ -585,7 +585,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;data_init
 </UL>
 
-<P><STRONG><a name="[55]"></a>parser_moniter_add_buff</STRONG> (Thumb, 456 bytes, Stack size 8 bytes, message_analysis.o(i.parser_moniter_add_buff))
+<P><STRONG><a name="[55]"></a>parser_moniter_add_buff</STRONG> (Thumb, 458 bytes, Stack size 8 bytes, message_analysis.o(i.parser_moniter_add_buff))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = parser_moniter_add_buff
 </UL>
 <BR>[Calls]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_usart_buffers_length
@@ -593,14 +593,16 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial_message_handle
 </UL>
 
-<P><STRONG><a name="[65]"></a>parser_rec_int_data_deal</STRONG> (Thumb, 548 bytes, Stack size 8 bytes, message_analysis.o(i.parser_rec_int_data_deal))
+<P><STRONG><a name="[65]"></a>parser_rec_int_data_deal</STRONG> (Thumb, 552 bytes, Stack size 8 bytes, message_analysis.o(i.parser_rec_int_data_deal))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = parser_rec_int_data_deal
 </UL>
 <BR>[Called By]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;serial_parser_comm_analysis
 </UL>
 
-<P><STRONG><a name="[66]"></a>parser_rec_string_data_deal</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, message_analysis.o(i.parser_rec_string_data_deal))
-<BR><BR>[Called By]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;serial_parser_comm_analysis
+<P><STRONG><a name="[66]"></a>parser_rec_string_data_deal</STRONG> (Thumb, 1280 bytes, Stack size 16 bytes, message_analysis.o(i.parser_rec_string_data_deal))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = parser_rec_string_data_deal
+</UL>
+<BR>[Called By]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;serial_parser_comm_analysis
 </UL>
 
 <P><STRONG><a name="[68]"></a>screen_init</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, screen.o(i.screen_init))
@@ -608,7 +610,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[57]"></a>serial_parser_comm_analysis</STRONG> (Thumb, 186 bytes, Stack size 20 bytes, message_analysis.o(i.serial_parser_comm_analysis))
-<BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = serial_parser_comm_analysis &rArr; parser_rec_int_data_deal
+<BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = serial_parser_comm_analysis &rArr; parser_rec_string_data_deal
 </UL>
 <BR>[Calls]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parser_rec_string_data_deal
 <LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parser_rec_int_data_deal
@@ -617,7 +619,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[63]"></a>sys_manager_handle</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, sys_manager.o(i.sys_manager_handle))
-<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = sys_manager_handle &rArr; Serial_message_handle &rArr; serial_parser_comm_analysis &rArr; parser_rec_int_data_deal
+<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = sys_manager_handle &rArr; Serial_message_handle &rArr; serial_parser_comm_analysis &rArr; parser_rec_string_data_deal
 </UL>
 <BR>[Calls]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial_message_handle
 </UL>

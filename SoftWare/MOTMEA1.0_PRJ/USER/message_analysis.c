@@ -97,7 +97,7 @@ void parser_moniter_add_buff(void)
 		
 		if(ParserMoniter.IsBufferAdd == true)
 		{
-			if(ParserMoniter.Frame_Buffers[ParserMoniter.AddIdx].Idx < SERIAL_BUFFER_MAX_VAL)
+			if(ParserMoniter.Frame_Buffers[ParserMoniter.AddIdx].Idx < USART_BUFFER_MAX_VAL)
 			{
 				//缓冲项填充数据
 				ParserMoniter.Frame_Buffers[ParserMoniter.AddIdx].Buff[ \
@@ -364,8 +364,10 @@ bool parser_rec_int_data_deal(u16 IDNum)
 			break;
 		
 		default:
-			break;
+			return false;
+		
 	}
+	return true;
 	
 }
 
@@ -373,7 +375,7 @@ bool parser_rec_int_data_deal(u16 IDNum)
 * @ Function Name : parser_rec_string_data_deal
 * @ Author        : hlb
 * @ Brief         : 读字符串控件返回数据包处理函数
-* @ Date          : 2017.07.08
+* @ Date          : 2017.07.09
 * @ Input         : u16							数据ID号
 * @ Output        : bool						是否接收成功
 * @ Modify        : ...
@@ -516,32 +518,133 @@ bool parser_rec_string_data_deal(u16 IDNum)
 			}
 			break;
 			
+
+		case ID_ADJUST_REA_CURRNT:
+			adjustInformation.inputCurrentStringIdx = 0;
+			for(i = 0; i < byteNum; i++)
+			{
+				if(adjustInformation.inputCurrentStringIdx < MAX_BYTE_NUM_DISPLAY_CURRENT)
+				{
+					adjustInformation.inputCurrent[adjustInformation.inputCurrentStringIdx++] = \
+						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
+				}
+				else
+				{
+					break;
+				}
+			}
+			break;
 			
+		case ID_INPUT_PASSWORD:
+			passwordInformation.inputPasswordStringIdx = 0;
+			for(i = 0; i < byteNum; i++)
+			{
+				if(passwordInformation.inputPasswordStringIdx < MAX_BYTE_NUM_DISPLAY_CURRENT)
+				{
+					passwordInformation.inputPassword[passwordInformation.inputPasswordStringIdx++] = \
+						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
+				}
+				else
+				{
+					break;
+				}
+			}
+			break;
 			
+		case ID_OLD_PASSWORD:
+			passwordInformation.oldPasswordStringIdx = 0;
+			for(i = 0; i < byteNum; i++)
+			{
+				if(passwordInformation.oldPasswordStringIdx < MAX_BYTE_NUM_DISPLAY_CURRENT)
+				{
+					passwordInformation.oldPassword[passwordInformation.oldPasswordStringIdx++] = \
+						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
+				}
+				else
+				{
+					break;
+				}
+			}
+			break;
+
+		case ID_NEW_PASSWORD:
+			passwordInformation.newPasswordStringIdx = 0;
+			for(i = 0; i < byteNum; i++)
+			{
+				if(passwordInformation.newPasswordStringIdx < MAX_BYTE_NUM_DISPLAY_CURRENT)
+				{
+					passwordInformation.newPassword[passwordInformation.newPasswordStringIdx++] = \
+						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
+				}
+				else
+				{
+					break;
+				}
+			}
+			break;		
+			
+		default:
+			return false;
 			
 	}
+	return true;
 }
 
-//读位图控件返回数据包处理函数
-void parser_rec_status_data_deal(u16 IDNum)
+/**
+* @ Function Name : parser_rec_picture_data_deal
+* @ Author        : hlb
+* @ Brief         : 读位图控件返回数据包处理函数
+* @ Date          : 2017.07.10
+* @ Input         : u16							数据ID号
+* @ Output        : bool						是否接收成功
+* @ Modify        : ...
+**/
+bool parser_rec_picture_data_deal(u16 IDNum)
 {
 	
+	return true;
 }
 
-//读下拉列表控件返回数据包处理函数
-void parser_rec_selec_data_deal(u16 IDNum);
+/**
+* @ Function Name : parser_rec_select_data_deal
+* @ Author        : hlb
+* @ Brief         : 读下拉列表控件返回数据包处理函数
+* @ Date          : 2017.07.10
+* @ Input         : u16							数据ID号
+* @ Output        : bool						是否处理成功
+* @ Modify        : ...
+**/
+bool parser_rec_select_data_deal(u16 IDNum)
+{
+	switch(IDNum)
+	{
+		case ID_PN_NUMBER_SELECT:
+			configInformation.PNNumSelect = \
+				ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_SELECT_ADDRESS];
+			break;
+		
+		case ID_POWER_SELECT:
+			configInformation.powerSelect = \
+			ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_SELECT_ADDRESS];
+			break;
+		
+		default:
+			return false;
+	}
+	return true;
+}
 
 //读进度条控件返回数据包处理函数
-void parser_rec_bar_data_deal(u16 IDNum);
+bool parser_rec_bar_data_deal(u16 IDNum);
 
 //读时间控件返回数据包处理函数
-void parser_rec_time_data_deal(u16 IDNum);
+bool parser_rec_time_data_deal(u16 IDNum);
 
 //读日期控件返回数据包处理函数
-void parser_rec_date_data_deal(u16 IDNum);
+bool parser_rec_date_data_deal(u16 IDNum);
 
 //读页面返回数据包处理函数
-void parser_rec_page_data_deal(void)
+bool parser_rec_page_data_deal(void)
 {
 	
 }
@@ -557,12 +660,10 @@ void parser_rec_page_data_deal(void)
 **/
 bool serial_parser_comm_analysis(void)
 {
-	u8  i;
 	u8  dataNum;
 	u8  dataFunc;
 	u16 IDNum;
 	u8  dataType;
-	u32 intData;
 	
 	//读取数据包字符数
 	dataNum = ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_NUM_ADDRESS];
@@ -594,6 +695,7 @@ bool serial_parser_comm_analysis(void)
 				break;
 			
 			case FRAME_REC_DATA_STATUES_DEF:
+				parser_rec_picture_data_deal(IDNum);
 				break;
 			
 			case FRAME_REC_DATA_SELECT_DEF:
@@ -626,8 +728,7 @@ bool serial_parser_comm_analysis(void)
 **/
 void Serial_message_handle(void)
 {
-	static u16 i;
-	u16 t;
+
 	//解析器装载缓冲
 	parser_moniter_add_buff();
 	
@@ -646,10 +747,12 @@ void Serial_message_handle(void)
 		{
 			ParserMoniter.GetIdx++;
 		}
-		
+		if(ParserMoniter.GetIdx >= FRAME_BUFFER_NUM_MAX)
+		{
+			ParserMoniter.GetIdx = 0;
+		}
 	}
 	
-	t = ParserMoniter.Frame_Buffers[ParserMoniter.AddIdx].Idx;
 
 
 }
