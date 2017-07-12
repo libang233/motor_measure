@@ -5,6 +5,8 @@
 #include "config.h"
 #include "newtype.h"
 
+//全局信息数据外部声明
+extern global_Information_TypeDef globalInformation;
 
 //测试界面数据外部声明
 extern testing_Information_TypeDef testingInformation;

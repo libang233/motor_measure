@@ -28,8 +28,18 @@
 #define FRAME_DATA_INT_VALUE_ADDRESS_HIGH		6					//数据帧整型数值高字节地址
 #define FRAME_DATA_STRING_BYTE_NUM_ADDRESS		6					//数据帧字符串型数据字节数字节地址
 #define FRAME_DATA_STRING_VALUE_ADDRESS_HIGH	7					//数据帧字符串数据高字节地址
-#define FRAME_DATA_PICTURE_STATUS_ADDRESS       6					//数据帧位图控件状态字节地址
+#define FRAME_DATA_BITMAP_STATUS_ADDRESS        6					//数据帧位图控件状态字节地址
 #define FRAME_DATA_SELECT_ADDRESS				6					//数据帧下拉列表数据字节地址
+#define FRAME_DATA_BAR_NOW_PORGRESS_ADDRESS_HIGH 	6				//数据帧进度条当前进度值高字节地址
+#define FRAME_DATA_BAR_MAX_PORGRESS_ADDRESS_HIGH	8				//数据帧进度条最大进度值高字节地址
+#define FRAME_DATA_TIME_HOUR_ADDRESS			6					//数据帧时间控件小时地址
+#define FRAME_DATA_TIME_MINUTE_ADDRESS			7					//数据帧时间控件分钟地址
+#define FRAME_DATA_TIME_SECOND_ADDRESS			8					//数据帧时间控件秒地址
+#define FRAME_DATA_DATE_YEAR_ADDRESS_HIGH       6					//数据帧日期控件年高字节地址
+#define FRAME_DATA_DATE_MONTH_ADDRESS			8					//数据帧日期控件月地址
+#define FRAME_DATA_DATE_DAY_ADDRESS				9					//数据帧日期控件日地址
+#define FRAME_DATA_DATE_WEEK_ADDRESS			10					//数据帧日期控件星期地址
+#define FRAME_DATA_PAGE_IDX_HIGH_ADDRESS		3					//数据帧页面索引高字节地址
 
 //缓冲项最大长度定义
 #define USART_BUFFER_MAX_VAL					128
@@ -77,7 +87,7 @@ bool parser_rec_int_data_deal(u16 IDNum);
 bool parser_rec_string_data_deal(u16 IDNum);
 
 //读位图控件返回数据包处理函数
-bool parser_rec_picture_data_deal(u16 IDNum);
+bool parser_rec_bitmap_data_deal(u16 IDNum);
 
 //读下拉列表控件返回数据包处理函数
 bool parser_rec_select_data_deal(u16 IDNum);

@@ -31,6 +31,9 @@ void data_init(void)
 	//解析器初始化
 	parser_init();
 	
+	//全局信息数据初始化
+	memset(&globalInformation, 0,sizeof(globalInformation));
+	
 	//测试数据初始化；
 	memset(&testingInformation, 0, sizeof(testingInformation));
 	

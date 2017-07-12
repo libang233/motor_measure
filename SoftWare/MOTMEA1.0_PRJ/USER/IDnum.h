@@ -64,6 +64,9 @@
 #define ID_CONFIG_PWM			197
 
 //测试界面
+#define ID_TEST_PROGRESS_BAR	151
+#define ID_TEST_NOW_SPEED		152
+#define ID_TEST_NOW_CURRENT		153
 #define ID_FINISH_PART1_PWM		154
 #define ID_FINISH_PART2_PWM		155
 #define ID_FINISH_PART3_PWM		156
@@ -87,14 +90,14 @@
 #define ID_FINISH_SPEED 		181
 #define ID_FINISH_CURRENT		182
 #define ID_NOW_PWN				186
-#define ID_TEST_PASS			173
-#define ID_TEST_FAIL			174
+#define ID_TEST_OK  			173
+#define ID_TEST_NG	 			174
 
 //校准界面
 #define ID_ADJUST_MEA_CURRNT	176
 #define ID_ADJUST_REA_CURRNT	177
 #define ID_ADJUST_SAVE			178
-#define ID_AUTO_ZERO			212
+#define ID_ADJUST_AUTO_ZERO		212
 
 //密码界面
 #define ID_INPUT_PASSWORD		183

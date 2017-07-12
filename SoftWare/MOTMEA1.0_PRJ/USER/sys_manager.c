@@ -19,6 +19,9 @@
 //全局事件标志位实例化
 union whole_Evnt_TypeDef myEvnt;
 
+//全局信息数据实例化
+global_Information_TypeDef globalInformation;
+
 //测试界面数据实例化
 testing_Information_TypeDef testingInformation;
 

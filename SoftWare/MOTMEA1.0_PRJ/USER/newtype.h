@@ -107,7 +107,8 @@ typedef struct
 	part_Finish_Value_TypeDef part5FinishValule;
 	part_Finish_Value_TypeDef part6FinishValule;
 	
-	u8  PWMProgressbar;											//测试时显示当前pwm信号占空比值进度条
+	u16 testProgressBar;										//测试时当前进度值
+	u16 testProgressBarMax;										//最大进度值 
 	u8  nowPWM[MAX_BYTE_NUM_DISPLAY_PWM];						//测试时pwm信号占空比即时显示
 	u8  nowPWMStringIdx;										//前一项字符串索引	
 	u16 nowSpeed[MAX_BYTE_NUM_DISPLAY_SPEED];					//测试时显示当前测试风扇转速值，单位rpm
@@ -122,8 +123,8 @@ typedef struct
 	u8  finishSpeedStringIdx;									//前一项字符串索引
 	u16 finishCurrent[MAX_BYTE_NUM_DISPLAY_CURRENT];			//测试完成时电流显示项表头
 	u8  finishCurrentStringIdx;									//前一项字符串索引
-	u8  resultOK;												//测试结束时，测试结果显示OK部分
-	u8  reasultNG;												//测试结束时，测试结果显示NG部分
+	u8  resultBitmapOK;											//测试结束时，测试结果显示OK部分
+	u8  resultBitmapNG;				 						//测试结束时，测试结果显示NG部分
 	
 }testing_Information_TypeDef;
 
@@ -176,12 +177,36 @@ typedef struct
 }debug_Information_TypeDef;
 
 //
+//时间数据结构定义
+//
+typedef struct
+{
+	u8 hour;
+	u8 minute;
+	u8 second;
+	
+}begin_Page_Time_TypeDef;
+
+//
+//日期数据结构定义
+//
+typedef struct
+{
+	u16 year;
+	u8  month;
+	u8  day;
+	u8  week;
+	
+}begin_Page_Date_TypeDef;
+
+//
 //开始界面数据结构定义
 //
 typedef struct 
 {
-	u8 time;						//时间显示
-	u8 date;						//日期显示
+	begin_Page_Time_TypeDef time;	//时间显示
+	begin_Page_Date_TypeDef date;	//日期显示
+	
 	u8 goDebugPageButton;			//进入调试界面按键
 	u8 goTestPageButton;			//进入测试界面按键
 	u8 goConfigPageButton;			//进入配置界面按键
@@ -189,5 +214,14 @@ typedef struct
 	u8 goBrowsePageButton;			//进入浏览界面按键
 	
 }begin_Information_TypeDef;
+
+//
+//全局信息数据结构定义
+//
+typedef struct
+{
+	u8 nowPage;						//当前页面
+	
+}global_Information_TypeDef;
 
 #endif

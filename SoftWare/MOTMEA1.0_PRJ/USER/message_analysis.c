@@ -591,7 +591,7 @@ bool parser_rec_string_data_deal(u16 IDNum)
 }
 
 /**
-* @ Function Name : parser_rec_picture_data_deal
+* @ Function Name : parser_rec_bitmap_data_deal
 * @ Author        : hlb
 * @ Brief         : 读位图控件返回数据包处理函数
 * @ Date          : 2017.07.10
@@ -599,8 +599,23 @@ bool parser_rec_string_data_deal(u16 IDNum)
 * @ Output        : bool						是否接收成功
 * @ Modify        : ...
 **/
-bool parser_rec_picture_data_deal(u16 IDNum)
+bool parser_rec_bitmap_data_deal(u16 IDNum)
 {
+	switch(IDNum)
+	{
+		case ID_TEST_OK:
+			testingInformation.resultBitmapOK = \
+				ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_BITMAP_STATUS_ADDRESS];
+			break;
+		
+		case ID_TEST_NG:
+			testingInformation.resultBitmapNG = \
+				ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_BITMAP_STATUS_ADDRESS];
+			break;
+	
+		default:
+			return false;
+	}
 	
 	return true;
 }
@@ -631,19 +646,105 @@ bool parser_rec_select_data_deal(u16 IDNum)
 		default:
 			return false;
 	}
+	
 	return true;
 }
 
-//读进度条控件返回数据包处理函数
-bool parser_rec_bar_data_deal(u16 IDNum);
+/**
+* @ Function Name : parser_rec_bar_data_deal
+* @ Author        : hlb
+* @ Brief         : 读进度条控件返回数据包处理函数
+* @ Date          : 2017.07.11
+* @ Input         : u16							数据ID号
+* @ Output        : bool						是否处理成功
+* @ Modify        : ...
+**/
+bool parser_rec_bar_data_deal(u16 IDNum)
+{
+	if(IDNum == ID_TEST_PROGRESS_BAR)
+	{
+		testingInformation.testProgressBar = \
+			(ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_BAR_NOW_PORGRESS_ADDRESS_HIGH] << 8) \
+			+ ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_BAR_NOW_PORGRESS_ADDRESS_HIGH + 1];
+		testingInformation.testProgressBarMax = \
+			(ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_BAR_MAX_PORGRESS_ADDRESS_HIGH] << 8) \
+			+ ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_BAR_NOW_PORGRESS_ADDRESS_HIGH + 1];
+	}
+	else
+	{
+		return false;
+	}
+	
+	return true;
+}
 
-//读时间控件返回数据包处理函数
-bool parser_rec_time_data_deal(u16 IDNum);
+/**
+* @ Function Name : parser_rec_time_data_deal
+* @ Author        : hlb
+* @ Brief         : 读时间控件返回数据包处理函数
+* @ Date          : 2017.07.12
+* @ Input         : u16							数据ID号
+* @ Output        : bool						是否处理成功
+* @ Modify        : ...
+**/
+bool parser_rec_time_data_deal(u16 IDNum)
+{
+	if(IDNum == ID_BEGIN_TIME)
+	{
+		beginInformation.time.hour = \
+			ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_TIME_HOUR_ADDRESS];
+		beginInformation.time.minute = \
+			ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_TIME_MINUTE_ADDRESS];
+		beginInformation.time.second = \
+			ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_TIME_SECOND_ADDRESS];
+	}
+	else
+	{
+		return false;
+	}
+	
+	return true;
+}
 
-//读日期控件返回数据包处理函数
-bool parser_rec_date_data_deal(u16 IDNum);
+/**
+* @ Function Name : parser_rec_date_data_deal
+* @ Author        : hlb
+* @ Brief         : 读日期控件返回数据包处理函数
+* @ Date          : 2017.07.12
+* @ Input         : u16							数据ID号
+* @ Output        : bool						是否处理成功
+* @ Modify        : ...
+**/
+bool parser_rec_date_data_deal(u16 IDNum)
+{
+	if(IDNum == ID_BEGIN_DATE)
+	{
+		beginInformation.date.year = \
+			(ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_DATE_YEAR_ADDRESS_HIGH] << 8) + \
+			ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_DATE_YEAR_ADDRESS_HIGH + 1];
+		beginInformation.date.month = \
+			ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_DATE_MONTH_ADDRESS];
+		beginInformation.date.day = \
+			ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_DATE_DAY_ADDRESS];
+		beginInformation.date.week = \
+			ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_DATE_WEEK_ADDRESS];
+	}
+	else
+	{
+		return false;
+	}
+	
+	return true;
+}
 
-//读页面返回数据包处理函数
+/**
+* @ Function Name : parser_rec_page_data_deal
+* @ Author        : hlb
+* @ Brief         : 读页面返回数据包处理函数
+* @ Date          : 2017.07.12
+* @ Output        : bool						是否处理成功
+* @ Modify        : ...
+**/
 bool parser_rec_page_data_deal(void)
 {
 	
@@ -695,7 +796,7 @@ bool serial_parser_comm_analysis(void)
 				break;
 			
 			case FRAME_REC_DATA_STATUES_DEF:
-				parser_rec_picture_data_deal(IDNum);
+				parser_rec_bitmap_data_deal(IDNum);
 				break;
 			
 			case FRAME_REC_DATA_SELECT_DEF:
