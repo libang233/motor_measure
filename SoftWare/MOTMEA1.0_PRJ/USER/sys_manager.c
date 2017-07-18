@@ -15,9 +15,9 @@
 #include "screen.h"
 #include "data_init.h"
 #include "message_analysis.h"
+#include "message_send.h"
+#include "user_control.h"
 
-//全局事件标志位实例化
-union whole_Evnt_TypeDef myEvnt;
 
 //全局信息数据实例化
 global_Information_TypeDef globalInformation;
@@ -53,13 +53,14 @@ void sys_manager_init(void)
 	data_init();
 	
 	//串口初始化
-	usart_init();
+	usart_init(USART_INIT_WITH_DMA);
 	
 	//LED和蜂鸣器初始化
 	LED_buzzer_init();
 	
 	//屏幕初始化
 	screen_init();
+	
 	
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 	
@@ -75,33 +76,14 @@ void sys_manager_init(void)
  **/
 void sys_manager_handle(void)
 {
+	//串口解析控制器线程
+	usart_analysis_handle();								
+	
+	//串口发送控制器线程
+	usart_send_handle();
+	
+	//用户控制器线程
+	user_control_handle();
 
-	Serial_message_handle();								//串口数据控制器线程
-
-	
-	if(myEvnt.Bit.IsTest == 1)								//进入检测
-	{
-		
-	}
-	
-	if(myEvnt.Bit.IsConfig == 1)							//进入配置
-	{
-		
-	}
-	
-	if(myEvnt.Bit.IsResearch == 1)							//进入查阅
-	{
-		
-	}
-	
-	if(myEvnt.Bit.IsDebug == 1)								//进入调试
-	{
-		
-	}
-	
-	if(myEvnt.Bit.IsAdjust == 1)							//进入校准
-	{
-		
-	}
 }
  

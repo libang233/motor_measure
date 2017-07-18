@@ -11,12 +11,13 @@
 
 #include "usart.h"
 #include "newtype.h"
+#include "dma.h"
  
 //如果使能接收
 #if EN_USART1_RX   
 
 //接收缓冲
-Usart_Rx_Buff_TypeDef UsartRxBuffer;		
+Usart_Rx_Buff_TypeDef UsartRxBuffer;	
 
 //串口1中断服务程序
 	 
@@ -24,10 +25,10 @@ Usart_Rx_Buff_TypeDef UsartRxBuffer;
 * @ Function Name : usart_init
 * @ Author        : hlb
 * @ Brief         : 串口初始化
-* @ Date          : 2017.05.29
+* @ Date          : 2017.07.18
 * @ Modify        : ...
  **/
-void usart_init(void)
+void usart_init(u32 mode)
 {
 	GPIO_InitTypeDef  GPIO_InitStructure;
 	USART_InitTypeDef USART_InitStructure;
@@ -66,6 +67,21 @@ void usart_init(void)
 	USART_Cmd(USART1, ENABLE);                    			//使能串口1 
 	
 	memset(&UsartRxBuffer, 0, sizeof(UsartRxBuffer));		//串口缓冲初始化
+	
+		
+	/*--------------------------------DMA-----------------------------------*/
+	if (mode == USART_INIT_WITHOUT_DMA)
+	{	
+		return;
+	}
+	else if (mode == USART_INIT_WITH_DMA)
+	{
+		usart1_dma_init(); // 初始化dma
+	}
+	else
+	{
+		return;
+	}
 
 	UsartRxBuffer.AddIdx = 0;
 	UsartRxBuffer.GetIdx = 0;
@@ -81,13 +97,14 @@ void usart_init(void)
  **/
 void USART1_IRQHandler(void)                	
 {
-	u8 Res;
+	u16 i;
+	u32 Res;
 
 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)  		
 	{
 		Res = USART_ReceiveData(USART1);						//读取接收到的数据
 
-		if(UsartRxBuffer.AddIdx < USART_REC_LEN)
+		if(UsartRxBuffer.AddIdx < USART_RX_LEN)
 		{
 			UsartRxBuffer.Buff[UsartRxBuffer.AddIdx++] = Res;	//填充至缓存
 		}
@@ -95,8 +112,8 @@ void USART1_IRQHandler(void)
 		{
 			UsartRxBuffer.AddIdx = 0;
 			UsartRxBuffer.Buff[UsartRxBuffer.AddIdx++] = Res;
-		} 	
-     } 
+		}
+    } 
 } 
 #endif	
 

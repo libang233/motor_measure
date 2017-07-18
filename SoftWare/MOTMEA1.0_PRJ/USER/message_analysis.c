@@ -13,10 +13,11 @@
 #include "usart.h"
 #include "newtype.h"
 #include "message_analysis.h"
+#include "message_send.h"
 
 
 //解析器实例化
-Serial_Parser_Moniter_TypeDef ParserMoniter;
+Usart_Parser_Moniter_TypeDef ParserMoniter;
 
 /**
 * @ Function Name : parser_init
@@ -63,7 +64,7 @@ u16 get_usart_buffers_length(void)
 	//当写指针在读指针之前
 	if(length < 0)
 	{
-		length = USART_REC_LEN - UsartRxBuffer.GetIdx + UsartRxBuffer.AddIdx;		
+		length = USART_RX_LEN - UsartRxBuffer.GetIdx + UsartRxBuffer.AddIdx;		
 	}
 	return length;
 }
@@ -81,7 +82,7 @@ void parser_moniter_add_buff(void)
 	
 	if(get_usart_buffers_length() > 0)
 	{
-		if(UsartRxBuffer.GetIdx >= USART_REC_LEN )
+		if(UsartRxBuffer.GetIdx >= USART_RX_LEN )
 		{
 			UsartRxBuffer.GetIdx = 0;
 		}
@@ -101,7 +102,7 @@ void parser_moniter_add_buff(void)
 			{
 				//缓冲项填充数据
 				ParserMoniter.Frame_Buffers[ParserMoniter.AddIdx].Buff[ \
-				ParserMoniter.Frame_Buffers[ParserMoniter.AddIdx].Idx++] = Res;							
+					ParserMoniter.Frame_Buffers[ParserMoniter.AddIdx].Idx++] = Res;							
 			}
 			else
 			{
@@ -130,6 +131,7 @@ void parser_moniter_add_buff(void)
 						{
 							ParserMoniter.AddIdx = 0;
 						}
+						
 						//恢复缓冲区接收标志
 						ParserMoniter.IsBufferAdd = false;
 						//恢复缓冲项索引
@@ -747,7 +749,10 @@ bool parser_rec_date_data_deal(u16 IDNum)
 **/
 bool parser_rec_page_data_deal(void)
 {
-	
+	globalInformation.nowPage = \
+		(ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_PAGE_IDX_ADDRESS_HIGH] << 8) + \
+		ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_PAGE_IDX_ADDRESS_HIGH + 1];
+	return true;
 }
 
 
@@ -774,7 +779,8 @@ bool serial_parser_comm_analysis(void)
 	
 	if(dataFunc == FRAME_REC_PAGE_INSTRUCTION_DEF)
 	{
-		
+		parser_rec_page_data_deal();
+		return true;
 	}
 	else if(dataFunc == FRAME_REC_MES_INSTRUCTION_DEF)
 	{
@@ -800,15 +806,19 @@ bool serial_parser_comm_analysis(void)
 				break;
 			
 			case FRAME_REC_DATA_SELECT_DEF:
+				parser_rec_select_data_deal(IDNum);
 				break;
 			
 			case FRAME_REC_DATA_BAR_DEF:
+				parser_rec_bar_data_deal(IDNum);
 				break;
 			
 			case FRAME_REC_DATA_TIME_DEF:
+				parser_rec_time_data_deal(IDNum);
 				break;
 			
 			case FRAME_REC_DATA_DATE_DEF:
+				parser_rec_date_data_deal(IDNum);
 				break;
 			
 			default:
@@ -821,37 +831,41 @@ bool serial_parser_comm_analysis(void)
 }
 
 /**
-* @ Function Name : Serial_analysis_handle
+* @ Function Name : usart_analysis_handle
 * @ Author        : hlb
-* @ Brief         : 串口数据控制器线程
-* @ Date          : 2017.06.5
+* @ Brief         : 串口数据解析线程
+* @ Date          : 2017.06.05
 * @ Modify        : ...
 **/
-void Serial_message_handle(void)
+void usart_analysis_handle(void)
 {
 
+	int i;
+	
 	//解析器装载缓冲
 	parser_moniter_add_buff();
 	
 	if(get_parser_buffers_length() > 0)
 	{
-//		for(i = 1; i < ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Idx; i++)
-//		{
-//			USART_SendData(USART1,ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[i]);
-//		}
-		
+	
 		if(serial_parser_comm_analysis() == true)
 		{
-			ParserMoniter.GetIdx++;
+			ParserMoniter.GetIdx++;	
 		}
 		else
-		{
+		{		
 			ParserMoniter.GetIdx++;
 		}
 		if(ParserMoniter.GetIdx >= FRAME_BUFFER_NUM_MAX)
 		{
 			ParserMoniter.GetIdx = 0;
 		}
+
+	}
+	if(configInformation.part1Information.explainStringIdx > 0)
+	{
+		dma_usart_send(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
+		configInformation.part1Information.explainStringIdx = 0;
 	}
 	
 

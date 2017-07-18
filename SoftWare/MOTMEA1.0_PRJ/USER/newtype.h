@@ -17,26 +17,6 @@
 
 
 //
-//全局事件标志位
-//
-union whole_Evnt_TypeDef
-{
-	u32 ALL;
-	struct
-	{
-		volatile u8 IsSerialMessageAnaly		:1;		//串口数据分析标志位
-		volatile u8 IsTest                      :1;		//测试程序标志位
-		volatile u8 IsConfig                    :1;		//配置程序标志位
-		volatile u8 IsResearch					:1;		//查阅程序标志位
-		volatile u8 IsDebug                     :1;		//调试程序标志位
-		volatile u8 IsAdjust					:1;		//校准程序标志位
-		volatile u8 IsTestUsart					:1;		//校准程序标志位
-		
-		
-	}Bit;
-};
-
-//
 //配置测试段数据结构定义
 //
 typedef struct
@@ -75,7 +55,12 @@ typedef struct
 	u16 testCurrent;											//系统判定是否插入风扇的临界电流值
 	u8 PWM;														//pwm调速信号频率
 	u8 PNNumSelect;												//料号选择
-	u8 powerSelect;												//电源选择														
+	u8 powerSelect;												//电源选择				
+
+	u8 PNNumSelected;											//已选择的料号
+	bool isConfig;												//是否为配置状态
+	bool isPNNumAdd;											//料号列表是否添加
+	bool isDataUpdate;											//料号对应数据是否更新
 	
 }config_Information_TypeDef;
 

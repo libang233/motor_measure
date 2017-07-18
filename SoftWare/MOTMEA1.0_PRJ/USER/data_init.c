@@ -25,8 +25,7 @@
  **/
 void data_init(void)
 {
-	//初始化全局标志位
-	myEvnt.ALL = 0;
+
 	
 	//解析器初始化
 	parser_init();

@@ -39,7 +39,18 @@
 #define FRAME_DATA_DATE_MONTH_ADDRESS			8					//数据帧日期控件月地址
 #define FRAME_DATA_DATE_DAY_ADDRESS				9					//数据帧日期控件日地址
 #define FRAME_DATA_DATE_WEEK_ADDRESS			10					//数据帧日期控件星期地址
-#define FRAME_DATA_PAGE_IDX_HIGH_ADDRESS		3					//数据帧页面索引高字节地址
+#define FRAME_DATA_PAGE_IDX_ADDRESS_HIGH		3					//数据帧页面索引高字节地址
+
+//页码定义
+#define PAGE_NUM_BEGIN							0
+#define PAGE_NUM_TEST							1
+#define PAGE_NUM_CONFIG							2
+#define PAGE_NUM_ADJUST							3
+#define PAGE_NUM_PASSWORD_INPUT					4
+#define PAGE_NUM_PASSWORD_WRONG					5
+#define PAGE_NUM_DEBUG							6
+
+
 
 //缓冲项最大长度定义
 #define USART_BUFFER_MAX_VAL					128
@@ -66,10 +77,10 @@ typedef struct
 	u16  AddIdx;													//添加索引
 	u16  GetIdx;													//取出索引
 	
-}Serial_Parser_Moniter_TypeDef;
+}Usart_Parser_Moniter_TypeDef;
 
 //外部声明解析器
-extern Serial_Parser_Moniter_TypeDef ParserMoniter;	
+extern Usart_Parser_Moniter_TypeDef ParserMoniter;	
 				
 //计算串口缓冲区长度
 u16  get_usart_buffers_length(void);
@@ -108,7 +119,7 @@ bool parser_rec_page_data_deal(void);
 bool serial_parser_comm_analysis(void);
 	
 //串口数据控制器线程
-void Serial_message_handle(void);
+void usart_analysis_handle(void);
 
 //解析器初始化
 void parser_init(void);
