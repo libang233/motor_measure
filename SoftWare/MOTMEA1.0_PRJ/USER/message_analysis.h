@@ -10,6 +10,39 @@
 //帧相关定义
 #define FRAME_HEAD_DEF							0x55				//数据帧头字符
 #define FRAME_END_DEF							0xaa				//数据帧尾字符
+
+#define FRAME_WRITE_STATE_DATA_HEAD				0xe6				//写状态数据包头字符
+#define FRAME_WRITE_STATE_ARG_ADDRESS			5					//写状态参数地址		
+#define FRAME_WRITE_STATE_SIZE					8					//写状态帧字符数
+#define FRAME_WRITE_STATE_DATA_NUM 				4					//写状态数据包字节数
+
+#define FRAME_WRITE_PAGE_DATA_HEAD				0xe8
+#define FRAME_WRITE_PAGE_ARG_ADDRESS_HIGH		3
+#define FRAME_WRITE_PAGE_ARG_ADDRESS_LOW		4
+#define FRAME_WRITE_PAGE_SIZE					7
+#define FRAME_WRITE_PAGE_DATA_NUM				3
+
+#define FRAME_WRITE_TIME_DATA_HEAD				0xe5
+#define FRAME_WRITE_TIME_HOUR_ADDRESS			5					
+#define FRAME_WRITE_TIME_MINUTE_ADDRESS			6					
+#define FRAME_WRITE_TIME_SECOND_ADDRESS			7				
+#define FRAME_WRITE_TIME_SIZE					10
+#define FRAME_WRITE_TIME_DATA_NUM 				6
+
+#define FRAME_WRITE_DATE_DATA_HEAD				0xe5
+#define FRAME_WRITE_DATE_YEAR_ADDRESS_HIHG		5	
+#define FRAME_WRITE_DATE_YEAR_ADDRESS_LOW		6	
+#define FRAME_WRITE_DATE_MONTH_ADDRESS			7					
+#define FRAME_WRITE_DATE_DAY_ADDRESS			8				
+#define FRAME_WRITE_DATE_SIZE					11
+#define FRAME_WRITE_DATE_DATA_NUM 				7
+
+#define FRAME_WRITE_BAR_DATA_HEAD				0xe5
+#define FRAME_WRITE_BAR_VAL_ADDRESS_HIGH		5
+#define FRAME_WRITE_BAR_VAL_ADDRESS_LOW			6
+#define	FRAME_WRITE_BAR_SIZE					9
+#define FRAME_WRITE_BAR_DATA_NUM				5
+
 #define FRAME_REC_MES_INSTRUCTION_DEF			0xe5				//数据帧返回数据包读控件数据包头字符
 #define FRAME_REC_PAGE_INSTRUCTION_DEF			0xe9				//数据帧返回数据包读页码数据包头字符
 #define FRAME_REC_DATA_INT_DEF					0x22				//数据帧返回数据包整型数据类型字符
@@ -20,10 +53,12 @@
 #define FRAME_REC_DATA_TIME_DEF					0x13				//数据帧返回数据包时间数据类型字符	
 #define FRAME_REC_DATA_DATE_DEF					0x14				//数据帧返回数据包日期数据类型字符	
 
+#define FRAME_HEAD_ADDRESS						0					//数据帧头字符地址
 #define FRAME_DATA_NUM_ADDRESS					1					//数据帧数据包字节数地址
-#define FEAME_DATA_FUNC_ADDRESS					2					//数据帧功能字节地址
+#define FRAME_DATA_HEAD_ADDRESS					2					//数据帧功能字节地址
 #define FRAME_DATA_ID_ADDRESS_HIGH				3					//数据帧ID高字节地址
-#define FRAME_DATA_ID_ADDRESS_LOW				4					//数据帧ID低字节地址
+#define FRAME_DATA_ID_ADDRESS_LOW				4					//数据帧ID低字节地址			
+
 #define FRAME_DATA_TYPE_ADDRESS					5					//数据帧数据类型字节地址
 #define FRAME_DATA_INT_VALUE_ADDRESS_HIGH		6					//数据帧整型数值高字节地址
 #define FRAME_DATA_STRING_BYTE_NUM_ADDRESS		6					//数据帧字符串型数据字节数字节地址
@@ -40,6 +75,13 @@
 #define FRAME_DATA_DATE_DAY_ADDRESS				9					//数据帧日期控件日地址
 #define FRAME_DATA_DATE_WEEK_ADDRESS			10					//数据帧日期控件星期地址
 #define FRAME_DATA_PAGE_IDX_ADDRESS_HIGH		3					//数据帧页面索引高字节地址
+
+//校验位同数据包字节数地址偏移量
+#define FRAME_CHECK_ADDRESS_OFFSET				2
+//结尾位同数据包字节数地址偏移量
+#define FRAME_END_ADDRESS_OFFSET				3
+//帧字节数同数据包字节数偏移量					
+#define FRAME_SIZE_OFFSET						4
 
 //页码定义
 #define PAGE_NUM_BEGIN							0

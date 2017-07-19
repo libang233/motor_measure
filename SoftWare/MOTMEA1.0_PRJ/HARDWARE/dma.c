@@ -11,10 +11,33 @@
 #include "dma.h"
 #include "usart.h"
 
-bool Usart1_Dma_Enable;
+/**
+* @ Function Name : dma_usart_tx_restart
+* @ Author        : hlb
+* @ Brief         : 重启串口的dma
+* @ Date          : 2017.07.18
+* @ Input         : u8 *res	      	  发送的数据  
+					u32 size            传输数据的长度
+* @ Modify        : ...
+**/
+void dma_usart_tx_restart(u8 *res, u32 size)
+{
+	// 禁用DMA
+	DMA_Cmd(USART1_TX_DMA_CHANNEL, DISABLE);
+	
+	// 设置DMA的传输值
+	USART1_TX_DMA_CHANNEL -> CNDTR = size;
+	
+	// 设置传输地址
+	USART1_TX_DMA_CHANNEL -> CMAR  = (u32)res;
+	
+	// 启动DMA
+	DMA_Cmd(USART1_TX_DMA_CHANNEL, ENABLE);
+	
+}
 
 /**
-* @ Function Name : drv_mcu_usart1_dma_init
+* @ Function Name : usart1_dma_init
 * @ Author        : hlb
 * @ Brief         : 初始化串口1的dma。
 * @ Date          : 2017.07.18
@@ -24,8 +47,6 @@ void usart1_dma_init(void)
 {
 	DMA_InitTypeDef dma_initstruct;  
 	NVIC_InitTypeDef  NVIC_InitStructure;
-	
-	
 	
 	/*------------------------------TX_DMA----------------------------------*/
 	//DMA发送中断设置  
@@ -77,12 +98,70 @@ void usart1_dma_init(void)
 	// 允许串口DMA
 	USART_DMACmd(USART1, USART_DMAReq_Tx, ENABLE);
 	//USART_DMACmd(USART1, USART_DMAReq_Rx, ENABLE);
-	
-	// 置位dma状态
-	Usart1_Dma_Enable = true;
-
-	
+		
 }
+
+/**
+* @ Function Name : dma_usart_tx
+* @ Author        : hlb
+* @ Brief         : 串口DMA发送函数
+* @ Date          : 2017.07.19
+* @ Input         : u8* buff       待发送数组头指针
+*                   u32 size       待发送数组大小
+* @ Modify        : ...
+**/
+void dma_usart_tx(u8 *buff, u32 size)
+{
+	// 清除TC标志
+	USART_ClearFlag(USART1, USART_FLAG_TC);
+	
+	//重启DMA发送
+	dma_usart_tx_restart(buff, size);
+}
+
+/**
+* @ Function Name : usart1_get_tx_dma_tc_state
+* @ Author        : hlb
+* @ Brief         : 取串口1的发送dma传输标志位
+* @ Date          : 2017.07.18
+* @ OutPut        : 串口1发送DMA传送完成标志位
+* @ Modify        : ...
+ **/
+bool usart1_get_tx_dma_tc_state(void)
+{
+	if(DMA_GetFlagStatus(DMA1_FLAG_TC4) == SET)
+	{
+		DMA_ClearFlag(DMA1_FLAG_TC4);
+		
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+
+/**
+* @ Function Name : dma_usart_chek_tx_state
+* @ Author        : hlb
+* @ Brief         : DMA发送状态查询
+* @ Date          : 2017.07.19
+* @ Modify        : ...
+**/
+void dma_usart_chek_tx_state(void)
+{
+	//如果DMA为忙
+	if(UsartTxBuffer.DmaBusy)
+	{
+		// 查询dma的完成标志
+		if (usart1_get_tx_dma_tc_state())
+		{
+			UsartTxBuffer.DmaBusy = false;
+		}		
+	}
+}
+
 
 /**
 * @ Function Name : DMA1_Channel4_IRQHandler

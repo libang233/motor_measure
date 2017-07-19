@@ -27,13 +27,10 @@ void data_init(void)
 {
 
 	
-	//解析器初始化
-	parser_init();
-	
 	//全局信息数据初始化
 	memset(&globalInformation, 0,sizeof(globalInformation));
 	
-	//测试数据初始化；
+	//测试界面数据初始化
 	memset(&testingInformation, 0, sizeof(testingInformation));
 	
 	//校准界面数据初始化
@@ -48,6 +45,7 @@ void data_init(void)
 	//调试界面密码初始化
 	memset(&debugInformation, 0, sizeof(debugInformation));
 	
+	//开始界面数据初始化
 	memset(&beginInformation, 0, sizeof(beginInformation));
 	
 }

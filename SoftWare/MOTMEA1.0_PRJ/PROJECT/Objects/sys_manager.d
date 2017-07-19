@@ -24,3 +24,4 @@
 .\objects\sys_manager.o: ..\USER\message_analysis.h
 .\objects\sys_manager.o: ..\USER\IDnum.h
 .\objects\sys_manager.o: ..\USER\message_send.h
+.\objects\sys_manager.o: ..\USER\user_control.h

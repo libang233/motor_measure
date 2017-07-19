@@ -61,6 +61,9 @@ void sys_manager_init(void)
 	//屏幕初始化
 	screen_init();
 	
+	//解析器初始化
+	parser_init();
+	
 	
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 	

@@ -13,6 +13,9 @@
 #define USART1_RX_DMA_PRIORITY     DMA_Priority_VeryHigh
 
 
+void dma_usart_chek_tx_state(void);
+void dma_usart_tx_restart(u8 *buff, u32 size);
+void dma_usart_tx(u8 *buff, u32 size);
 void usart1_dma_init(void);
 
 #endif

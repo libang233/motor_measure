@@ -3,6 +3,8 @@
 .\objects\message_send.o: ..\USER\config.h
 .\objects\message_send.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\message_send.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\string.h
+.\objects\message_send.o: ..\USER\message_analysis.h
+.\objects\message_send.o: ..\USER\IDnum.h
 .\objects\message_send.o: ..\HARDWARE\usart.h
 .\objects\message_send.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\message_send.o: ..\USER\sys_manager.h

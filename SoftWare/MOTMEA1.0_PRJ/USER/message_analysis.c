@@ -775,7 +775,7 @@ bool serial_parser_comm_analysis(void)
 	dataNum = ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_NUM_ADDRESS];
 	
 	//读取数据包功能字符
-	dataFunc = ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FEAME_DATA_FUNC_ADDRESS];
+	dataFunc = ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_HEAD_ADDRESS];
 	
 	if(dataFunc == FRAME_REC_PAGE_INSTRUCTION_DEF)
 	{
@@ -864,7 +864,17 @@ void usart_analysis_handle(void)
 	}
 	if(configInformation.part1Information.explainStringIdx > 0)
 	{
-		dma_usart_send(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
+
+		usart_tx(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
+		usart_tx(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
+		usart_tx(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
+		usart_tx(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
+		usart_tx(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
+		usart_tx(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
+		usart_tx(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
+		usart_tx(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
+		usart_tx(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
+		usart_tx(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
 		configInformation.part1Information.explainStringIdx = 0;
 	}
 	

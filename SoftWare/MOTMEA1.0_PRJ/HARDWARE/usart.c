@@ -19,7 +19,24 @@
 //接收缓冲
 Usart_Rx_Buff_TypeDef UsartRxBuffer;	
 
-//串口1中断服务程序
+//发送缓冲
+Usart_Tx_Buff_TypeDef UsartTxBuffer;
+
+
+/**
+* @ Function Name : usart_data_init
+* @ Author        : hlb
+* @ Brief         : 串口数据初始化
+* @ Date          : 2017.07.19
+* @ Modify        : ...
+ **/
+void usart_data_init(void)
+{
+	//初始化接收缓冲
+	memset(&UsartRxBuffer, 0, sizeof(UsartRxBuffer));
+	//初始化发送缓冲
+	memset(&UsartTxBuffer, 0, sizeof(UsartTxBuffer));
+}
 	 
 /**
 * @ Function Name : usart_init
@@ -30,9 +47,13 @@ Usart_Rx_Buff_TypeDef UsartRxBuffer;
  **/
 void usart_init(u32 mode)
 {
+
 	GPIO_InitTypeDef  GPIO_InitStructure;
 	USART_InitTypeDef USART_InitStructure;
 	NVIC_InitTypeDef  NVIC_InitStructure;
+	
+	//串口数据初始化
+	usart_data_init();
 	 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1|RCC_APB2Periph_GPIOA, ENABLE);		//使能USART1，GPIOA时钟
   
@@ -82,9 +103,6 @@ void usart_init(u32 mode)
 	{
 		return;
 	}
-
-	UsartRxBuffer.AddIdx = 0;
-	UsartRxBuffer.GetIdx = 0;
 }
 
 
