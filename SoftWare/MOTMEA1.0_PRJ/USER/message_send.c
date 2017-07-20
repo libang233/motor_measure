@@ -55,6 +55,7 @@ void frame_complete_tx(u8 *frame, u8 dataSize)
 	frame[FRAME_DATA_NUM_ADDRESS] = dataSize;
 	
 	//计算校验位
+	frame[dataSize + FRAME_CHECK_ADDRESS_OFFSET] = 0;
 	for(i = 0; i < dataSize; i++)
 	{
 		frame[dataSize + FRAME_CHECK_ADDRESS_OFFSET] += \
@@ -64,6 +65,130 @@ void frame_complete_tx(u8 *frame, u8 dataSize)
 	
 	usart_tx(frame, dataSize + FRAME_SIZE_OFFSET);
 }
+
+/**
+* @ Function Name : write_int
+* @ Author        : hlb
+* @ Brief         : 写数值
+* @ Date          : 2017.07.20
+* @ Input         : u16   IDNum      ID号
+					u32    val       数值
+* @ Modify        : ... 
+**/
+void write_int(u16 IDNum, u32 val)
+{
+	int i;
+	u8 frame[FRAME_WRITE_INT_SIZE];
+	
+	frame[FRAME_DATA_HEAD_ADDRESS]			  = FRAME_WRITE_INT_DATA_HEAD;
+	frame[FRAME_DATA_ID_ADDRESS_HIGH]   	  = (IDNum >> 8);
+	frame[FRAME_DATA_ID_ADDRESS_LOW]		  = IDNum;
+	for(i = FRAME_WRITE_INT_VAL_NUM - 1; i >= 0; i--)
+	{
+		frame[FRAME_WRITE_INT_VAL_ADDRESS_HIGH + FRAME_WRITE_INT_VAL_NUM - 1 - i] = (val << (8 * i));
+	}
+	
+	frame_complete_tx(frame, FRAME_WRITE_INT_DATA_NUM);
+}
+
+/**
+* @ Function Name : write_char
+* @ Author        : hlb
+* @ Brief         : 写字符
+* @ Date          : 2017.07.20
+* @ Input         : u16   IDNum      ID号
+					u8*    val       字符串数据
+					u8     valSize	 字符串长度
+* @ Modify        : ... 
+**/
+void write_char(u16 IDNum, u8* val, u8 valSize)
+{
+	u8 i;
+	u8 frame[FRAME_WRITE_CHAR_MAX_SIZE];
+	
+	frame[FRAME_DATA_HEAD_ADDRESS]			  = FRAME_WRITE_CHAR_DATA_HEAD;
+	frame[FRAME_DATA_ID_ADDRESS_HIGH]   	  = (IDNum >> 8);
+	frame[FRAME_DATA_ID_ADDRESS_LOW]		  = IDNum;
+	for(i = 0; i < valSize; i++)
+	{
+		frame[FRAME_WRITE_CHAR_VAL_ADDRESS_HIGH + i] = val[i];
+	}
+	
+	frame_complete_tx(frame, valSize + FRAME_WRITE_CHAR_OFFSET);
+}
+
+/**
+* @ Function Name : write_bitmap
+* @ Author        : hlb
+* @ Brief         : 写位图
+* @ Date          : 2017.07.20
+* @ Input         : u16   IDNum       ID号
+					u8    status      状态
+* @ Modify        : ... 
+**/
+void write_bitmap(u16 IDNum, u8 status)
+{
+	u8 frame[FRAME_WRITE_BITMAP_SIZE];
+
+	frame[FRAME_DATA_HEAD_ADDRESS]			  = FRAME_WRITE_BITMAP_DATA_HEAD;
+	frame[FRAME_DATA_ID_ADDRESS_HIGH]   	  = (IDNum >> 8);
+	frame[FRAME_DATA_ID_ADDRESS_LOW]		  = IDNum;
+	frame[FRAME_WRITE_BITMAP_VAL_ADDRESS]  	  = status;
+	
+	frame_complete_tx(frame, FRAME_WRITE_BITMAP_DATA_NUM);
+}
+
+
+/**
+* @ Function Name : write_select_val
+* @ Author        : hlb
+* @ Brief         : 写下拉列表
+* @ Date          : 2017.07.20
+* @ Input         : u16   IDNum       ID号
+					u8    Idx	      索引
+					u8    valSize     写入内容
+*                   u8*   val   	  内容字符数
+* @ Modify        : ... 
+**/
+void write_select_val(u16 IDNum, u8 Idx, u8 valSize, u8* val)
+{
+	u8 i;
+	u8 frame[FRAME_WRITE_SELECT_MAX_SIZE];
+	
+	frame[FRAME_DATA_HEAD_ADDRESS] 			   = FRAME_WRITE_SELECT_DATA_HEAD;
+	frame[FRAME_DATA_ID_ADDRESS_HIGH]   	   = (IDNum >> 8);
+	frame[FRAME_DATA_ID_ADDRESS_LOW]		   = IDNum;
+	frame[FRAME_WRITE_SELECT_TYPE_ADDRESS]	   = FRAME_WRITE_SELECT_TYPE;
+	frame[FRAME_WRITE_SELECT_IDX_ADDRESS]	   = Idx;
+	for(i = 0; i < valSize; i++)
+	{
+		frame[FRAME_WRITE_SELECT_VAL_ADDRESS_HIGH + i] = val[i];
+	}
+	
+	frame_complete_tx(frame, valSize + FRAME_WRITE_SELECT_OFFSET);
+}
+
+/**
+* @ Function Name : write_select_position
+* @ Author        : hlb
+* @ Brief         : 写下拉列表
+* @ Date          : 2017.07.20
+* @ Input         : u16   IDNum   ID号
+*                   u8    pos     选择项
+* @ Modify        : ... 
+**/
+void write_select_position(u16 IDNum, u8 pos)
+{
+	u8 frame[FRAME_WRITE_SELECT_POS_SIZE];
+
+	frame[FRAME_DATA_HEAD_ADDRESS]			  = FRAME_WRITE_SELECT_POS_DATA_HEAD;
+	frame[FRAME_DATA_ID_ADDRESS_HIGH]   	  = (IDNum >> 8);
+	frame[FRAME_DATA_ID_ADDRESS_LOW]		  = IDNum;
+	frame[FRAME_WRITE_SELECT_POS_VAL_ADDRESS] = pos;
+	
+	frame_complete_tx(frame, FRAME_WRITE_SELECT_POS_DATA_NUM);
+}
+
 
 /**
 * @ Function Name : write_bar
@@ -78,7 +203,7 @@ void write_bar(u16 IDNum, u16 val)
 {
 	u8 frame[FRAME_WRITE_BAR_SIZE];
 	
-	frame[FRAME_DATA_HEAD_ADDRESS] = FRAME_WRITE_BAR_DATA_HEAD;
+	frame[FRAME_DATA_HEAD_ADDRESS]			  = FRAME_WRITE_BAR_DATA_HEAD;
 	frame[FRAME_DATA_ID_ADDRESS_HIGH]   	  = (IDNum >> 8);
 	frame[FRAME_DATA_ID_ADDRESS_LOW]		  = IDNum;
 	frame[FRAME_WRITE_BAR_VAL_ADDRESS_HIGH]   = (val >> 8);

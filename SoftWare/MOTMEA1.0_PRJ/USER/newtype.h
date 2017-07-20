@@ -109,7 +109,7 @@ typedef struct
 	u16 finishCurrent[MAX_BYTE_NUM_DISPLAY_CURRENT];			//测试完成时电流显示项表头
 	u8  finishCurrentStringIdx;									//前一项字符串索引
 	u8  resultBitmapOK;											//测试结束时，测试结果显示OK部分
-	u8  resultBitmapNG;				 						//测试结束时，测试结果显示NG部分
+	u8  resultBitmapNG;				 							//测试结束时，测试结果显示NG部分
 	
 }testing_Information_TypeDef;
 
@@ -119,7 +119,7 @@ typedef struct
 typedef struct
 {
 	u16 measureCurrent[MAX_BYTE_NUM_DISPLAY_CURRENT];			//校准是测量到的电流值
-	u8  measureCurrentStringIdx;									//前一项字符串索引
+	u8  measureCurrentStringIdx;								//前一项字符串索引
 	u16 inputCurrent[MAX_BYTE_NUM_DISPLAY_CURRENT];				//输入实际测量的标准电流值
 	u8  inputCurrentStringIdx;									//前一项字符串索引
 	u8  autoZeroButton;											//电流自动校零按键

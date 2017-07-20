@@ -12,6 +12,19 @@
  #include "sys_manager.h"
  #include "message_analysis.h"
  
+  
+ /**
+* @ Function Name : config_page_handle
+* @ Author        : hlb
+* @ Brief         : 配置界面函数
+* @ Date          : 2017.05.29
+* @ Modify        : ...
+ **/
+ void config_page_handle(void)
+ {
+	 
+ }
+ 
  /**
 * @ Function Name : sys_manager_handle
 * @ Author        : hlb

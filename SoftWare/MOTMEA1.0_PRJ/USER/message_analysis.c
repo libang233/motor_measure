@@ -865,18 +865,19 @@ void usart_analysis_handle(void)
 	if(configInformation.part1Information.explainStringIdx > 0)
 	{
 
-		usart_tx(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
-		usart_tx(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
-		usart_tx(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
-		usart_tx(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
-		usart_tx(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
-		usart_tx(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
-		usart_tx(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
-		usart_tx(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
-		usart_tx(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
-		usart_tx(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
+		//usart_tx(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
+		
+		write_char(ID_PART1_EXPLAIN, configInformation.part1Information.explain, configInformation.part1Information.explainStringIdx);
+		
 		configInformation.part1Information.explainStringIdx = 0;
 	}
+	if(configInformation.part1Information.testPWM > 0)
+	{
+		write_int(ID_PART1_PWM, configInformation.part1Information.testPWM);
+		
+		configInformation.part1Information.testPWM = 0;
+	}
+	
 	
 
 

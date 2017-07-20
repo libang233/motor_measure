@@ -27,29 +27,66 @@ Project File Date:  07/18/2017
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 2 (build 183)', folder: 'F:\Program Files\keil\ARM\ARMCC\Bin'
 Build target 'Target 1'
-compiling sys_manager.c...
-compiling message_analysis.c...
-..\USER\message_analysis.c(769): warning:  #550-D: variable "dataNum" was set but never used
-        u8  dataNum;
-..\USER\message_analysis.c(843): warning:  #177-D: variable "i" was declared but never referenced
-        int i;
-..\USER\message_analysis.c: 2 warnings, 0 errors
-compiling message_send.c...
-..\USER\message_send.c(79): warning:  #177-D: variable "i" was declared but never referenced
-        u8 i;
-..\USER\message_send.c: 1 warning, 0 errors
-compiling data_init.c...
-compiling user_control.c...
+compiling diskio.c...
+..\FatFs\diskio.c(31): warning:  #223-D: function "RAM_disk_status" declared implicitly
+                result = RAM_disk_status();
+..\FatFs\diskio.c(38): warning:  #223-D: function "MMC_disk_status" declared implicitly
+                result = MMC_disk_status();
+..\FatFs\diskio.c(45): warning:  #223-D: function "USB_disk_status" declared implicitly
+                result = USB_disk_status();
+..\FatFs\diskio.c(27): warning:  #550-D: variable "result" was set but never used
+        int result;
+..\FatFs\diskio.c(69): warning:  #223-D: function "RAM_disk_initialize" declared implicitly
+                result = RAM_disk_initialize();
+..\FatFs\diskio.c(76): warning:  #223-D: function "MMC_disk_initialize" declared implicitly
+                result = MMC_disk_initialize();
+..\FatFs\diskio.c(83): warning:  #223-D: function "USB_disk_initialize" declared implicitly
+                result = USB_disk_initialize();
+..\FatFs\diskio.c(65): warning:  #550-D: variable "result" was set but never used
+        int result;
+..\FatFs\diskio.c(112): warning:  #223-D: function "RAM_disk_read" declared implicitly
+                result = RAM_disk_read(buff, sector, count);
+..\FatFs\diskio.c(121): warning:  #223-D: function "MMC_disk_read" declared implicitly
+                result = MMC_disk_read(buff, sector, count);
+..\FatFs\diskio.c(130): warning:  #223-D: function "USB_disk_read" declared implicitly
+                result = USB_disk_read(buff, sector, count);
+..\FatFs\diskio.c(106): warning:  #550-D: variable "result" was set but never used
+        int result;
+..\FatFs\diskio.c(160): warning:  #223-D: function "RAM_disk_write" declared implicitly
+                result = RAM_disk_write(buff, sector, count);
+..\FatFs\diskio.c(169): warning:  #223-D: function "MMC_disk_write" declared implicitly
+                result = MMC_disk_write(buff, sector, count);
+..\FatFs\diskio.c(178): warning:  #223-D: function "USB_disk_write" declared implicitly
+                result = USB_disk_write(buff, sector, count);
+..\FatFs\diskio.c(154): warning:  #550-D: variable "result" was set but never used
+        int result;
+..\FatFs\diskio.c(201): warning:  #177-D: variable "result" was declared but never referenced
+        int result;
+..\FatFs\diskio.c: 17 warnings, 0 errors
 linking...
-Program Size: Code=7244 RO-data=268 RW-data=24 ZI-data=5632  
-FromELF: creating hex file...
-".\Objects\MOTORMEASURE_PRJ.axf" - 0 Error(s), 3 Warning(s).
+.\Objects\MOTORMEASURE_PRJ.axf: Error: L6218E: Undefined symbol get_fattime (referred from ff.o).
+.\Objects\MOTORMEASURE_PRJ.axf: Error: L6218E: Undefined symbol MMC_disk_initialize (referred from diskio.o).
+.\Objects\MOTORMEASURE_PRJ.axf: Error: L6218E: Undefined symbol MMC_disk_read (referred from diskio.o).
+.\Objects\MOTORMEASURE_PRJ.axf: Error: L6218E: Undefined symbol MMC_disk_status (referred from diskio.o).
+.\Objects\MOTORMEASURE_PRJ.axf: Error: L6218E: Undefined symbol MMC_disk_write (referred from diskio.o).
+.\Objects\MOTORMEASURE_PRJ.axf: Error: L6218E: Undefined symbol RAM_disk_initialize (referred from diskio.o).
+.\Objects\MOTORMEASURE_PRJ.axf: Error: L6218E: Undefined symbol RAM_disk_read (referred from diskio.o).
+.\Objects\MOTORMEASURE_PRJ.axf: Error: L6218E: Undefined symbol RAM_disk_status (referred from diskio.o).
+.\Objects\MOTORMEASURE_PRJ.axf: Error: L6218E: Undefined symbol RAM_disk_write (referred from diskio.o).
+.\Objects\MOTORMEASURE_PRJ.axf: Error: L6218E: Undefined symbol USB_disk_initialize (referred from diskio.o).
+.\Objects\MOTORMEASURE_PRJ.axf: Error: L6218E: Undefined symbol USB_disk_read (referred from diskio.o).
+.\Objects\MOTORMEASURE_PRJ.axf: Error: L6218E: Undefined symbol USB_disk_status (referred from diskio.o).
+.\Objects\MOTORMEASURE_PRJ.axf: Error: L6218E: Undefined symbol USB_disk_write (referred from diskio.o).
+Not enough information to list image symbols.
+Finished: 1 information, 0 warning and 13 error messages.
+".\Objects\MOTORMEASURE_PRJ.axf" - 13 Error(s), 17 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
   D:\32file\MOTORMEASURE_PRJ\motor_measure\SoftWare\MOTMEA1.0_PRJ\PROJECT\RTE
   F:\Program Files\keil\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include
 
 <h2>Collection of Component Files used:</h2>
+Target not created.
 </pre>
 </body>
 </html>
