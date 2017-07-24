@@ -9,6 +9,7 @@
 .\objects\message_analysis.o: ..\FWLIB\stm32f10x_conf.h
 .\objects\message_analysis.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h
 .\objects\message_analysis.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h
+.\objects\message_analysis.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_sdio.h
 .\objects\message_analysis.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h
 .\objects\message_analysis.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h
 .\objects\message_analysis.o: ..\USER\config.h
@@ -16,6 +17,7 @@
 .\objects\message_analysis.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\string.h
 .\objects\message_analysis.o: ..\USER\newtype.h
 .\objects\message_analysis.o: ..\USER\extern.h
+.\objects\message_analysis.o: ..\HARDWARE\assembler.h
 .\objects\message_analysis.o: ..\HARDWARE\usart.h
 .\objects\message_analysis.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\message_analysis.o: ..\USER\message_analysis.h

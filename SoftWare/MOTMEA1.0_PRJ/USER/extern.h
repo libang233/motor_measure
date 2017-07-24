@@ -11,6 +11,5 @@
 #ifndef __EXTERN_H_
 #define __EXTERN_H_
 
-extern union whole_Evnt_TypeDef myEvnt;				//全局事件标志位声明
 
 #endif

@@ -5,6 +5,7 @@
 #include "extern.h"
 
 #define MAX_BYTE_NUM_SPECIF_EXPLAIN				20					//规格项说明字节数
+#define MAX_PN_NUM_MAX_QUANTITY					50					//最大PN号个数
 #define MAX_BYTE_NUM_PN_NUM						20					//PN号字节数
 #define MAX_BYTE_NUM_PN_NUM_DESCRIP				20					//PN号补充描述字节数
 #define MAX_BYTE_NUM_DISPLAY_SPEED 				20					//显示的转速字节数
@@ -15,6 +16,15 @@
 #define MAX_BYTE_NUM_PASSWORD					20					//密码字节数
 #define MAX_BYTE_NUM_PASSWORD_TIP				20					//密码提示字节数
 
+
+#define MAX_PART_NUM							6
+
+#define TEST_PART1								0
+#define TEST_PART2								1
+#define TEST_PART3								2
+#define TEST_PART4								3
+#define TEST_PART5								4
+#define	TEST_PART6								5
 
 //
 //配置测试段数据结构定义
@@ -38,28 +48,27 @@ typedef struct
 typedef struct 
 {
 	//测试段数据
-	part_Information_TypeDef part1Information;
-	part_Information_TypeDef part2Information;
-	part_Information_TypeDef part3Information;
-	part_Information_TypeDef part4Information;
-	part_Information_TypeDef part5Information;
-	part_Information_TypeDef part6Information;
-
-	u8 PNNum[MAX_BYTE_NUM_PN_NUM];								//也称为PN号，区别不同规格的唯一识别码
-	u8 PNNumStringIdx;											//PN号字符串索引				
+	part_Information_TypeDef partInformation[MAX_PART_NUM];
+	
+	u8 PNNum[MAX_PN_NUM_MAX_QUANTITY][MAX_BYTE_NUM_PN_NUM];		//也称为PN号，区别不同规格的唯一识别码
+	u8 PNNumStringIdx[MAX_PN_NUM_MAX_QUANTITY];					//PN号字符串索引
+	u8 PNNumQuantity;											//PN号的总数
+	u8 nowPNNum;												//已选择的料号
 	u8 PNNumDescription[MAX_BYTE_NUM_PN_NUM_DESCRIP];			//PN号的补充描述
 	u8 descriptionStringIdx;									//描述字符串索引
 	u8 polesNum;												//风扇的极数
 	u8 partNum;													//设置的测试段数
-	u8 trigger;													//触发选择，1 = 触发，0 = 不触发
-	u16 testCurrent;											//系统判定是否插入风扇的临界电流值
-	u8 PWM;														//pwm调速信号频率
 	u8 PNNumSelect;												//料号选择
-	u8 powerSelect;												//电源选择				
+	u8 powerSelect;												//电源选择	
+	u16 PWMSignFrequen;											//pwm调速信号频率
+	u16 testCurrent;											//系统判定是否插入风扇的临界电流值
+	bool trigger;												//触发选择，1 = 触发，0 = 不触发	
 
-	u8 PNNumSelected;											//已选择的料号
+	bool isDeleteButtonDown;									//删除按键是否按下									
+	bool isSaveButtonDown;										//存储按键是否按下
 	bool isConfig;												//是否为配置状态
 	bool isPNNumAdd;											//料号列表是否添加
+	bool isPartUpdate;											//段是否隐藏更新
 	bool isDataUpdate;											//料号对应数据是否更新
 	
 }config_Information_TypeDef;
@@ -122,7 +131,8 @@ typedef struct
 	u8  measureCurrentStringIdx;								//前一项字符串索引
 	u16 inputCurrent[MAX_BYTE_NUM_DISPLAY_CURRENT];				//输入实际测量的标准电流值
 	u8  inputCurrentStringIdx;									//前一项字符串索引
-	u8  autoZeroButton;											//电流自动校零按键
+	bool isAutoZeroButtonDown;									//电流自动校零按键
+	bool isSaveArgButtonDown;									//存储校准参数按键
 	
 }adjust_Information_TypeDef;
 
@@ -140,8 +150,15 @@ typedef struct
 	u8 newPasswordStringIdx;							//前一项字符串索引
 	u8 oldPasswordTip[MAX_BYTE_NUM_PASSWORD_TIP];		//旧密码输入提示字符
 	u8 oldPasswordTipStringIdx;							//前一项字符串索引
-	u8 newPasswrodTip[MAX_BYTE_NUM_PASSWORD_TIP];		//新密码输入提示字符
-	u8 newPasswrodTipStringIdx;
+	u8 newPasswordTip[MAX_BYTE_NUM_PASSWORD_TIP];		//新密码输入提示字符
+	u8 newPasswrordTipStringIdx;						//前一项字符串索引		
+	u8 realPassword[MAX_BYTE_NUM_PASSWORD];				//正确的密码
+	u8 realPasswordStringIdx;							//前一项字符串索引
+	
+	bool isOkButtonDown;								//是否按下密码确定键
+	bool isChangeButtonDown;							//是否按下密码修改键
+	bool isChangeOkButtonDown;							//是否按下密码修改OK键
+	
 	
 }password_Information_TypeDef;
 
@@ -155,8 +172,8 @@ typedef struct
 	u8  speedStringIdx;										//前一项字符串索引
 	u8  current[MAX_BYTE_NUM_DISPLAY_CURRENT];				//调试界面电流显示	
 	u8  currentStringIdx;									//前一项字符串索引
-	u32 inputPoles;											//调试界面风扇极数输入
-	u32 inputPWMFrequen;									//调试界面pwm信号频率输入
+	u16 inputPoles;											//调试界面风扇极数输入
+	u8  inputPWMFrequen;									//调试界面pwm信号频率输入
 	u8  inputPWM;											//调试界面pwm信号占空比输入
 	
 }debug_Information_TypeDef;

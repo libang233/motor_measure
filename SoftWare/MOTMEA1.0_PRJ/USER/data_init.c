@@ -13,6 +13,7 @@
 #include "newtype.h"
 #include "data_init.h"
 #include "message_analysis.h"
+#include "sdcard_control.h"
 
 
 
@@ -47,6 +48,9 @@ void data_init(void)
 	
 	//开始界面数据初始化
 	memset(&beginInformation, 0, sizeof(beginInformation));
+	
+	//SD卡数据初始化
+	memset(&sdcardInformation, 0,sizeof(sdcardInformation));
 	
 }
 

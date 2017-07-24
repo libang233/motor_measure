@@ -9,5 +9,6 @@
 .\objects\stm32f10x_gpio.o: ..\FWLIB\stm32f10x.h
 .\objects\stm32f10x_gpio.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h
 .\objects\stm32f10x_gpio.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h
+.\objects\stm32f10x_gpio.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_sdio.h
 .\objects\stm32f10x_gpio.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h
 .\objects\stm32f10x_gpio.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h

@@ -17,6 +17,9 @@
 #include "message_analysis.h"
 #include "message_send.h"
 #include "user_control.h"
+#include "sdcard_control.h"
+#include "test.h"
+
 
 
 //全局信息数据实例化
@@ -40,6 +43,8 @@ debug_Information_TypeDef debugInformation;
 //开始界面数据实例化
 begin_Information_TypeDef beginInformation;
 
+
+
 /**
 * @ Function Name : sys_manager_init
 * @ Author        : hlb
@@ -49,11 +54,20 @@ begin_Information_TypeDef beginInformation;
  **/
 void sys_manager_init(void)
 {   
+	//中断配置
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+	
 	//数据初始化
 	data_init();
 	
 	//串口初始化
 	usart_init(USART_INIT_WITH_DMA);
+	
+	//SD卡初始化
+	sdcard_init();
+	
+	//解析器初始化
+	parser_init();
 	
 	//LED和蜂鸣器初始化
 	LED_buzzer_init();
@@ -61,11 +75,6 @@ void sys_manager_init(void)
 	//屏幕初始化
 	screen_init();
 	
-	//解析器初始化
-	parser_init();
-	
-	
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 	
 }
 
@@ -79,6 +88,7 @@ void sys_manager_init(void)
  **/
 void sys_manager_handle(void)
 {
+	
 	//串口解析控制器线程
 	usart_analysis_handle();								
 	
@@ -87,6 +97,14 @@ void sys_manager_handle(void)
 	
 	//用户控制器线程
 	user_control_handle();
+	
+	//SD卡控制器线程
+	sdcard_control_handle();
 
+	//test();
+
+
+	
 }
  
+

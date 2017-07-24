@@ -4,6 +4,10 @@
 #include "stm32f10x_conf.h"
 #include "config.h"
 #include "newtype.h"
+#include "assembler.h"
+
+
+
 
 //全局信息数据外部声明
 extern global_Information_TypeDef globalInformation;

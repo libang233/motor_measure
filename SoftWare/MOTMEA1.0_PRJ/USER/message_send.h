@@ -3,15 +3,6 @@
 
 #include "config.h"
 
-//最大发送字节数
-#define FRAME_SEND_MAX_SIZE  100
-
-typedef struct
-{
-	u8 frame[FRAME_SEND_MAX_SIZE];
-	u8 Idx;
-	
-}send_Frame_TypeDef;
 
 void write_int(u16 IDNum, u32 val);
 void write_char(u16 IDNum, u8* val, u8 valSize);
@@ -23,6 +14,8 @@ void write_date(u16 IDNum, u16 year, u8 month, u8 day);
 void write_time(u16 IDNum, u8 hour, u8 minute, u8 second);
 void write_page_num(u16 num);
 void write_control_state(u16 IDNum, u8 state);
+
+void pull_control_data(u16 IDNum, u8 type);
 
 void usart_send_handle(void);
 void usart_tx(u8 *buff, u32 size);

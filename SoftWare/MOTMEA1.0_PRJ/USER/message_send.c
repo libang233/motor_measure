@@ -24,7 +24,7 @@
 *                   u32 size 发送的数据长度
 * @ Modify        : ...
 **/
-void usart_tx(u8* buff, u32 size)
+void usart_tx(u8 *buff, u32 size)
 {
 	u32 freeSize = 0;
 	freeSize = USART_TX_LEN - UsartTxBuffer.Idx[UsartTxBuffer.PartAvailAction];
@@ -97,11 +97,11 @@ void write_int(u16 IDNum, u32 val)
 * @ Brief         : 写字符
 * @ Date          : 2017.07.20
 * @ Input         : u16   IDNum      ID号
-					u8*    val       字符串数据
+					u8    *val       字符串数据
 					u8     valSize	 字符串长度
 * @ Modify        : ... 
 **/
-void write_char(u16 IDNum, u8* val, u8 valSize)
+void write_char(u16 IDNum, u8 *val, u8 valSize)
 {
 	u8 i;
 	u8 frame[FRAME_WRITE_CHAR_MAX_SIZE];
@@ -147,10 +147,10 @@ void write_bitmap(u16 IDNum, u8 status)
 * @ Input         : u16   IDNum       ID号
 					u8    Idx	      索引
 					u8    valSize     写入内容
-*                   u8*   val   	  内容字符数
+*                   u8   *val   	  内容字符数
 * @ Modify        : ... 
 **/
-void write_select_val(u16 IDNum, u8 Idx, u8 valSize, u8* val)
+void write_select_val(u16 IDNum, u8 Idx, u8 valSize, u8 *val)
 {
 	u8 i;
 	u8 frame[FRAME_WRITE_SELECT_MAX_SIZE];
@@ -309,6 +309,46 @@ void write_control_state(u16 IDNum, u8 state)
 	frame_complete_tx(frame,FRAME_WRITE_STATE_DATA_NUM);
 }
 
+/**
+* @ Function Name : pull_control_data
+* @ Author        : hlb
+* @ Brief         : 发送下拉控件数据指令
+* @ Date          : 2017.07.23
+* @ Input         : u16  IDNum   ID号
+					u8   type	 数据类型
+* @ Modify        : ...
+**/
+void pull_control_data(u16 IDNum, u8 type)
+{
+	u8 frame[FRAME_PULL_CONTROL_SIZE];
+	
+	frame[FRAME_DATA_HEAD_ADDRESS]	   			= FRAME_PULL_CONTROL_HEAD;
+	frame[FRAME_DATA_ID_ADDRESS_HIGH]   		= (IDNum >> 8);
+	frame[FRAME_DATA_ID_ADDRESS_LOW]			= IDNum;
+	frame[FRAME_DATA_TYPE_ADDRESS]				= type;
+	frame[FRAME_PULL_CONTROL_VAL_ADDRESS]		= FRAME_PULL_CONTROL_VAL;
+	
+	frame_complete_tx(frame, FRAME_PULL_CONTROL_DATA_NUM);
+	
+}
+
+/**
+* @ Function Name : pull_page_num
+* @ Author        : hlb
+* @ Brief         : 发送下拉控件数据指令
+* @ Date          : 2017.07.23
+* @ Modify        : ...
+**/
+void pull_page_num(void)
+{
+	u8 frame[FRAME_PULL_PAGE_SIZE];
+	
+	frame[FRAME_DATA_HEAD_ADDRESS] = FRAME_PULL_PAGE_HEAD;
+	frame[FRAME_PULL_PAGE_VAL_ADDRESS] = FRAME_PULL_PAGE_VAL;
+	
+	frame_complete_tx(frame, FRAME_PULL_PAGE_DATA_NUM);
+	
+}
 
 
 /**

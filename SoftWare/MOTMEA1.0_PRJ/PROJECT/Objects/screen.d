@@ -9,6 +9,7 @@
 .\objects\screen.o: ..\FWLIB\stm32f10x_conf.h
 .\objects\screen.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h
 .\objects\screen.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h
+.\objects\screen.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_sdio.h
 .\objects\screen.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h
 .\objects\screen.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h
 .\objects\screen.o: ..\USER\config.h
@@ -16,3 +17,4 @@
 .\objects\screen.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\string.h
 .\objects\screen.o: ..\USER\newtype.h
 .\objects\screen.o: ..\USER\extern.h
+.\objects\screen.o: ..\HARDWARE\assembler.h

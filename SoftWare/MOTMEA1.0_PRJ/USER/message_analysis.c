@@ -194,154 +194,154 @@ bool parser_rec_int_data_deal(u16 IDNum)
 	switch(IDNum)
 	{
 		case ID_PART1_PWM:
-			configInformation.part1Information.testPWM = data;
+			configInformation.partInformation[TEST_PART1].testPWM = data;
 			break;
 		
 		case ID_PART1_TIME:
-			configInformation.part1Information.testTime = data;
+			configInformation.partInformation[TEST_PART1].testTime = data;
 			break;
 		
 		case ID_PART1_UP_SPEED:
-			configInformation.part1Information.testSpeedUpLimit = data;
+			configInformation.partInformation[TEST_PART1].testSpeedUpLimit = data;
 			break;
 		
 		case ID_PART1_DOWN_SPEED:
-			configInformation.part1Information.testSpeedDownLimit = data;
+			configInformation.partInformation[TEST_PART1].testSpeedDownLimit = data;
 			break;
 		
 		case ID_PART1_UP_CURRENT:
-			configInformation.part1Information.testCurrentUpLimit = data;
+			configInformation.partInformation[TEST_PART1].testCurrentUpLimit = data;
 			break;
 		
 		case ID_PART1_DOWN_CURRENT:
-			configInformation.part1Information.testCurrentDownLimit = data;
+			configInformation.partInformation[TEST_PART1].testCurrentDownLimit = data;
 			break;
 
 		case ID_PART2_PWM:
-			configInformation.part2Information.testPWM = data;
+			configInformation.partInformation[TEST_PART2].testPWM = data;
 			break;
 		
 		case ID_PART2_TIME:
-			configInformation.part2Information.testTime = data;
+			configInformation.partInformation[TEST_PART2].testTime = data;
 			break;
 		
 		case ID_PART2_UP_SPEED:
-			configInformation.part2Information.testSpeedUpLimit = data;
+			configInformation.partInformation[TEST_PART2].testSpeedUpLimit = data;
 			break;
 		
 		case ID_PART2_DOWN_SPEED:
-			configInformation.part2Information.testSpeedDownLimit = data;
+			configInformation.partInformation[TEST_PART2].testSpeedDownLimit = data;
 			break;
 		
 		case ID_PART2_UP_CURRENT:
-			configInformation.part2Information.testCurrentUpLimit = data;
+			configInformation.partInformation[TEST_PART2].testCurrentUpLimit = data;
 			break;
 		
 		case ID_PART2_DOWN_CURRENT:
-			configInformation.part2Information.testCurrentDownLimit = data;
+			configInformation.partInformation[TEST_PART2].testCurrentDownLimit = data;
 			break;
 		
 		case ID_PART3_PWM:
-			configInformation.part3Information.testPWM = data;
+			configInformation.partInformation[TEST_PART3].testPWM = data;
 			break;
 		
 		case ID_PART3_TIME:
-			configInformation.part3Information.testTime = data;
+			configInformation.partInformation[TEST_PART3].testTime = data;
 			break;
 		
 		case ID_PART3_UP_SPEED:
-			configInformation.part3Information.testSpeedUpLimit = data;
+			configInformation.partInformation[TEST_PART3].testSpeedUpLimit = data;
 			break;
 		
 		case ID_PART3_DOWN_SPEED:
-			configInformation.part3Information.testSpeedDownLimit = data;
+			configInformation.partInformation[TEST_PART3].testSpeedDownLimit = data;
 			break;
 		
 		case ID_PART3_UP_CURRENT:
-			configInformation.part3Information.testCurrentUpLimit = data;
+			configInformation.partInformation[TEST_PART3].testCurrentUpLimit = data;
 			break;
 		
 		case ID_PART3_DOWN_CURRENT:
-			configInformation.part3Information.testCurrentDownLimit = data;
+			configInformation.partInformation[TEST_PART3].testCurrentDownLimit = data;
 			break;
 		
 		case ID_PART4_PWM:
-			configInformation.part4Information.testPWM = data;
+			configInformation.partInformation[TEST_PART4].testPWM = data;
 			break;
 		
 		case ID_PART4_TIME:
-			configInformation.part4Information.testTime = data;
+			configInformation.partInformation[TEST_PART4].testTime = data;
 			break;
 		
 		case ID_PART4_UP_SPEED:
-			configInformation.part4Information.testSpeedUpLimit = data;
+			configInformation.partInformation[TEST_PART4].testSpeedUpLimit = data;
 			break;
 		
 		case ID_PART4_DOWN_SPEED:
-			configInformation.part4Information.testSpeedDownLimit = data;
+			configInformation.partInformation[TEST_PART4].testSpeedDownLimit = data;
 			break;
 		
 		case ID_PART4_UP_CURRENT:
-			configInformation.part4Information.testCurrentUpLimit = data;
+			configInformation.partInformation[TEST_PART4].testCurrentUpLimit = data;
 			break;
 		
 		case ID_PART4_DOWN_CURRENT:
-			configInformation.part4Information.testCurrentDownLimit = data;
+			configInformation.partInformation[TEST_PART4].testCurrentDownLimit = data;
 			break;
 		
 		case ID_PART5_PWM:
-			configInformation.part5Information.testPWM = data;
+			configInformation.partInformation[TEST_PART5].testPWM = data;
 			break;
 		
 		case ID_PART5_TIME:
-			configInformation.part5Information.testTime = data;
+			configInformation.partInformation[TEST_PART5].testTime = data;
 			break;
 		
 		case ID_PART5_UP_SPEED:
-			configInformation.part5Information.testSpeedUpLimit = data;
+			configInformation.partInformation[TEST_PART5].testSpeedUpLimit = data;
 			break;
 		
 		case ID_PART5_DOWN_SPEED:
-			configInformation.part5Information.testSpeedDownLimit = data;
+			configInformation.partInformation[TEST_PART5].testSpeedDownLimit = data;
 			break;
 		
 		case ID_PART5_UP_CURRENT:
-			configInformation.part5Information.testCurrentUpLimit = data;
+			configInformation.partInformation[TEST_PART5].testCurrentUpLimit = data;
 			break;
 		
 		case ID_PART5_DOWN_CURRENT:
-			configInformation.part5Information.testCurrentDownLimit = data;
+			configInformation.partInformation[TEST_PART5].testCurrentDownLimit = data;
 			break;
 		
 		case ID_PART6_PWM:
-			configInformation.part6Information.testPWM = data;
+			configInformation.partInformation[TEST_PART6].testPWM = data;
 			break;
 		
 		case ID_PART6_TIME:
-			configInformation.part6Information.testTime = data;
+			configInformation.partInformation[TEST_PART6].testTime = data;
 			break;
 		
 		case ID_PART6_UP_SPEED:
-			configInformation.part6Information.testSpeedUpLimit = data;
+			configInformation.partInformation[TEST_PART6].testSpeedUpLimit = data;
 			break;
 		
 		case ID_PART6_DOWN_SPEED:
-			configInformation.part6Information.testSpeedDownLimit = data;
+			configInformation.partInformation[TEST_PART6].testSpeedDownLimit = data;
 			break;
 		
 		case ID_PART6_UP_CURRENT:
-			configInformation.part6Information.testCurrentUpLimit = data;
+			configInformation.partInformation[TEST_PART6].testCurrentUpLimit = data;
 			break;
 		
 		case ID_PART6_DOWN_CURRENT:
-			configInformation.part6Information.testCurrentDownLimit = data;
+			configInformation.partInformation[TEST_PART6].testCurrentDownLimit = data;
 			break;
 		
 		case ID_POLES_NUMBER:
 			configInformation.polesNum = data;
 			break;
 		
-		case ID_PAET_NUMBER:
+		case ID_PART_NUMBER:
 			configInformation.partNum = data;
 			break;
 		
@@ -350,7 +350,7 @@ bool parser_rec_int_data_deal(u16 IDNum)
 			break;
 		
 		case ID_CONFIG_PWM:
-			configInformation.PWM = data;
+			configInformation.PWMSignFrequen = data;
 			break;
 		
 		case ID_DEBUG_INPUT_POLES:
@@ -393,12 +393,12 @@ bool parser_rec_string_data_deal(u16 IDNum)
 	switch(IDNum)
 	{
 		case ID_PART1_EXPLAIN:
-			configInformation.part1Information.explainStringIdx = 0;
+			configInformation.partInformation[TEST_PART1].explainStringIdx = 0;
 			for(i = 0; i < byteNum; i++)
 			{
-				if(configInformation.part1Information.explainStringIdx < MAX_BYTE_NUM_SPECIF_EXPLAIN)
+				if(configInformation.partInformation[TEST_PART1].explainStringIdx < MAX_BYTE_NUM_SPECIF_EXPLAIN)
 				{
-					configInformation.part1Information.explain[configInformation.part1Information.explainStringIdx++] =  \
+					configInformation.partInformation[TEST_PART1].explain[configInformation.partInformation[TEST_PART1].explainStringIdx++] =  \
 						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
 				}
 				else
@@ -409,12 +409,12 @@ bool parser_rec_string_data_deal(u16 IDNum)
 			break;
 		
 		case ID_PART2_EXPLAIN:
-			configInformation.part2Information.explainStringIdx = 0;
+			configInformation.partInformation[TEST_PART2].explainStringIdx = 0;
 			for(i = 0; i < byteNum; i++)
 			{
-				if(configInformation.part2Information.explainStringIdx < MAX_BYTE_NUM_SPECIF_EXPLAIN)
+				if(configInformation.partInformation[TEST_PART2].explainStringIdx < MAX_BYTE_NUM_SPECIF_EXPLAIN)
 				{
-					configInformation.part2Information.explain[configInformation.part2Information.explainStringIdx++] =  \
+					configInformation.partInformation[TEST_PART2].explain[configInformation.partInformation[TEST_PART2].explainStringIdx++] =  \
 						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
 				}
 				else
@@ -425,12 +425,12 @@ bool parser_rec_string_data_deal(u16 IDNum)
 			break;
 			
 		case ID_PART3_EXPLAIN:
-			configInformation.part3Information.explainStringIdx = 0;
+			configInformation.partInformation[TEST_PART3].explainStringIdx = 0;
 			for(i = 0; i < byteNum; i++)
 			{
-				if(configInformation.part3Information.explainStringIdx < MAX_BYTE_NUM_SPECIF_EXPLAIN)
+				if(configInformation.partInformation[TEST_PART3].explainStringIdx < MAX_BYTE_NUM_SPECIF_EXPLAIN)
 				{
-					configInformation.part3Information.explain[configInformation.part3Information.explainStringIdx++] =  \
+					configInformation.partInformation[TEST_PART3].explain[configInformation.partInformation[TEST_PART3].explainStringIdx++] =  \
 						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
 				}
 				else
@@ -441,12 +441,12 @@ bool parser_rec_string_data_deal(u16 IDNum)
 			break;
 			
 		case ID_PART4_EXPLAIN:
-			configInformation.part4Information.explainStringIdx = 0;
+			configInformation.partInformation[TEST_PART4].explainStringIdx = 0;
 			for(i = 0; i < byteNum; i++)
 			{
-				if(configInformation.part4Information.explainStringIdx < MAX_BYTE_NUM_SPECIF_EXPLAIN)
+				if(configInformation.partInformation[TEST_PART4].explainStringIdx < MAX_BYTE_NUM_SPECIF_EXPLAIN)
 				{
-					configInformation.part4Information.explain[configInformation.part4Information.explainStringIdx++] =  \
+					configInformation.partInformation[TEST_PART4].explain[configInformation.partInformation[TEST_PART4].explainStringIdx++] =  \
 						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
 				}
 				else
@@ -457,12 +457,12 @@ bool parser_rec_string_data_deal(u16 IDNum)
 			break;
 			
 		case ID_PART5_EXPLAIN:
-			configInformation.part5Information.explainStringIdx = 0;
+			configInformation.partInformation[TEST_PART5].explainStringIdx = 0;
 			for(i = 0; i < byteNum; i++)
 			{
-				if(configInformation.part5Information.explainStringIdx < MAX_BYTE_NUM_SPECIF_EXPLAIN)
+				if(configInformation.partInformation[TEST_PART5].explainStringIdx < MAX_BYTE_NUM_SPECIF_EXPLAIN)
 				{
-					configInformation.part5Information.explain[configInformation.part5Information.explainStringIdx++] =  \
+					configInformation.partInformation[TEST_PART5].explain[configInformation.partInformation[TEST_PART5].explainStringIdx++] =  \
 						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
 				}
 				else
@@ -473,12 +473,12 @@ bool parser_rec_string_data_deal(u16 IDNum)
 			break;
 			
 		case ID_PART6_EXPLAIN:
-			configInformation.part6Information.explainStringIdx = 0;
+			configInformation.partInformation[TEST_PART6].explainStringIdx = 0;
 			for(i = 0; i < byteNum; i++)
 			{
-				if(configInformation.part6Information.explainStringIdx < MAX_BYTE_NUM_SPECIF_EXPLAIN)
+				if(configInformation.partInformation[TEST_PART6].explainStringIdx < MAX_BYTE_NUM_SPECIF_EXPLAIN)
 				{
-					configInformation.part6Information.explain[configInformation.part6Information.explainStringIdx++] =  \
+					configInformation.partInformation[TEST_PART6].explain[configInformation.partInformation[TEST_PART6].explainStringIdx++] =  \
 						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
 				}
 				else
@@ -489,12 +489,12 @@ bool parser_rec_string_data_deal(u16 IDNum)
 			break;
 			
 		case ID_PN_NUMBER:
-			configInformation.PNNumStringIdx = 0;
+			configInformation.PNNumStringIdx[configInformation.nowPNNum] = 0;
 			for(i = 0; i < byteNum; i++)
 			{
-				if(configInformation.PNNumStringIdx < MAX_BYTE_NUM_PN_NUM)
+				if(configInformation.PNNumStringIdx[configInformation.nowPNNum] < MAX_BYTE_NUM_PN_NUM)
 				{
-					configInformation.PNNum[configInformation.PNNumStringIdx++] = \
+					configInformation.PNNum[configInformation.nowPNNum][configInformation.PNNumStringIdx[configInformation.nowPNNum]++] = \
 						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
 				}
 				else
@@ -750,11 +750,139 @@ bool parser_rec_date_data_deal(u16 IDNum)
 bool parser_rec_page_data_deal(void)
 {
 	globalInformation.nowPage = \
-		(ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_PAGE_IDX_ADDRESS_HIGH] << 8) + \
-		ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_PAGE_IDX_ADDRESS_HIGH + 1];
+		ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_PAGE_IDX_ADDRESS];
+
 	return true;
 }
 
+/**
+* @ Function Name : parser_rec_gui_page_data_deal
+* @ Author        : hlb
+* @ Brief         : 读页面返回数据包处理函数
+* @ Date          : 2017.07.12
+* @ Output        : bool						是否处理成功
+* @ Modify        : ...
+**/
+bool parser_rec_gui_page_data_deal(u16 IDNum)
+{
+	globalInformation.nowPage = \
+		ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_GUI_DATA_PAGE_IDX_ADDRESS];
+
+	return true;
+}
+
+/**
+* @ Function Name : parser_rec_gui_int_data_deal
+* @ Author        : hlb
+* @ Brief         : GUI整型返回数据包处理函数
+* @ Input         : u16							数据ID号
+* @ Date          : 2017.07.24
+* @ Output        : bool						是否处理成功
+* @ Modify        : ...
+**/
+bool parser_rec_gui_int_data_deal(u16 IDNum)
+{
+	switch(IDNum)
+	{
+		case ID_PART_NUMBER:
+			configInformation.partNum = ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_GUI_DATA_INT_ADDRESS_HIGH + 3];
+			if(configInformation.partNum > MAX_PART_NUM)
+			{
+				configInformation.partNum = MAX_PART_NUM;
+			}
+			//更新段号
+			configInformation.isPartUpdate = false;
+			break;
+		
+		default:
+			return false;
+	}
+	
+	return true;
+}
+
+/**
+* @ Function Name : parser_rec_gui_select_data_deal
+* @ Author        : hlb
+* @ Brief         : GUI下拉列表返回数据包处理函数
+* @ Input         : u16							数据ID号
+* @ Date          : 2017.07.24
+* @ Output        : bool						是否处理成功
+* @ Modify        : ...
+**/
+bool parser_rec_gui_select_data_deal(u16 IDNum)
+{
+	switch(IDNum)
+	{
+		case ID_PN_NUMBER_SELECT:
+			configInformation.PNNumSelect = ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_GUI_DATA_SELECT_ADDRESS];
+			break;
+		
+		case ID_POWER_SELECT:
+			configInformation.powerSelect = ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_GUI_DATA_SELECT_ADDRESS];
+			break;
+		
+		default:
+			return false;
+	}
+	
+	return true;
+}
+
+
+/**
+* @ Function Name : parser_rec_gui_button_data_deal
+* @ Author        : hlb
+* @ Brief         : GUI按键返回数据包处理函数
+* @ Input         : u16							数据ID号
+* @ Date          : 2017.07.22
+* @ Output        : bool						是否处理成功
+* @ Modify        : ...
+**/
+bool parser_rec_gui_button_data_deal(u16 IDNum)
+{
+	if(ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_GUI_DATA_BUTTON_ADDRESS] == 1)
+	{
+		switch(IDNum)
+		{
+	
+			case ID_CONFIG_SAVE_BUTTON:
+				configInformation.isSaveButtonDown = true;
+				break;
+			
+			case ID_DELETE_PN_BUTTON:
+				configInformation.isDeleteButtonDown = true;
+				break;
+			
+			case ID_ADJUST_SAVE_BUTTON:
+				adjustInformation.isSaveArgButtonDown = true;
+				break;
+			
+			case ID_ADJUST_AUTO_ZERO_BUTTON:
+				adjustInformation.isAutoZeroButtonDown = true;
+				break;
+			
+			case ID_PASSWORD_OK_BUTTON:
+				passwordInformation.isOkButtonDown = true;
+				break;
+			
+			case ID_PASSWORD_CHANGE_BUTTON:
+				passwordInformation.isChangeButtonDown = true;
+				break;
+			
+			case ID_PASSWORD_CHANGE_OK_BUTTON:
+				passwordInformation.isChangeOkButtonDown = true;
+				break;
+			
+			default:
+				return false;
+		}
+		return true;
+	}
+	
+	return false;
+	
+}
 
 /**
 * @ Function Name : serial_parser_comm_analysis
@@ -777,22 +905,46 @@ bool serial_parser_comm_analysis(void)
 	//读取数据包功能字符
 	dataFunc = ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_HEAD_ADDRESS];
 	
-	if(dataFunc == FRAME_REC_PAGE_INSTRUCTION_DEF)
+	//读取控件ID
+	IDNum = (ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_ID_ADDRESS_HIGH] << 8) + \
+	ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_ID_ADDRESS_LOW];
+	
+	//读取数据包数据类型
+	dataType = ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_TYPE_ADDRESS];
+	
+	//接收gui返回信息
+	if(dataFunc ==FRAME_REC_GUI_READ_DATA_HEAD )
 	{
-		parser_rec_page_data_deal();
-		return true;
-	}
-	else if(dataFunc == FRAME_REC_MES_INSTRUCTION_DEF)
-	{
-		//读取控件ID
-		IDNum = (ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_ID_ADDRESS_HIGH] << 8) + \
-		ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_ID_ADDRESS_LOW];
-		
-		//读取数据包数据类型
-		dataType = ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_TYPE_ADDRESS];
-		
 		switch(dataType)
 		{
+			case FRAME_REC_DATA_BUTTON_DEF:
+				parser_rec_gui_button_data_deal(IDNum);
+				break;
+			
+			case FRAME_REC_DATA_PAGE_DEF:
+				parser_rec_gui_page_data_deal(IDNum);
+				break;
+			
+			case FRAME_REC_DATA_SELECT_DEF:
+				
+				break;
+			
+			default:
+				return false;
+				
+		}
+	}
+	//接收到界面下拉信息
+	else if(dataFunc == FRAME_REC_READ_PAGE_DATA_HEAD)
+	{
+		parser_rec_page_data_deal();
+	}
+	//接收到数据下拉信息
+	else if(dataFunc == FRAME_REC_READ_MES_DATA_HEAD)
+	{
+		switch(dataType)
+		{
+			
 			case FRAME_REC_DATA_INT_DEF:
 				parser_rec_int_data_deal(IDNum);
 				break;
@@ -856,26 +1008,27 @@ void usart_analysis_handle(void)
 		{		
 			ParserMoniter.GetIdx++;
 		}
+		
 		if(ParserMoniter.GetIdx >= FRAME_BUFFER_NUM_MAX)
 		{
 			ParserMoniter.GetIdx = 0;
 		}
 
 	}
-	if(configInformation.part1Information.explainStringIdx > 0)
+	
+	
+	if(configInformation.partInformation[TEST_PART1].explainStringIdx > 0)
 	{
-
-		//usart_tx(configInformation.part1Information.explain,configInformation.part1Information.explainStringIdx);
 		
-		write_char(ID_PART1_EXPLAIN, configInformation.part1Information.explain, configInformation.part1Information.explainStringIdx);
+		write_char(ID_PART1_EXPLAIN, configInformation.partInformation[TEST_PART1].explain, configInformation.partInformation[TEST_PART1].explainStringIdx);
 		
-		configInformation.part1Information.explainStringIdx = 0;
+		configInformation.partInformation[TEST_PART1].explainStringIdx = 0;
 	}
-	if(configInformation.part1Information.testPWM > 0)
+	if(configInformation.partInformation[TEST_PART1].testPWM > 0)
 	{
-		write_int(ID_PART1_PWM, configInformation.part1Information.testPWM);
+		write_int(ID_PART1_PWM, configInformation.partInformation[TEST_PART1].testPWM);
 		
-		configInformation.part1Information.testPWM = 0;
+		configInformation.partInformation[TEST_PART1].testPWM = 0;
 	}
 	
 	
