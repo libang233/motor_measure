@@ -3,5 +3,7 @@
 
 #include "config.h"
 
+void config_page_handle(void);
+
 #endif
 

@@ -489,12 +489,12 @@ bool parser_rec_string_data_deal(u16 IDNum)
 			break;
 			
 		case ID_PN_NUMBER:
-			configInformation.PNNumStringIdx[configInformation.nowPNNum] = 0;
+			configInformation.PNNumDisplayIdx = 0;
 			for(i = 0; i < byteNum; i++)
 			{
-				if(configInformation.PNNumStringIdx[configInformation.nowPNNum] < MAX_BYTE_NUM_PN_NUM)
+				if(configInformation.PNNumDisplayIdx < MAX_BYTE_NUM_PN_NUM)
 				{
-					configInformation.PNNum[configInformation.nowPNNum][configInformation.PNNumStringIdx[configInformation.nowPNNum]++] = \
+					configInformation.PNNumDisplay[configInformation.PNNumDisplayIdx++] = \
 						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
 				}
 				else
@@ -638,6 +638,8 @@ bool parser_rec_select_data_deal(u16 IDNum)
 		case ID_PN_NUMBER_SELECT:
 			configInformation.PNNumSelect = \
 				ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_SELECT_ADDRESS];
+				//更新界面数据
+				configInformation.isDataUpdate = false;
 			break;
 		
 		case ID_POWER_SELECT:
@@ -751,7 +753,30 @@ bool parser_rec_page_data_deal(void)
 {
 	globalInformation.nowPage = \
 		ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_PAGE_IDX_ADDRESS];
+	configInformation.isDataUpdate = false;
 
+	return true;
+}
+
+/**
+* @ Function Name : parser_rec_gui_select_data_deal
+* @ Author        : hlb
+* @ Brief         : 下拉列表返回数据包处理函数
+* @ Date          : 2017.07.26
+* @ Output        : bool						是否处理成功
+* @ Modify        : ...
+**/
+bool paser_rec_gui_select_data_deal(u16 IDNum)
+{
+	switch(IDNum)
+	{
+		case ID_PN_NUMBER_SELECT:
+			configInformation.PNNumSelect = ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_GUI_DATA_SELECT_ADDRESS];
+			configInformation.isDataUpdate = false;
+			break;
+		default:
+			return false;
+	}
 	return true;
 }
 
@@ -759,7 +784,7 @@ bool parser_rec_page_data_deal(void)
 * @ Function Name : parser_rec_gui_page_data_deal
 * @ Author        : hlb
 * @ Brief         : 读页面返回数据包处理函数
-* @ Date          : 2017.07.12
+* @ Date          : 2017.07.24
 * @ Output        : bool						是否处理成功
 * @ Modify        : ...
 **/
@@ -816,6 +841,8 @@ bool parser_rec_gui_select_data_deal(u16 IDNum)
 	{
 		case ID_PN_NUMBER_SELECT:
 			configInformation.PNNumSelect = ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_GUI_DATA_SELECT_ADDRESS];
+			//更新数据标志开启
+			configInformation.isDataUpdate = false;
 			break;
 		
 		case ID_POWER_SELECT:
@@ -913,7 +940,7 @@ bool serial_parser_comm_analysis(void)
 	dataType = ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_TYPE_ADDRESS];
 	
 	//接收gui返回信息
-	if(dataFunc ==FRAME_REC_GUI_READ_DATA_HEAD )
+	if(dataFunc == FRAME_REC_GUI_READ_DATA_HEAD )
 	{
 		switch(dataType)
 		{
@@ -926,7 +953,7 @@ bool serial_parser_comm_analysis(void)
 				break;
 			
 			case FRAME_REC_DATA_SELECT_DEF:
-				
+				paser_rec_gui_select_data_deal(IDNum);
 				break;
 			
 			default:
@@ -993,6 +1020,7 @@ void usart_analysis_handle(void)
 {
 
 	int i;
+	u8 res[10];
 	
 	//解析器装载缓冲
 	parser_moniter_add_buff();
@@ -1017,21 +1045,23 @@ void usart_analysis_handle(void)
 	}
 	
 	
-	if(configInformation.partInformation[TEST_PART1].explainStringIdx > 0)
-	{
-		
-		write_char(ID_PART1_EXPLAIN, configInformation.partInformation[TEST_PART1].explain, configInformation.partInformation[TEST_PART1].explainStringIdx);
-		
-		configInformation.partInformation[TEST_PART1].explainStringIdx = 0;
-	}
-	if(configInformation.partInformation[TEST_PART1].testPWM > 0)
-	{
-		write_int(ID_PART1_PWM, configInformation.partInformation[TEST_PART1].testPWM);
-		
-		configInformation.partInformation[TEST_PART1].testPWM = 0;
-	}
 	
-	
+//	if(configInformation.isSaveButtonDown == true)
+//	{
+//		while(1)
+//		{
+//			USART_SendData(USART1,'1');
+//		}
+//	}
+//	
+//	sprintf((char*)res, "%d", globalInformation.nowPage);
+//	
+//	if(globalInformation.nowPage != 0)
+//	{
+//		usart_tx(res, 1);
+//	}
+//	
+//	
 
 
 }

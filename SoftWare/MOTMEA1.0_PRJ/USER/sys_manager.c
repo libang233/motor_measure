@@ -95,14 +95,15 @@ void sys_manager_handle(void)
 	//串口发送控制器线程
 	usart_send_handle();
 	
+	//SD卡控制器线程
+	sdcard_control_handle();
+	
 	//用户控制器线程
 	user_control_handle();
 	
-	//SD卡控制器线程
-	sdcard_control_handle();
 
-	//test();
 
+	test();
 
 	
 }

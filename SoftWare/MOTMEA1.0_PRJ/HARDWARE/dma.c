@@ -177,8 +177,6 @@ void DMA1_Channel4_IRQHandler(void)
     //关闭DMA  
     DMA_Cmd(DMA1_Channel4,DISABLE);  
     //DMA1_Channel4->CCR &= ~(1<<0);  
-  
-    //允许再次发送  
-    //Flag_Uart_Send = 0;  
+
 }  
 

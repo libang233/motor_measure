@@ -50,10 +50,11 @@ typedef struct
 	//测试段数据
 	part_Information_TypeDef partInformation[MAX_PART_NUM];
 	
-	u8 PNNum[MAX_PN_NUM_MAX_QUANTITY][MAX_BYTE_NUM_PN_NUM];		//也称为PN号，区别不同规格的唯一识别码
+	u8 PNNum[MAX_PN_NUM_MAX_QUANTITY][MAX_BYTE_NUM_PN_NUM];		//PN号列表
 	u8 PNNumStringIdx[MAX_PN_NUM_MAX_QUANTITY];					//PN号字符串索引
+	u8 PNNumDisplay[MAX_BYTE_NUM_PN_NUM];						//显示的PN号
+	u8 PNNumDisplayIdx;											//前一项字符串索引	
 	u8 PNNumQuantity;											//PN号的总数
-	u8 nowPNNum;												//已选择的料号
 	u8 PNNumDescription[MAX_BYTE_NUM_PN_NUM_DESCRIP];			//PN号的补充描述
 	u8 descriptionStringIdx;									//描述字符串索引
 	u8 polesNum;												//风扇的极数

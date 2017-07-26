@@ -597,6 +597,26 @@
               <FileType>1</FileType>
               <FilePath>..\Page\config_page_control.c</FilePath>
             </File>
+            <File>
+              <FileName>adjust_page_control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Page\adjust_page_control.c</FilePath>
+            </File>
+            <File>
+              <FileName>debug_page_control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Page\debug_page_control.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_page_control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Page\test_page_control.c</FilePath>
+            </File>
+            <File>
+              <FileName>password_page_control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Page\password_page_control.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

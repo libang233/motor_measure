@@ -20,6 +20,7 @@
 .\objects\sdcard_control.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h
 .\objects\sdcard_control.o: ..\HARDWARE\assembler.h
 .\objects\sdcard_control.o: ..\USER\message_send.h
+.\objects\sdcard_control.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\sdcard_control.o: ..\FatFs\exfuns.h
 .\objects\sdcard_control.o: ..\FatFs\ff.h
 .\objects\sdcard_control.o: ..\FatFs\integer.h

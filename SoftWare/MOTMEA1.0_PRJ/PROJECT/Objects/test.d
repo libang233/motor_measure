@@ -18,12 +18,14 @@
 .\objects\test.o: ..\USER\newtype.h
 .\objects\test.o: ..\USER\extern.h
 .\objects\test.o: ..\HARDWARE\assembler.h
+.\objects\test.o: ..\USER\IDNum.h
 .\objects\test.o: ..\USER\test.h
 .\objects\test.o: ..\FatFs\ff.h
 .\objects\test.o: ..\FatFs\integer.h
 .\objects\test.o: ..\FatFs\ffconf.h
 .\objects\test.o: ..\HARDWARE\sdio.h
 .\objects\test.o: ..\USER\message_send.h
+.\objects\test.o: ..\USER\message_analysis.h
 .\objects\test.o: ..\FatFs\exfuns.h
 .\objects\test.o: ..\MALLOC\malloc.h
 .\objects\test.o: ..\HARDWARE\usart.h

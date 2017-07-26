@@ -8,9 +8,11 @@
  * ---------------------------------------------------------------------------------------------------------------
  * Modifier                                    Data                                             Brief
  * -------------------------------------------------------------------------------------------------------------*/
- #include "user_control.h"
- #include "sys_manager.h"
- #include "message_analysis.h"
+#include "user_control.h"
+#include "sys_manager.h"
+#include "message_analysis.h"
+#include "config_page_control.h"
+#include "message_send.h"
  
   
 
@@ -24,6 +26,7 @@
  **/
 void user_control_handle(void)
 {
+
 	switch(globalInformation.nowPage)
 	{
 		case PAGE_NUM_BEGIN:
@@ -33,6 +36,7 @@ void user_control_handle(void)
 			break;
 		
 		case PAGE_NUM_CONFIG:
+			config_page_handle();
 			break;
 		
 		case PAGE_NUM_ADJUST:

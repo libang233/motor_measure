@@ -29,6 +29,10 @@
 ".\objects\exfuns.o"
 ".\objects\malloc.o"
 ".\objects\config_page_control.o"
+".\objects\adjust_page_control.o"
+".\objects\debug_page_control.o"
+".\objects\test_page_control.o"
+".\objects\password_page_control.o"
 --strict --scatter ".\Objects\MOTORMEASURE_PRJ.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

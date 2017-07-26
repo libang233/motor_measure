@@ -45,20 +45,24 @@
 #define	PN_FILE_PART1_PWM_ADDRESS						71
 #define	PN_FILE_PART1_TIME_ADDRESS						72
 #define PN_FILE_PART1_SPEED_UP_ADDRESS_HIGH				73	
-#define FN_FILE_PART1_SPEED_UP_ADDRESS_LOW				74
+#define PN_FILE_PART1_SPEED_UP_ADDRESS_LOW				74
 #define PN_FILE_PART1_SPEED_DOWN_ADDRESS_HIGH			75
-#define FN_FILE_PART1_SPEED_DOWN_ADDRESS_LOW			76
+#define PN_FILE_PART1_SPEED_DOWN_ADDRESS_LOW			76
 #define PN_FILE_PART1_CURE_UP_ADDRESS_HIGH				77	
-#define FN_FILE_PART1_CURE_UP_ADDRESS_LOW				78
+#define PN_FILE_PART1_CURE_UP_ADDRESS_LOW				78
 #define PN_FILE_PART1_CURE_DOWN_ADDRESS_HIGH			79
-#define FN_FILE_PART1_CURE_DOWN_ADDRESS_LOW				80
+#define PN_FILE_PART1_CURE_DOWN_ADDRESS_LOW				80
 
 
 #define PN_FILE_ONE_PART_SIZE							31
 
+#define PN_FILE_NAME_SIZE_MAX							10							
+
 //
 //ÁÏºÅÄ£°å
 //
+#define MODLE_PN_POSITION								0
+
 #define MODLE_PN_NUM_BYTE_NUM							18
 #define MODLE_PN_NUM 									"modle pwm fan text"
 #define MODLE_PN_DESCRIP_BYTE_NUM						7
@@ -117,6 +121,9 @@ typedef struct
 
 extern sdcard_Information_TypeDef sdcardInformation;
 
+void sdcard_PN_file_load(void);
+void sdcard_PN_file_edit(void);
+void sdcard_PN_file_delete(void);
 void sdcard_init(void);
 void sdcard_control_handle(void);
 

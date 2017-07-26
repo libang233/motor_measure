@@ -83,9 +83,10 @@ void write_int(u16 IDNum, u32 val)
 	frame[FRAME_DATA_HEAD_ADDRESS]			  = FRAME_WRITE_INT_DATA_HEAD;
 	frame[FRAME_DATA_ID_ADDRESS_HIGH]   	  = (IDNum >> 8);
 	frame[FRAME_DATA_ID_ADDRESS_LOW]		  = IDNum;
-	for(i = FRAME_WRITE_INT_VAL_NUM - 1; i >= 0; i--)
+	
+	for(i = 0; i < FRAME_WRITE_INT_VAL_NUM; i++)
 	{
-		frame[FRAME_WRITE_INT_VAL_ADDRESS_HIGH + FRAME_WRITE_INT_VAL_NUM - 1 - i] = (val << (8 * i));
+		frame[FRAME_WRITE_INT_VAL_ADDRESS_HIGH + i] = (val >> 8 * (3 - i));
 	}
 	
 	frame_complete_tx(frame, FRAME_WRITE_INT_DATA_NUM);
@@ -315,7 +316,7 @@ void write_control_state(u16 IDNum, u8 state)
 * @ Brief         : 发送下拉控件数据指令
 * @ Date          : 2017.07.23
 * @ Input         : u16  IDNum   ID号
-					u8   type	 数据类型
+					u8   type	 控件类型
 * @ Modify        : ...
 **/
 void pull_control_data(u16 IDNum, u8 type)

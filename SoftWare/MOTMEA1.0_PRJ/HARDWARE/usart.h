@@ -4,11 +4,11 @@
 #include "stdio.h"	
 #include "sys_manager.h"
 
-//定义最大接收字节数 1024
+//定义最大接收字节数 
 #define USART_RX_LEN  			(u32)1024   
 
 //最大发送缓冲
-#define USART_TX_LEN			(u32)512	
+#define USART_TX_LEN			(u32)2048	
 
 //发送缓冲个数
 #define TX_BUFFER_NUM_DEFAULT   (u32)2
@@ -32,9 +32,9 @@
 //串口数据缓冲定义
 typedef struct
 {
-	u8  Buff[USART_RX_LEN];			 	 //缓冲区
-	u16 AddIdx;							 //添加索引
-	u16 GetIdx;							 //取出索引
+	volatile u8  Buff[USART_RX_LEN];			 	 //缓冲区
+	volatile u16 AddIdx;							 //添加索引
+	volatile u16 GetIdx;							 //取出索引
 	
 }Usart_Rx_Buff_TypeDef;
 #pragma pack(pop)

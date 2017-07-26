@@ -22,3 +22,8 @@
 .\objects\config_page_control.o: ..\USER\message_analysis.h
 .\objects\config_page_control.o: ..\USER\IDnum.h
 .\objects\config_page_control.o: ..\USER\message_send.h
+.\objects\config_page_control.o: ..\USER\sdcard_control.h
+.\objects\config_page_control.o: ..\FatFs\diskio.h
+.\objects\config_page_control.o: ..\FatFs\integer.h
+.\objects\config_page_control.o: ..\HARDWARE\usart.h
+.\objects\config_page_control.o: F:\Program Files\keil\ARM\ARMCC\Bin\..\include\stdio.h
