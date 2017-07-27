@@ -139,7 +139,7 @@ void sdcard_index_file_pn_edit(u8 pos, u8 *PNNum, u8 size)
 	}	
 	
 	f_open(file, "0:/index.txt", FA_OPEN_EXISTING | FA_WRITE);
-	f_write(file, buffer, sizeof(buffer), &bw);
+	f_write(file, buffer, INDEX_DATA_MAX_BYTE, &bw);
 	f_close(file);
 	
 }
@@ -301,26 +301,47 @@ void sdcard_PN_file_edit(void)
 	u8 PNFile[PN_FILE_MAX_BYTE];
 	u8 fileName[PN_FILE_NAME_SIZE_MAX];
 	
+	memset(&PNFile, 0, sizeof(PNFile));
+	memset(&fileName, 0, sizeof(fileName));
+	
 	for(i = 0; i < MAX_PN_NUM_MAX_QUANTITY; i++)
 	{
 		if(sdcardInformation.PNFileStatus[i] == true)
 		{
 			//编辑已有的料号
-			if(strcmp((char*)configInformation.PNNumDisplay, (char*)configInformation.PNNum[PNIdx]) == 0)
+			if(configInformation.PNNumDisplayIdx == configInformation.PNNumStringIdx[PNIdx])
 			{
-				//不可编辑系统模板料号
-				if(i == 0)
+				//匹配料号名称
+				for(j = 0; j < configInformation.PNNumDisplayIdx; j++)
 				{
-					return;
+					//不匹配
+					if(configInformation.PNNumDisplay[j] != configInformation.PNNum[PNIdx][j])
+					{
+						break;
+					}
 				}
-				//得到相应PN文件
-				sprintf((char*)fileName, "0:/%d.txt", i);
-				break;
+				//匹配
+				if(j == configInformation.PNNumDisplayIdx)
+				{
+					//不可编辑系统模板料号
+					if(i == 0)
+					{
+						return;
+					}
+					//得到相应PN文件名
+					sprintf((char*)fileName, "0:/%d.txt", i);
+					break;					
+				}
 			}
 			PNIdx++;
 		}
 	}
-	
+//	
+//	while(1)
+//	{
+//		USART_SendData(USART1, PNIdx);
+//	}
+
 	//没有同名的料号
 	if(i == MAX_PN_NUM_MAX_QUANTITY)
 	{
@@ -332,36 +353,33 @@ void sdcard_PN_file_edit(void)
 				sprintf((char*)fileName, "0:/%d.txt", i);
 				//修改引导文件
 				sdcard_index_file_pn_edit(i, configInformation.PNNumDisplay, configInformation.PNNumDisplayIdx);
-				//修改料号列表
-				configInformation.PNNumSelect = PNIdx;
-				configInformation.PNNumQuantity++;
-				configInformation.PNNumStringIdx[PNIdx] = configInformation.PNNumDisplayIdx;
-				for(j = 0; j < configInformation.PNNumDisplayIdx; j++)
-				{
-					configInformation.PNNum[PNIdx][j] = configInformation.PNNumDisplay[j];
-				}
+				//重新装载引导
+				sdcard_index_file_load();
 				
-				sdcardInformation.PNFileStatus[i] = true;
+				break;	
 				
-				break;
 			}
 		}
+		
 		//料号已满
-		return;
+		if(i ==  MAX_PN_NUM_MAX_QUANTITY)
+		{
+			return;
+		}
+
 	}
-
-
-	memset(&PNFile, 0, sizeof(PNFile));
-	memset(&fileName, 0, sizeof(fileName));
+	
+	//料号选择指向
+	configInformation.PNNumSelect = PNIdx;
 	
 	PNFile[PN_FILE_PN_IDX_ADDRESS] = configInformation.PNNumDisplayIdx;
-	for(i = 0; i < MODLE_PN_NUM_BYTE_NUM; i++)
+	for(i = 0; i < configInformation.PNNumDisplayIdx; i++)
 	{
 		PNFile[PN_FILE_PN_NUM_ADDRESS_HIGH + i] = configInformation.PNNumDisplay[i];
 	}
 	
 	PNFile[PN_FILE_PN_DES_IDX_ADDRESS] = configInformation.descriptionStringIdx;
-	for(i = 0; i < MODLE_PN_DESCRIP_BYTE_NUM; i++)
+	for(i = 0; i < configInformation.descriptionStringIdx; i++)
 	{
 		PNFile[PN_FILE_PN_DES_ADDRESS_HIGH + i] = configInformation.PNNumDescription[i];
 	}
@@ -406,7 +424,7 @@ void sdcard_PN_file_edit(void)
 		}
 		
 	}
-	
+
 	f_open(file, (char*)fileName, FA_OPEN_EXISTING | FA_WRITE);
 	f_write(file, PNFile, PN_FILE_MAX_BYTE, &bw);
 	f_close(file);

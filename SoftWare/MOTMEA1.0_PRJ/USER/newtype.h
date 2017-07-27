@@ -69,8 +69,12 @@ typedef struct
 	bool isSaveButtonDown;										//存储按键是否按下
 	bool isConfig;												//是否为配置状态
 	bool isPNNumAdd;											//料号列表是否添加
-	bool isPartUpdate;											//段是否隐藏更新
-	bool isDataUpdate;											//料号对应数据是否更新
+	bool isPartUpdate;											//段是否隐藏更新	false = 未更新 true = 已更新
+	bool isDataUpdate;											//料号对应数据是否已更新 false = 未更新 true = 已更新
+	bool isDataPull;											//屏幕数据是否开始下拉
+	bool isDataReced;											//数据是否接收完毕
+	
+	bool testFlag;															
 	
 }config_Information_TypeDef;
 

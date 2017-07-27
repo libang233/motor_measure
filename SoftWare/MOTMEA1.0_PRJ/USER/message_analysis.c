@@ -343,6 +343,11 @@ bool parser_rec_int_data_deal(u16 IDNum)
 		
 		case ID_PART_NUMBER:
 			configInformation.partNum = data;
+			if(configInformation.partNum > MAX_PART_NUM)
+			{
+				configInformation.partNum = MAX_PART_NUM;
+			}
+			configInformation.isPartUpdate = false;
 			break;
 		
 		case ID_TEST_CURRENT:
@@ -638,13 +643,14 @@ bool parser_rec_select_data_deal(u16 IDNum)
 		case ID_PN_NUMBER_SELECT:
 			configInformation.PNNumSelect = \
 				ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_SELECT_ADDRESS];
-				//更新界面数据
-				configInformation.isDataUpdate = false;
 			break;
 		
 		case ID_POWER_SELECT:
 			configInformation.powerSelect = \
 			ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_SELECT_ADDRESS];
+		
+			//电源作为最后一个数据下拉 以判断数据是否全部接收
+			configInformation.isDataReced = true;
 			break;
 		
 		default:
@@ -875,6 +881,7 @@ bool parser_rec_gui_button_data_deal(u16 IDNum)
 	
 			case ID_CONFIG_SAVE_BUTTON:
 				configInformation.isSaveButtonDown = true;
+				configInformation.isDataPull	   = false;
 				break;
 			
 			case ID_DELETE_PN_BUTTON:
@@ -954,6 +961,10 @@ bool serial_parser_comm_analysis(void)
 			
 			case FRAME_REC_DATA_SELECT_DEF:
 				paser_rec_gui_select_data_deal(IDNum);
+				break;
+			
+			case FRAME_REC_DATA_INT_DEF:
+				parser_rec_gui_int_data_deal(IDNum);
 				break;
 			
 			default:

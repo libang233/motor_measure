@@ -26,7 +26,6 @@
 void config_page_data_push(void)
 {
 	u8 i;
-	u8 j;
 	
 	
 	//上传料号列表
@@ -90,8 +89,6 @@ void config_page_data_pull(void)
 	
 	pull_control_data(ID_PN_NUMBER_SELECT, FRAME_REC_DATA_SELECT_DEF);
 	
-	pull_control_data(ID_POWER_SELECT, FRAME_REC_DATA_SELECT_DEF);
-	
 	pull_control_data(ID_PN_NUMBER, FRAME_REC_DATA_STRING_DEF);
 	
 	pull_control_data(ID_PN_DESCRIP, FRAME_REC_DATA_STRING_DEF);
@@ -123,6 +120,10 @@ void config_page_data_pull(void)
 		
 		pull_control_data(ID_PART1_DOWN_CURRENT + 6 * i, FRAME_REC_DATA_INT_DEF);
 	}
+	
+	//将电源数据放置最后 做为结束标志 
+	//当接收到电源信息时 则认为数据接收完毕
+	pull_control_data(ID_POWER_SELECT, FRAME_REC_DATA_SELECT_DEF);
 }
 
 /**
@@ -195,9 +196,28 @@ void config_page_disappear_part(void)
 {
 	u8 i;
 	
-	//隐藏多余段
-	if(configInformation.partNum < MAX_PART_NUM)
+	
+	if(configInformation.partNum <= MAX_PART_NUM)
 	{
+		//使能有效段
+		for(i = 0; i < configInformation.partNum; i++)
+		{
+			write_control_state(ID_PART1_EXPLAIN + i, CONTROL_ENABLE);
+			
+			write_control_state(ID_PART1_PWM + 6 * i, CONTROL_ENABLE);
+			
+			write_control_state(ID_PART1_TIME + 6 * i, CONTROL_ENABLE);
+			
+			write_control_state(ID_PART1_UP_SPEED + 6 * i, CONTROL_ENABLE);
+			
+			write_control_state(ID_PART1_DOWN_SPEED + 6 * i, CONTROL_ENABLE);
+			
+			write_control_state(ID_PART1_UP_CURRENT + 6 * i, CONTROL_ENABLE);
+			
+			write_control_state(ID_PART1_DOWN_CURRENT + 6 * i, CONTROL_ENABLE);
+			
+		}
+		//隐藏多余段
 		for(i = configInformation.partNum; i < MAX_PART_NUM; i++)
 		{
 			write_control_state(ID_PART1_EXPLAIN + i, CONTROL_DISENABLE_DISAPPER);
@@ -232,23 +252,14 @@ void config_page_update(void)
 	sdcard_PN_file_load();
 
 	//禁能或隐藏相应控件
-	config_page_disenable();
+	//config_page_disenable();
 	
 	//上传数据
 	config_page_data_push();
 	
-}
-
-/**
-* @ Function Name : config_page_init
-* @ Author        : hlb
-* @ Brief         : 配置界面初始化函数
-* @ Date          : 2017.07.25
-* @ Modify        : ...
- **/
-void config_page_init(void)
-{
-
+	//隐藏相应段
+	config_page_disappear_part();
+	
 }
 
 /**
@@ -260,14 +271,12 @@ void config_page_init(void)
  **/
 void config_page_handle(void)
 {
-//	u8 i;
-//	USART_SendData(USART1,configInformation.partInformation[0].testCurrentDownLimit);
-//	USART_SendData(USART1,configInformation.partInformation[0].testCurrentDownLimit >> 8);
-	
+	u8 i;
+
 	if(configInformation.isDataUpdate == false)
 	{
 		config_page_update();
-		
+
 		configInformation.isDataUpdate = true;
 	}
 
@@ -280,28 +289,33 @@ void config_page_handle(void)
 	
 	if(configInformation.isSaveButtonDown == true)
 	{	
+		if(configInformation.isDataPull == false)
+		{
+			//发送下拉数据指令
+			config_page_data_pull();
+			
+			configInformation.isDataPull = true;
+		}
 		
-		config_page_data_pull();
-
-		sdcard_PN_file_edit();
-		
-		while(true)
+		//数据下拉接收完毕
+		if(configInformation.isDataReced == true)
 		{
 
-			USART_SendData(USART1,'1');
-		}
-	
-		configInformation.isDataUpdate = true;
-	
-		configInformation.isDeleteButtonDown = false;
+			sdcard_PN_file_edit();
+
+			configInformation.isDataReced = false;
 		
+			configInformation.isDataUpdate = false;
+	
+			configInformation.isSaveButtonDown = false;
+		}
 	}
 	
 	if(configInformation.isDeleteButtonDown == true)
 	{
 		sdcard_PN_file_delete();
 		
-		configInformation.isDataUpdate = true;
+		configInformation.isDataUpdate = false;
 		
 		configInformation.isDeleteButtonDown = false;
 	}

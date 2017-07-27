@@ -69,7 +69,7 @@
 #define MODLE_PN_DESCRIP								"pwm fan"
 #define	MODLE_PN_POLES_NUM								4
 #define MODLE_PN_PART_NUM								4
-#define MODLE_PN_TEST_POWER								1
+#define MODLE_PN_TEST_POWER								2
 #define	MODLE_PN_TRIGGER								1
 #define MODLE_PN_PWM_FREQUEN							25000
 #define MODLE_PN_CUR									5
