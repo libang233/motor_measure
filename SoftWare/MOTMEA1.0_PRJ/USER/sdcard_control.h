@@ -110,6 +110,15 @@
 #define MODLE_PN_PART4_CURE_UP							2000
 #define MODLE_PN_PART4_CURE_DOWN						1000
 
+//
+//≥ı º√‹¬Î…Ë÷√
+//
+#define INIT_PASSWORD_IDX								8
+#define INIT_PASSWORD									"12345678"
+#define INIT_PASSWORD_TIP_IDX							4
+#define INIT_PASSWORD_TIP								"init"
+
+
 typedef struct
 {
 	u8 sdcardStatus;		//SDø®◊¥Ã¨
@@ -124,6 +133,7 @@ extern sdcard_Information_TypeDef sdcardInformation;
 void sdcard_PN_file_load(void);
 void sdcard_PN_file_edit(void);
 void sdcard_PN_file_delete(void);
+void sdcard_index_file_password_edit(void);
 void sdcard_init(void);
 void sdcard_control_handle(void);
 

@@ -48,7 +48,7 @@ void config_page_data_push(void)
 	
 	write_int(ID_PART_NUMBER, configInformation.partNum);
 	
-	write_control_state(ID_TRIGGER, configInformation.trigger);
+	write_bitmap(ID_TRIGGER, configInformation.trigger);
 	
 	write_int(ID_TEST_CURRENT, configInformation.testCurrent);
 	
@@ -97,7 +97,7 @@ void config_page_data_pull(void)
 	
 	pull_control_data(ID_PART_NUMBER, FRAME_REC_DATA_INT_DEF);
 	
-	pull_control_data(ID_TRIGGER, FRAME_REC_DATA_STATUES_DEF);
+	pull_control_data(ID_TRIGGER, FRAME_REC_DATA_BITMAP_DEF);
 	
 	pull_control_data(ID_TEST_CURRENT, FRAME_REC_DATA_INT_DEF);
 	
@@ -127,6 +127,56 @@ void config_page_data_pull(void)
 }
 
 /**
+* @ Function Name : config_page_enable
+* @ Author        : hlb
+* @ Brief         : 配置界面 使能控件
+* @ Date          : 2017.07.25
+* @ Modify        : ...
+ **/
+void config_page_enable(void)
+{
+	u8 i;
+
+	//使能其他控件
+	write_control_state(ID_POWER_SELECT, CONTROL_ENABLE);
+
+	write_control_state(ID_PN_NUMBER, CONTROL_ENABLE);
+
+	write_control_state(ID_PN_DESCRIP, CONTROL_ENABLE);
+
+	write_control_state(ID_POLES_NUMBER, CONTROL_ENABLE);
+
+	write_control_state(ID_PART_NUMBER, CONTROL_ENABLE);
+
+	write_control_state(ID_TRIGGER, CONTROL_ENABLE);
+
+	write_control_state(ID_TEST_CURRENT, CONTROL_ENABLE);
+
+	write_control_state(ID_CONFIG_PWM, CONTROL_ENABLE);
+	
+		//使能有效段
+	for(i = 0; i < configInformation.partNum; i++)
+	{
+		write_control_state(ID_PART1_EXPLAIN + i, CONTROL_ENABLE);
+		
+		write_control_state(ID_PART1_PWM + 6 * i, CONTROL_ENABLE);
+		
+		write_control_state(ID_PART1_TIME + 6 * i, CONTROL_ENABLE);
+		
+		write_control_state(ID_PART1_UP_SPEED + 6 * i, CONTROL_ENABLE);
+		
+		write_control_state(ID_PART1_DOWN_SPEED + 6 * i, CONTROL_ENABLE);
+		
+		write_control_state(ID_PART1_UP_CURRENT + 6 * i, CONTROL_ENABLE);
+		
+		write_control_state(ID_PART1_DOWN_CURRENT + 6 * i, CONTROL_ENABLE);
+		
+	}	
+
+	
+}
+
+/**
 * @ Function Name : config_page_disenable
 * @ Author        : hlb
 * @ Brief         : 配置界面 查阅状态下禁能控件
@@ -135,18 +185,9 @@ void config_page_data_pull(void)
  **/
 void config_page_disenable(void)
 {
-	u8 i;
 
-	
-	//是否为配置状态
 	if(configInformation.isConfig == false)
 	{
-		//禁能并消除显示存储和删除按键
-		write_control_state(ID_CONFIG_SAVE_BUTTON, CONTROL_DISENABLE_DISAPPER);
-	
-		write_control_state(ID_DELETE_PN_BUTTON, CONTROL_DISENABLE_DISAPPER);	
-
-
 		//禁能其他控件
 		write_control_state(ID_POWER_SELECT, CONTROL_DISENABLE);
 
@@ -163,26 +204,7 @@ void config_page_disenable(void)
 		write_control_state(ID_TEST_CURRENT, CONTROL_DISENABLE);
 
 		write_control_state(ID_CONFIG_PWM, CONTROL_DISENABLE);
-
-
-		//遍历段 禁能
-		for(i = 0; i < configInformation.partNum; i++)
-		{
-			write_control_state(ID_PART1_EXPLAIN + i, CONTROL_DISENABLE);
-
-			write_control_state(ID_PART1_PWM + 6 * i, CONTROL_DISENABLE);
-
-			write_control_state(ID_PART1_TIME + 6 * i, CONTROL_DISENABLE);
-
-			write_control_state(ID_PART1_UP_SPEED + 6 * i, CONTROL_DISENABLE);
-
-			write_control_state(ID_PART1_DOWN_SPEED + 6 * i, CONTROL_DISENABLE);
-
-			write_control_state(ID_PART1_UP_CURRENT + 6 * i, CONTROL_DISENABLE);
-
-			write_control_state(ID_PART1_DOWN_CURRENT + 6 * i, CONTROL_DISENABLE);
-		}		
-	
+		
 	}
 }
 /**
@@ -199,24 +221,50 @@ void config_page_disappear_part(void)
 	
 	if(configInformation.partNum <= MAX_PART_NUM)
 	{
-		//使能有效段
-		for(i = 0; i < configInformation.partNum; i++)
+		//如果为查阅状态
+		if(configInformation.isConfig == false)
 		{
-			write_control_state(ID_PART1_EXPLAIN + i, CONTROL_ENABLE);
-			
-			write_control_state(ID_PART1_PWM + 6 * i, CONTROL_ENABLE);
-			
-			write_control_state(ID_PART1_TIME + 6 * i, CONTROL_ENABLE);
-			
-			write_control_state(ID_PART1_UP_SPEED + 6 * i, CONTROL_ENABLE);
-			
-			write_control_state(ID_PART1_DOWN_SPEED + 6 * i, CONTROL_ENABLE);
-			
-			write_control_state(ID_PART1_UP_CURRENT + 6 * i, CONTROL_ENABLE);
-			
-			write_control_state(ID_PART1_DOWN_CURRENT + 6 * i, CONTROL_ENABLE);
-			
+			//禁能有效段
+			for(i = 0; i < configInformation.partNum; i++)
+			{
+				write_control_state(ID_PART1_EXPLAIN + i, CONTROL_DISENABLE);
+				
+				write_control_state(ID_PART1_PWM + 6 * i, CONTROL_DISENABLE);
+				
+				write_control_state(ID_PART1_TIME + 6 * i, CONTROL_DISENABLE);
+				
+				write_control_state(ID_PART1_UP_SPEED + 6 * i, CONTROL_DISENABLE);
+				
+				write_control_state(ID_PART1_DOWN_SPEED + 6 * i, CONTROL_DISENABLE);
+				
+				write_control_state(ID_PART1_UP_CURRENT + 6 * i, CONTROL_DISENABLE);
+				
+				write_control_state(ID_PART1_DOWN_CURRENT + 6 * i, CONTROL_DISENABLE);
+				
+			}			
 		}
+		else
+		{
+			//使能有效段
+			for(i = 0; i < configInformation.partNum; i++)
+			{
+				write_control_state(ID_PART1_EXPLAIN + i, CONTROL_ENABLE);
+				
+				write_control_state(ID_PART1_PWM + 6 * i, CONTROL_ENABLE);
+				
+				write_control_state(ID_PART1_TIME + 6 * i, CONTROL_ENABLE);
+				
+				write_control_state(ID_PART1_UP_SPEED + 6 * i, CONTROL_ENABLE);
+				
+				write_control_state(ID_PART1_DOWN_SPEED + 6 * i, CONTROL_ENABLE);
+				
+				write_control_state(ID_PART1_UP_CURRENT + 6 * i, CONTROL_ENABLE);
+				
+				write_control_state(ID_PART1_DOWN_CURRENT + 6 * i, CONTROL_ENABLE);
+				
+			}	
+		}
+
 		//隐藏多余段
 		for(i = configInformation.partNum; i < MAX_PART_NUM; i++)
 		{
@@ -250,38 +298,131 @@ void config_page_update(void)
 
 	//从sd卡下载数据
 	sdcard_PN_file_load();
-
-	//禁能或隐藏相应控件
-	//config_page_disenable();
+	
+	//使能相应控件
+	config_page_enable();
 	
 	//上传数据
 	config_page_data_push();
 	
-	//隐藏相应段
-	config_page_disappear_part();
+	//禁能相应控件
+	config_page_disenable();
+}
+
+ /**
+* @ Function Name : config_page_PN_save
+* @ Author        : hlb
+* @ Brief         : 配置界面料号存储事件
+* @ Date          : 2017.07.29
+* @ Output        : bool			是否处理完毕
+* @ Modify        : ...
+ **/ 
+bool config_page_PN_save(void)
+{
+	if(configInformation.isDataPull == true)
+	{
+		//发送下拉数据指令
+		config_page_data_pull();
+		
+		configInformation.isDataPull = false;
+	}
+	//数据下拉接收完毕
+	if(configInformation.isDataReced == true)
+	{
+		//修改PN文件
+		sdcard_PN_file_edit();
+
+		configInformation.isDataReced = false;
 	
+		configInformation.isDataUpdate = false;
+
+		return true;
+	}
+	
+	return false;
+}
+
+/**
+* @ Function Name : config_page_init
+* @ Author        : hlb
+* @ Brief         : 配置界面初始化
+* @ Date          : 2017.07.28
+* @ Modify        : ...
+ **/
+void config_page_init(void)
+{
+	
+	//是否为配置状态
+	if(configInformation.isConfig == false)
+	{
+		//禁能并消除显示存储和删除按键
+		write_control_state(ID_CONFIG_SAVE_BUTTON, CONTROL_DISENABLE_DISAPPER);
+
+		write_control_state(ID_DELETE_PN_BUTTON, CONTROL_DISENABLE_DISAPPER);	
+		
+		if(configInformation.PNNumQuantity == 1)
+		{
+			//只有模板料号存在
+			configInformation.PNNumSelect = MODLE_PN_POSITION;
+		}
+		else
+		{
+			//选取最后一个料号
+			configInformation.PNNumSelect = configInformation.PNNumQuantity - 1;
+		}
+	}
+	else
+	{
+				
+		//显示存储和删除按键
+		write_control_state(ID_CONFIG_SAVE_BUTTON, CONTROL_ENABLE);
+
+		write_control_state(ID_DELETE_PN_BUTTON, CONTROL_ENABLE);	
+		
+		if(configInformation.PNNumQuantity >= MAX_PN_NUM_MAX_QUANTITY)
+		{
+			//料号已满 读取第二个料号
+			configInformation.PNNumSelect = MODLE_PN_POSITION + 1;
+		}
+		else
+		{
+			//料号未满 读取模板料号
+			configInformation.PNNumSelect = MODLE_PN_POSITION;
+		}
+	}
 }
 
 /**
 * @ Function Name : config_page_handle
 * @ Author        : hlb
-* @ Brief         : 配置界面函数
+* @ Brief         : 配置界面线程
 * @ Date          : 2017.07.25
 * @ Modify        : ...
  **/
 void config_page_handle(void)
 {
-	u8 i;
-
+	
+	if(globalInformation.isPageInit == false)
+	{
+		//初始化界面
+		config_page_init();
+		
+		configInformation.isDataUpdate = false;
+		globalInformation.isPageInit = true;
+	}
+	
 	if(configInformation.isDataUpdate == false)
 	{
+		//更新界面数据
 		config_page_update();
 
+		configInformation.isPartUpdate = false;
 		configInformation.isDataUpdate = true;
 	}
 
 	if(configInformation.isPartUpdate == false)
 	{
+		//更新段的状态
 		config_page_disappear_part();
 		
 		configInformation.isPartUpdate = true;
@@ -289,30 +430,16 @@ void config_page_handle(void)
 	
 	if(configInformation.isSaveButtonDown == true)
 	{	
-		if(configInformation.isDataPull == false)
+		//进入料号存储事件
+		if(config_page_PN_save() == true)
 		{
-			//发送下拉数据指令
-			config_page_data_pull();
-			
-			configInformation.isDataPull = true;
-		}
-		
-		//数据下拉接收完毕
-		if(configInformation.isDataReced == true)
-		{
-
-			sdcard_PN_file_edit();
-
-			configInformation.isDataReced = false;
-		
-			configInformation.isDataUpdate = false;
-	
 			configInformation.isSaveButtonDown = false;
 		}
 	}
 	
 	if(configInformation.isDeleteButtonDown == true)
 	{
+		//删除存储料号
 		sdcard_PN_file_delete();
 		
 		configInformation.isDataUpdate = false;

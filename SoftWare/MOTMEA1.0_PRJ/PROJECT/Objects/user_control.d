@@ -22,4 +22,6 @@
 .\objects\user_control.o: ..\USER\message_analysis.h
 .\objects\user_control.o: ..\USER\IDnum.h
 .\objects\user_control.o: ..\Page\config_page_control.h
+.\objects\user_control.o: ..\Page\password_page_control.h
+.\objects\user_control.o: ..\Page\begin_page_control.h
 .\objects\user_control.o: ..\USER\message_send.h

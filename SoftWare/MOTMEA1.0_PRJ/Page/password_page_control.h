@@ -3,5 +3,8 @@
 
 #include "config.h"
 
+
+void password_page_handle(void);
+
 #endif
 

@@ -72,9 +72,6 @@ void sys_manager_init(void)
 	//LED和蜂鸣器初始化
 	LED_buzzer_init();
 	
-	//屏幕初始化
-	screen_init();
-	
 	
 }
 

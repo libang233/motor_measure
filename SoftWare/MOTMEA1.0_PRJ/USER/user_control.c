@@ -12,6 +12,8 @@
 #include "sys_manager.h"
 #include "message_analysis.h"
 #include "config_page_control.h"
+#include "password_page_control.h"
+#include "begin_page_control.h"
 #include "message_send.h"
  
   
@@ -30,6 +32,7 @@ void user_control_handle(void)
 	switch(globalInformation.nowPage)
 	{
 		case PAGE_NUM_BEGIN:
+			begin_page_handle();
 			break;
 		
 		case PAGE_NUM_TEST:
@@ -43,6 +46,7 @@ void user_control_handle(void)
 			break;
 		
 		case PAGE_NUM_PASSWORD_INPUT:
+			password_page_handle();
 			break;
 		
 		case PAGE_NUM_PASSWORD_WRONG:

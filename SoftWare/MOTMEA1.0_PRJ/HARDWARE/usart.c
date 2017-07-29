@@ -115,7 +115,6 @@ void usart_init(u32 mode)
  **/
 void USART1_IRQHandler(void)                	
 {
-	u16 i;
 	u32 Res;
 
 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)  		

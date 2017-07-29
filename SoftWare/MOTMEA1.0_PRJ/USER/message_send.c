@@ -254,7 +254,6 @@ void write_date(u16 IDNum, u16 year, u8 month, u8 day)
 **/
 void write_time(u16 IDNum, u8 hour, u8 minute, u8 second)
 {
-	u8 i;
 	u8 frame[FRAME_WRITE_TIME_SIZE];
 	
 	frame[FRAME_DATA_HEAD_ADDRESS]	   		= FRAME_WRITE_TIME_DATA_HEAD;

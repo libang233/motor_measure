@@ -49,8 +49,6 @@ void sdcard_index_file_load(void)
 	}
 	f_close(file);
 	
-
-	
 	adjustInformation.inputCurrentStringIdx = buffer[INDEX_DATA_ADJUST_CUR_BYTE_NUM_ADDRESS];
 	for(i = 0; i < adjustInformation.inputCurrentStringIdx; i++)
 	{
@@ -75,13 +73,15 @@ void sdcard_index_file_load(void)
 		
 		if(buffer[INDEX_DATA_PN_NUM_BYTE_NUM_ADDRESS + i * INDEX_DATA_ONE_PN_SIZE] != 0)
 		{
+			//生成可用的料号的列表
 			sdcardInformation.PNFileStatus[i] = true;
 			
 			//读取PN号字符串索引
 			configInformation.PNNumStringIdx[configInformation.PNNumQuantity] = \
 				buffer[INDEX_DATA_PN_NUM_BYTE_NUM_ADDRESS + i * INDEX_DATA_ONE_PN_SIZE];
+			
 			//根据偏移读取每一项PN
-			for(j = 0; j < configInformation.PNNumStringIdx[i]; j++)
+			for(j = 0; j < configInformation.PNNumStringIdx[configInformation.PNNumQuantity]; j++)
 			{
 				configInformation.PNNum[configInformation.PNNumQuantity][j] = \
 					buffer[INDEX_DATA_PN_NUM_ADDRESS_HIGH + i * INDEX_DATA_ONE_PN_SIZE + j];
@@ -98,6 +98,67 @@ void sdcard_index_file_load(void)
 	
 }
 
+/**
+* @ Function Name : sdcard_index_file_password_edit
+* @ Author        : hlb
+* @ Brief         : SD卡引导文件密码编辑
+* @ Date          : 2017.07.25
+* @ Modify        : ...
+**/
+void sdcard_index_file_password_edit(void)
+{
+	u8 i;
+	u8 res;
+	u8 buffer[INDEX_DATA_MAX_BYTE];
+	
+	//清空缓冲区
+	memset(&buffer, 0, INDEX_DATA_MAX_BYTE);
+	
+	f_open(file, "0:/index.txt", FA_OPEN_EXISTING | FA_READ);
+	
+	br = 1;
+	
+	while(1)
+	{
+		res = f_read(file, buffer, INDEX_DATA_MAX_BYTE, &br);
+		if(res || br == 0)
+		{
+			break;
+		}
+	}
+	f_close(file);
+	
+	buffer[INDEX_DATA_PASSWORD_BYTE_NUM_ADDRESS] = passwordInformation.newPasswordStringIdx;
+	for(i = 0; i < passwordInformation.newPasswordStringIdx; i++)
+	{
+		buffer[INDEX_DATA_PASSWORD_ADDRESS_HIGH + i] = passwordInformation.newPassword[i];
+	}
+	
+	buffer[INDEX_DATA_PASSWORD_TIP_BYTE_NUM_ADDRESS] = passwordInformation.newPasswordTipStringIdx;
+	for(i = 0; i <passwordInformation.newPasswordTipStringIdx; i++)
+	{
+		buffer[INDEX_DATA_PASSWORD_TIP_ADDRESS_HIGH + i] = passwordInformation.newPasswordTip[i];
+	}
+	
+	f_open(file, "0:/index.txt", FA_OPEN_EXISTING | FA_WRITE);
+	f_write(file, buffer, INDEX_DATA_MAX_BYTE, &bw);
+	f_close(file);
+	
+	passwordInformation.realPasswordStringIdx = passwordInformation.newPasswordStringIdx;
+	for(i = 0; i < passwordInformation.newPasswordStringIdx; i++)
+	{
+		passwordInformation.realPassword[i] = passwordInformation.newPassword[i];
+	}
+	
+	passwordInformation.oldPasswordTipStringIdx = passwordInformation.newPasswordTipStringIdx;
+	for(i = 0; i <passwordInformation.newPasswordTipStringIdx; i++)
+	{
+		passwordInformation.oldPasswordTip[i] = passwordInformation.newPasswordTip[i];
+	}
+
+}
+	
+	
 /**
 * @ Function Name : sdcard_index_file_pn_edit
 * @ Author        : hlb
@@ -131,6 +192,7 @@ void sdcard_index_file_pn_edit(u8 pos, u8 *PNNum, u8 size)
 	}
 	f_close(file);
 	
+	//修改变更的料号
 	buffer[INDEX_DATA_PN_NUM_BYTE_NUM_ADDRESS + pos * INDEX_DATA_ONE_PN_SIZE] = size;
 	for(i = 0; i < size; i++)
 	{
@@ -160,8 +222,10 @@ void sdcard_PN_file_load(void)
 	u8 fileName[PN_FILE_NAME_SIZE_MAX];
 	u8 buffer[PN_FILE_MAX_BYTE];
 	
+	//清空数组
 	memset(fileName, 0, PN_FILE_NAME_SIZE_MAX);
 	
+	//寻找当前料号选择所对应的料号文件
 	for(i = 0; i < MAX_PN_NUM_MAX_QUANTITY; i++)
 	{
 		if(sdcardInformation.PNFileStatus[i] == true)
@@ -174,8 +238,6 @@ void sdcard_PN_file_load(void)
 			PNIdx++;
 		}
 	}
-
-	
 	
 	f_open(file, (char*)fileName, FA_OPEN_EXISTING | FA_READ);
 	br = 1;
@@ -194,7 +256,7 @@ void sdcard_PN_file_load(void)
 	f_close(file);
 	
 
-	
+	//装载料号文件内容到结构体数据
 	configInformation.PNNumDisplayIdx = buffer[PN_FILE_PN_IDX_ADDRESS];
 	for(i = 0; i < configInformation.PNNumDisplayIdx; i++)
 	{
@@ -248,7 +310,7 @@ void sdcard_PN_file_load(void)
 * @ Function Name : sdcard_PN_file_delete
 * @ Author        : hlb
 * @ Brief         : SD卡料号删除
-* @ Date          : 2017.07.25
+* @ Date          : 2017.07.28
 * @ Modify        : ...
 **/
 void sdcard_PN_file_delete(void)
@@ -269,28 +331,35 @@ void sdcard_PN_file_delete(void)
 					//系统模板不可删除
 					return;
 				}
+				//修改引导
 				sdcard_index_file_pn_edit(i,PNNum,size);
 			}
 			PNIdx ++;
 		}
 	}
+	//重新装载引导
+	//sdcard_index_file_load();
 	
-	sdcard_index_file_load();
-	
-	//如果下一个料号不存在 否则不变
-	if(configInformation.PNNumSelect == configInformation.PNNumQuantity )
+	//如果下一个料号不存在
+	if(configInformation.PNNumSelect == configInformation.PNNumQuantity - 1)
 	{
+		//选择上一个料号
 		configInformation.PNNumSelect--;
 	}
+	else
+	{
+		//选择下一个料号
+		configInformation.PNNumSelect++;
+	}
 
-	
+	configInformation.PNNumQuantity--;
 }
 
 /**
 * @ Function Name : sdcard_PN_file_edit
 * @ Author        : hlb
 * @ Brief         : SD卡料号编辑
-* @ Date          : 2017.07.25
+* @ Date          : 2017.07.27
 * @ Modify        : ...
 **/
 void sdcard_PN_file_edit(void)
@@ -301,6 +370,7 @@ void sdcard_PN_file_edit(void)
 	u8 PNFile[PN_FILE_MAX_BYTE];
 	u8 fileName[PN_FILE_NAME_SIZE_MAX];
 	
+	//清空数组
 	memset(&PNFile, 0, sizeof(PNFile));
 	memset(&fileName, 0, sizeof(fileName));
 	
@@ -330,35 +400,41 @@ void sdcard_PN_file_edit(void)
 					}
 					//得到相应PN文件名
 					sprintf((char*)fileName, "0:/%d.txt", i);
+					
+					//料号选择指向被修改的料号
+					configInformation.PNNumSelect = PNIdx;
+					
 					break;					
 				}
 			}
 			PNIdx++;
 		}
 	}
-//	
-//	while(1)
-//	{
-//		USART_SendData(USART1, PNIdx);
-//	}
 
+	PNIdx = 0;
 	//没有同名的料号
 	if(i == MAX_PN_NUM_MAX_QUANTITY)
 	{
 		for(i = 0; i < MAX_PN_NUM_MAX_QUANTITY; i++)
 		{
-			//新建料号
+			//寻找可用的料号文件
 			if(sdcardInformation.PNFileStatus[i] == false)
 			{
+				//分配文件
 				sprintf((char*)fileName, "0:/%d.txt", i);
+				
 				//修改引导文件
 				sdcard_index_file_pn_edit(i, configInformation.PNNumDisplay, configInformation.PNNumDisplayIdx);
+				
 				//重新装载引导
 				sdcard_index_file_load();
 				
-				break;	
+				//料号选择指向被新建的料号
+				configInformation.PNNumSelect = PNIdx;	
 				
+				break;	
 			}
+			PNIdx++;
 		}
 		
 		//料号已满
@@ -369,8 +445,6 @@ void sdcard_PN_file_edit(void)
 
 	}
 	
-	//料号选择指向
-	configInformation.PNNumSelect = PNIdx;
 	
 	PNFile[PN_FILE_PN_IDX_ADDRESS] = configInformation.PNNumDisplayIdx;
 	for(i = 0; i < configInformation.PNNumDisplayIdx; i++)
@@ -379,7 +453,7 @@ void sdcard_PN_file_edit(void)
 	}
 	
 	PNFile[PN_FILE_PN_DES_IDX_ADDRESS] = configInformation.descriptionStringIdx;
-	for(i = 0; i < configInformation.descriptionStringIdx; i++)
+	for(i = 0; i < configInformation.descriptionStringIdx; i++) 
 	{
 		PNFile[PN_FILE_PN_DES_ADDRESS_HIGH + i] = configInformation.PNNumDescription[i];
 	}
@@ -558,9 +632,26 @@ void sdcard_index_file_creat(void)
 	u8 i;
 
 	u8 modlePN[] = MODLE_PN_NUM;
+	u8 initPassword[] = INIT_PASSWORD;
+	u8 initPasswordTip[] = INIT_PASSWORD_TIP;
 	u8 sdInformaIndex[INDEX_DATA_MAX_BYTE];
+	
 	memset(&sdInformaIndex, 0, sizeof(sdInformaIndex));
 	
+	//设定初始密码
+	sdInformaIndex[INDEX_DATA_PASSWORD_BYTE_NUM_ADDRESS] = INIT_PASSWORD_IDX;
+	for(i = 0; i < INIT_PASSWORD_IDX; i++)
+	{
+		sdInformaIndex[INDEX_DATA_PASSWORD_ADDRESS_HIGH + i] = initPassword[i];
+	}
+	
+	sdInformaIndex[ INDEX_DATA_PASSWORD_TIP_BYTE_NUM_ADDRESS] = INIT_PASSWORD_TIP_IDX;
+	for(i = 0; i < INIT_PASSWORD_TIP_IDX; i++)
+	{
+		sdInformaIndex[INDEX_DATA_PASSWORD_TIP_ADDRESS_HIGH + i] = initPasswordTip[i];
+	}
+	
+	//设定初始料号
 	sdInformaIndex[INDEX_DATA_HEAD_ADDRESS] = INDEX_DATA_HEAD_DEF;
 	sdInformaIndex[INDEX_DATA_PN_NUM_QUANT_ADDRESS] = 1;
 	sdInformaIndex[INDEX_DATA_PN_NUM_BYTE_NUM_ADDRESS] = MODLE_PN_NUM_BYTE_NUM;
@@ -633,7 +724,8 @@ void sdcard_init(void)
 			else if(sdcardInformation.sdcardStatus == FR_EXIST)
 			{
 				//下载数据
-				sdcard_index_file_load();	
+				sdcard_index_file_load();
+				
 				sdcardInformation.sdcardStatus = FR_OK;		
 			}
 		}
@@ -649,19 +741,14 @@ void sdcard_init(void)
 **/
 void sdcard_control_handle(void)
 {
-	u8 readOK[]= "readOK";
-	u8 readError[] = "error";
 	if(sdcardInformation.sdcardStatus == FR_OK)
 	{	
-		//usart_tx(readOK, 6);
+
 	}
 	else
 	{
 		//SD卡初始化
 		sdcard_init();
-		
-		usart_tx(readError, 5);
-		
 	}
 }
 

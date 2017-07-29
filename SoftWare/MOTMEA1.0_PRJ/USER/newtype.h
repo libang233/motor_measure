@@ -68,7 +68,6 @@ typedef struct
 	bool isDeleteButtonDown;									//删除按键是否按下									
 	bool isSaveButtonDown;										//存储按键是否按下
 	bool isConfig;												//是否为配置状态
-	bool isPNNumAdd;											//料号列表是否添加
 	bool isPartUpdate;											//段是否隐藏更新	false = 未更新 true = 已更新
 	bool isDataUpdate;											//料号对应数据是否已更新 false = 未更新 true = 已更新
 	bool isDataPull;											//屏幕数据是否开始下拉
@@ -156,13 +155,17 @@ typedef struct
 	u8 oldPasswordTip[MAX_BYTE_NUM_PASSWORD_TIP];		//旧密码输入提示字符
 	u8 oldPasswordTipStringIdx;							//前一项字符串索引
 	u8 newPasswordTip[MAX_BYTE_NUM_PASSWORD_TIP];		//新密码输入提示字符
-	u8 newPasswrordTipStringIdx;						//前一项字符串索引		
+	u8 newPasswordTipStringIdx;							//前一项字符串索引		
 	u8 realPassword[MAX_BYTE_NUM_PASSWORD];				//正确的密码
 	u8 realPasswordStringIdx;							//前一项字符串索引
 	
 	bool isOkButtonDown;								//是否按下密码确定键
 	bool isChangeButtonDown;							//是否按下密码修改键
 	bool isChangeOkButtonDown;							//是否按下密码修改OK键
+	bool isGetOldPassword;								//是否以接收到旧密码
+	bool isGetNewPassword;								//是否接收到新密码
+	bool isDataPullInput;								//是否完成下拉输入的密码
+	bool isDataPullNew;									//是否完成下拉新密码
 	
 	
 }password_Information_TypeDef;
@@ -228,6 +231,7 @@ typedef struct
 typedef struct
 {
 	u8 nowPage;						//当前页面
+	bool isPageInit;				//界面是否初始化	false = 未初始化 true = 已初始化
 	
 }global_Information_TypeDef;
 

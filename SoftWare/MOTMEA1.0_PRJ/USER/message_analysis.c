@@ -546,7 +546,7 @@ bool parser_rec_string_data_deal(u16 IDNum)
 			passwordInformation.inputPasswordStringIdx = 0;
 			for(i = 0; i < byteNum; i++)
 			{
-				if(passwordInformation.inputPasswordStringIdx < MAX_BYTE_NUM_DISPLAY_CURRENT)
+				if(passwordInformation.inputPasswordStringIdx < MAX_BYTE_NUM_PASSWORD)
 				{
 					passwordInformation.inputPassword[passwordInformation.inputPasswordStringIdx++] = \
 						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
@@ -556,13 +556,14 @@ bool parser_rec_string_data_deal(u16 IDNum)
 					break;
 				}
 			}
+			passwordInformation.isGetOldPassword = true;
 			break;
 			
 		case ID_OLD_PASSWORD:
 			passwordInformation.oldPasswordStringIdx = 0;
 			for(i = 0; i < byteNum; i++)
 			{
-				if(passwordInformation.oldPasswordStringIdx < MAX_BYTE_NUM_DISPLAY_CURRENT)
+				if(passwordInformation.oldPasswordStringIdx <MAX_BYTE_NUM_PASSWORD)
 				{
 					passwordInformation.oldPassword[passwordInformation.oldPasswordStringIdx++] = \
 						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
@@ -578,7 +579,7 @@ bool parser_rec_string_data_deal(u16 IDNum)
 			passwordInformation.newPasswordStringIdx = 0;
 			for(i = 0; i < byteNum; i++)
 			{
-				if(passwordInformation.newPasswordStringIdx < MAX_BYTE_NUM_DISPLAY_CURRENT)
+				if(passwordInformation.newPasswordStringIdx < MAX_BYTE_NUM_PASSWORD)
 				{
 					passwordInformation.newPassword[passwordInformation.newPasswordStringIdx++] = \
 						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
@@ -588,7 +589,40 @@ bool parser_rec_string_data_deal(u16 IDNum)
 					break;
 				}
 			}
+			passwordInformation.isGetNewPassword = true;
 			break;		
+			
+		case ID_OLD_PASSWORD_TIP:
+			passwordInformation.oldPasswordTipStringIdx = 0;
+			for(i = 0; i < byteNum; i++)
+			{
+				if(passwordInformation.oldPasswordTipStringIdx < MAX_BYTE_NUM_PASSWORD_TIP)
+				{
+					passwordInformation.oldPasswordTip[passwordInformation.oldPasswordTipStringIdx++] = \
+						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
+				}
+				else
+				{
+					break;
+				}
+			}
+			break;
+		
+		case ID_NEW_PASSWORD_TIP:
+			passwordInformation.newPasswordTipStringIdx = 0;
+			for(i = 0; i < byteNum; i++)
+			{
+				if(passwordInformation.newPasswordTipStringIdx < MAX_BYTE_NUM_PASSWORD_TIP)
+				{
+					passwordInformation.newPasswordTip[passwordInformation.newPasswordTipStringIdx++] = \
+						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
+				}
+				else
+				{
+					break;
+				}
+			}			
+			break;
 			
 		default:
 			return false;
@@ -610,6 +644,11 @@ bool parser_rec_bitmap_data_deal(u16 IDNum)
 {
 	switch(IDNum)
 	{
+		case ID_TRIGGER:
+			configInformation.trigger = \
+				ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_BITMAP_STATUS_ADDRESS];
+			break;
+		
 		case ID_TEST_OK:
 			testingInformation.resultBitmapOK = \
 				ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_BITMAP_STATUS_ADDRESS];
@@ -759,7 +798,6 @@ bool parser_rec_page_data_deal(void)
 {
 	globalInformation.nowPage = \
 		ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_PAGE_IDX_ADDRESS];
-	configInformation.isDataUpdate = false;
 
 	return true;
 }
@@ -778,6 +816,7 @@ bool paser_rec_gui_select_data_deal(u16 IDNum)
 	{
 		case ID_PN_NUMBER_SELECT:
 			configInformation.PNNumSelect = ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_GUI_DATA_SELECT_ADDRESS];
+		
 			configInformation.isDataUpdate = false;
 			break;
 		default:
@@ -798,6 +837,8 @@ bool parser_rec_gui_page_data_deal(u16 IDNum)
 {
 	globalInformation.nowPage = \
 		ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_GUI_DATA_PAGE_IDX_ADDRESS];
+	//更新界面初始化标志
+	globalInformation.isPageInit = false;
 
 	return true;
 }
@@ -819,7 +860,9 @@ bool parser_rec_gui_int_data_deal(u16 IDNum)
 			configInformation.partNum = ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_GUI_DATA_INT_ADDRESS_HIGH + 3];
 			if(configInformation.partNum > MAX_PART_NUM)
 			{
+				//限制最大段数				
 				configInformation.partNum = MAX_PART_NUM;
+				write_int(ID_PART_NUMBER, MAX_PART_NUM);
 			}
 			//更新段号
 			configInformation.isPartUpdate = false;
@@ -881,7 +924,7 @@ bool parser_rec_gui_button_data_deal(u16 IDNum)
 	
 			case ID_CONFIG_SAVE_BUTTON:
 				configInformation.isSaveButtonDown = true;
-				configInformation.isDataPull	   = false;
+				configInformation.isDataPull	   = true;
 				break;
 			
 			case ID_DELETE_PN_BUTTON:
@@ -897,7 +940,8 @@ bool parser_rec_gui_button_data_deal(u16 IDNum)
 				break;
 			
 			case ID_PASSWORD_OK_BUTTON:
-				passwordInformation.isOkButtonDown = true;
+				passwordInformation.isOkButtonDown  = true;
+				passwordInformation.isDataPullInput = true;
 				break;
 			
 			case ID_PASSWORD_CHANGE_BUTTON:
@@ -906,6 +950,7 @@ bool parser_rec_gui_button_data_deal(u16 IDNum)
 			
 			case ID_PASSWORD_CHANGE_OK_BUTTON:
 				passwordInformation.isChangeOkButtonDown = true;
+				passwordInformation.isDataPullNew   	 = true;
 				break;
 			
 			default:
@@ -991,7 +1036,7 @@ bool serial_parser_comm_analysis(void)
 				parser_rec_string_data_deal(IDNum);
 				break;
 			
-			case FRAME_REC_DATA_STATUES_DEF:
+			case FRAME_REC_DATA_BITMAP_DEF:
 				parser_rec_bitmap_data_deal(IDNum);
 				break;
 			
@@ -1029,16 +1074,13 @@ bool serial_parser_comm_analysis(void)
 **/
 void usart_analysis_handle(void)
 {
-
-	int i;
-	u8 res[10];
 	
 	//解析器装载缓冲
 	parser_moniter_add_buff();
 	
 	if(get_parser_buffers_length() > 0)
 	{
-	
+		//解析帧
 		if(serial_parser_comm_analysis() == true)
 		{
 			ParserMoniter.GetIdx++;	
@@ -1052,28 +1094,6 @@ void usart_analysis_handle(void)
 		{
 			ParserMoniter.GetIdx = 0;
 		}
-
 	}
-	
-	
-	
-//	if(configInformation.isSaveButtonDown == true)
-//	{
-//		while(1)
-//		{
-//			USART_SendData(USART1,'1');
-//		}
-//	}
-//	
-//	sprintf((char*)res, "%d", globalInformation.nowPage);
-//	
-//	if(globalInformation.nowPage != 0)
-//	{
-//		usart_tx(res, 1);
-//	}
-//	
-//	
-
-
 }
 

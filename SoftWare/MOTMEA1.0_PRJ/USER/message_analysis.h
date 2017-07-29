@@ -90,7 +90,7 @@
 
 #define FRAME_REC_DATA_INT_DEF					0x22				//数据帧返回数据包整型数据类型字符
 #define FRAME_REC_DATA_STRING_DEF				0x23				//数据帧返回数据包字符串数据类型字符
-#define FRAME_REC_DATA_STATUES_DEF				0x21				//数据帧返回数据包状态数据类型字符		
+#define FRAME_REC_DATA_BITMAP_DEF				0x21				//数据帧返回数据包状态数据类型字符		
 #define FRAME_REC_DATA_SELECT_DEF				0x25				//数据帧返回数据包索引数据类型字符	
 #define FRAME_REC_DATA_BAR_DEF					0x10				//数据帧返回数据包进度条数据类型字符	
 #define FRAME_REC_DATA_TIME_DEF					0x13				//数据帧返回数据包时间数据类型字符	

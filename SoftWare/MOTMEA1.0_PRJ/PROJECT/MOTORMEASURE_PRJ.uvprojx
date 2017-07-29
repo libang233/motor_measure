@@ -617,6 +617,11 @@
               <FileType>1</FileType>
               <FilePath>..\Page\password_page_control.c</FilePath>
             </File>
+            <File>
+              <FileName>begin_page_control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Page\begin_page_control.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
