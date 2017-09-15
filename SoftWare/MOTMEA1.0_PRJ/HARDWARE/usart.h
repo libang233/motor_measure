@@ -14,10 +14,10 @@
 #define TX_BUFFER_NUM_DEFAULT   (u32)2
 
 //缓冲区头部索引
-#define BUFFER_HEAD_DEFAULT          (u32)0
+#define BUFFER_HEAD_DEFAULT     (u32)0
 
 //使能接收
-#define EN_USART1_RX 			1	     
+#define EN_USART1_RX 		    1	     
 
 
 // 串口初始化模式定义

@@ -118,6 +118,8 @@
 #define INIT_PASSWORD_TIP_IDX							4
 #define INIT_PASSWORD_TIP								"init"
 
+#define INIT_PN_FILE_AD									"0:/1.txt"
+#define PN_FILE_NUM_POSITION							3
 
 typedef struct
 {

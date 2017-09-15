@@ -145,7 +145,6 @@ void parser_moniter_add_buff(void)
 					}
 				}				
 			}
-
 		}
 	}
 }
@@ -892,10 +891,6 @@ bool parser_rec_gui_select_data_deal(u16 IDNum)
 			configInformation.PNNumSelect = ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_GUI_DATA_SELECT_ADDRESS];
 			//更新数据标志开启
 			configInformation.isDataUpdate = false;
-			break;
-		
-		case ID_POWER_SELECT:
-			configInformation.powerSelect = ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_GUI_DATA_SELECT_ADDRESS];
 			break;
 		
 		default:

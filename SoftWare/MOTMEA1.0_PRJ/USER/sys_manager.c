@@ -12,7 +12,6 @@
 #include "sys_manager.h"
 #include "usart.h"
 #include "LED_buzzer.h"
-#include "screen.h"
 #include "data_init.h"
 #include "message_analysis.h"
 #include "message_send.h"
@@ -98,7 +97,6 @@ void sys_manager_handle(void)
 	//用户控制器线程
 	user_control_handle();
 	
-
 
 	test();
 

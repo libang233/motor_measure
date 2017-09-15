@@ -392,7 +392,7 @@ void dma_usart_tx_handle(void)
 void usart_send_handle(void)
 {
 	//检查DMA发送状态
-	dma_usart_chek_tx_state();
+	dma_usart_check_tx_state();
 
 	//发送处理线程
 	dma_usart_tx_handle();

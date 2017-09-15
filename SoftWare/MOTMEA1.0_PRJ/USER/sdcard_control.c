@@ -442,9 +442,7 @@ void sdcard_PN_file_edit(void)
 		{
 			return;
 		}
-
 	}
-	
 	
 	PNFile[PN_FILE_PN_IDX_ADDRESS] = configInformation.PNNumDisplayIdx;
 	for(i = 0; i < configInformation.PNNumDisplayIdx; i++)
@@ -502,6 +500,26 @@ void sdcard_PN_file_edit(void)
 	f_open(file, (char*)fileName, FA_OPEN_EXISTING | FA_WRITE);
 	f_write(file, PNFile, PN_FILE_MAX_BYTE, &bw);
 	f_close(file);
+}
+
+/**
+* @ Function Name : sdcard_creat_empty_PN_file 
+* @ Author        : hlb
+* @ Brief         : SD卡创建空的料号文件
+* @ Date          : 2017.09.15
+* @ Modify        : ...
+**/
+void sdcard_creat_empty_PN_file(void)
+{
+	u8 i;
+	u8 fileName[PN_FILE_NAME_SIZE_MAX];
+	for(i = 1; i < MAX_PN_NUM_MAX_QUANTITY; i++)
+	{
+		sprintf((char*)fileName, "0:/%d.txt", i);
+		f_open(file, (char*)fileName, FA_CREATE_NEW | FA_WRITE);
+		f_close(file);
+	}
+	
 }
 
 /**
@@ -666,8 +684,6 @@ void sdcard_index_file_creat(void)
 	
 }
 
-
-
 /**
 * @ Function Name : sdcard_init_file_creat
 * @ Author        : hlb
@@ -683,9 +699,11 @@ void sdcard_init_file_creat(void)
 	
 	//创建模板PN文件
 	sdcard_creat_modle_PN_file();
+	
+	//创建空的PN文件
+	sdcard_creat_empty_PN_file();
+	
 }
-
-
  
 /**
 * @ Function Name : sdcard_init
@@ -718,6 +736,7 @@ void sdcard_init(void)
 			{
 				//创建新的文件
 				sdcard_init_file_creat();
+				
 				//下载数据
 				sdcard_index_file_load();
 			}

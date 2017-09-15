@@ -61,7 +61,6 @@ void usart1_dma_init(void)
 	// 使能时钟
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
 		
-	dma_initstruct.DMA_BufferSize         = 1;                        		  // 设置dma的buffersize，此处为预留
 	dma_initstruct.DMA_DIR                = DMA_DIR_PeripheralDST;    		  // 设置dma的方向由内存到外设
 	dma_initstruct.DMA_M2M                = DMA_M2M_Disable;         		  // 禁止内存到内存的传输
 	dma_initstruct.DMA_BufferSize         = USART_TX_LEN;					  // 设置DMA在传输时缓冲区的长度	
@@ -86,7 +85,7 @@ void usart1_dma_init(void)
 	dma_initstruct.DMA_MemoryInc          = DMA_MemoryInc_Enable;     		  // 允许内存自增地址
 	dma_initstruct.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;	  // 外设数据字长
 	dma_initstruct.DMA_MemoryDataSize	  = DMA_MemoryDataSize_Byte;		  // 内存数据字长
-	dma_initstruct.DMA_Mode               = DMA_Mode_Normal;         		  // 循环接收
+	dma_initstruct.DMA_Mode               = DMA_Mode_Circular;         		  // 循环接收
 	dma_initstruct.DMA_Priority           = USART1_RX_DMA_PRIORITY;	  		  // 设置DMA通道的优先级
 	dma_initstruct.DMA_M2M                = DMA_M2M_Disable;         		  // 禁止内存到内存的传输
 	// 初始化DMA1的5通道(USART1, RX)
@@ -149,7 +148,7 @@ bool usart1_get_tx_dma_tc_state(void)
 * @ Date          : 2017.07.19
 * @ Modify        : ...
 **/
-void dma_usart_chek_tx_state(void)
+void dma_usart_check_tx_state(void)
 {
 	//如果DMA为忙
 	if(UsartTxBuffer.DmaBusy)
