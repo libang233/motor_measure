@@ -27,4 +27,14 @@
 .\objects\sys_manager.o: ..\USER\message_send.h
 .\objects\sys_manager.o: ..\USER\user_control.h
 .\objects\sys_manager.o: ..\USER\sdcard_control.h
+.\objects\sys_manager.o: ..\HARDWARE\GPIO_Control.h
+.\objects\sys_manager.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h
+.\objects\sys_manager.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h
+.\objects\sys_manager.o: ..\HARDWARE\GPIO\CUR.h
+.\objects\sys_manager.o: ..\HARDWARE\GPIO\PWM.h
+.\objects\sys_manager.o: ..\HARDWARE\GPIO\FG.h
+.\objects\sys_manager.o: ..\HARDWARE\GPIO\Relay.h
+.\objects\sys_manager.o: ..\HARDWARE\GPIO\Reserved.h
+.\objects\sys_manager.o: ..\HARDWARE\GPIO\ReservedTest.h
+.\objects\sys_manager.o: ..\HARDWARE\GPIO\testState.h
 .\objects\sys_manager.o: ..\USER\test.h

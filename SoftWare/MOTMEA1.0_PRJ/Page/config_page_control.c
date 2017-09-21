@@ -360,16 +360,16 @@ void config_page_init(void)
 
 		write_control_state(ID_DELETE_PN_BUTTON, CONTROL_DISENABLE_DISAPPER);	
 		
-		if(configInformation.PNNumQuantity == 1)
-		{
-			//只有模板料号存在
-			configInformation.PNNumSelect = MODLE_PN_POSITION;
-		}
-		else
-		{
-			//选取最后一个料号
-			configInformation.PNNumSelect = configInformation.PNNumQuantity - 1;
-		}
+//		if(configInformation.PNNumQuantity == 1)
+//		{
+//			//只有模板料号存在
+//			configInformation.PNNumSelect = MODLE_PN_POSITION;
+//		}
+//		else
+//		{
+//			//选取最后一个料号
+//			configInformation.PNNumSelect = configInformation.PNNumQuantity - 1;
+//		}
 	}
 	else
 	{
@@ -379,16 +379,16 @@ void config_page_init(void)
 
 		write_control_state(ID_DELETE_PN_BUTTON, CONTROL_ENABLE);	
 		
-		if(configInformation.PNNumQuantity >= MAX_PN_NUM_MAX_QUANTITY)
-		{
-			//料号已满 读取第二个料号
-			configInformation.PNNumSelect = MODLE_PN_POSITION + 1;
-		}
-		else
-		{
-			//料号未满 读取模板料号
-			configInformation.PNNumSelect = MODLE_PN_POSITION;
-		}
+//		if(configInformation.PNNumQuantity >= MAX_PN_NUM_MAX_QUANTITY)
+//		{
+//			//料号已满 读取第二个料号
+//			configInformation.PNNumSelect = MODLE_PN_POSITION + 1;
+//		}
+//		else
+//		{
+//			//料号未满 读取模板料号
+//			configInformation.PNNumSelect = MODLE_PN_POSITION;
+//		}
 	}
 }
 

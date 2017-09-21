@@ -17,8 +17,11 @@
 #include "message_send.h"
 #include "user_control.h"
 #include "sdcard_control.h"
+#include "GPIO_Control.h"
 #include "test.h"
 
+
+  
 
 
 //全局信息数据实例化
@@ -56,6 +59,9 @@ void sys_manager_init(void)
 	//中断配置
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 	
+	//GPIO初始化
+	GPIO_Control_Init();
+	
 	//数据初始化
 	data_init();
 	
@@ -84,6 +90,7 @@ void sys_manager_init(void)
  **/
 void sys_manager_handle(void)
 {
+
 	
 	//串口解析控制器线程
 	usart_analysis_handle();								

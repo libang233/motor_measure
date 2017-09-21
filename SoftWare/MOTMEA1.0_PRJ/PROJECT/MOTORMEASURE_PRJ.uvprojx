@@ -171,10 +171,10 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4096</DriverSelection>
+            <DriverSelection>4103</DriverSelection>
           </Flash1>
-          <bUseTDR>1</bUseTDR>
-          <Flash2>BIN\UL2CM3.DLL</Flash2>
+          <bUseTDR>0</bUseTDR>
+          <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
@@ -365,7 +365,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\FWLIB;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x;..\Libraries\CMSIS\CM3\CoreSupport;..\Libraries\STM32F10x_StdPeriph_Driver\src;..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\HARDWARE;..\USER;..\FatFs;..\MALLOC;..\Page</IncludePath>
+              <IncludePath>..\FWLIB;..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x;..\Libraries\CMSIS\CM3\CoreSupport;..\Libraries\STM32F10x_StdPeriph_Driver\src;..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\HARDWARE;..\USER;..\FatFs;..\MALLOC;..\Page;..\HARDWARE\GPIO</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -488,6 +488,16 @@
               <FileType>1</FileType>
               <FilePath>..\FWLIB\stm32f10x_sdio.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f10x_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_tim.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -532,6 +542,11 @@
               <FileName>assembler.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\assembler.c</FilePath>
+            </File>
+            <File>
+              <FileName>GPIO_Control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\GPIO_Control.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -612,6 +627,46 @@
               <FileName>begin_page_control.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Page\begin_page_control.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>GPIO</GroupName>
+          <Files>
+            <File>
+              <FileName>CUR.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\GPIO\CUR.c</FilePath>
+            </File>
+            <File>
+              <FileName>PWM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\GPIO\PWM.c</FilePath>
+            </File>
+            <File>
+              <FileName>FG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\GPIO\FG.c</FilePath>
+            </File>
+            <File>
+              <FileName>Relay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\GPIO\Relay.c</FilePath>
+            </File>
+            <File>
+              <FileName>Reserved.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\GPIO\Reserved.c</FilePath>
+            </File>
+            <File>
+              <FileName>ReservedTest.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\GPIO\ReservedTest.c</FilePath>
+            </File>
+            <File>
+              <FileName>testState.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\GPIO\testState.c</FilePath>
             </File>
           </Files>
         </Group>

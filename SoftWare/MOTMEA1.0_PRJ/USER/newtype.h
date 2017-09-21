@@ -19,6 +19,8 @@
 
 #define MAX_PART_NUM							6
 
+#define MAX_CUR_DEC_BIT							10					//电流最大十进制位数
+
 #define TEST_PART1								0
 #define TEST_PART2								1
 #define TEST_PART3								2
@@ -131,12 +133,21 @@ typedef struct
 //
 typedef struct
 {
-	u16 measureCurrent[MAX_BYTE_NUM_DISPLAY_CURRENT];			//校准是测量到的电流值
+	
+	u16 adjustParameter;										//电流误差
+	u8  signOfadjustParameter;									//电流误差的符号 0 = 正  1 = 负
+	u16 measureCurrent;											//测量电流数值
+	u16 inputCurrent;											//输入电流数值
+	u8  measureCurrentString[MAX_BYTE_NUM_DISPLAY_CURRENT];		//校准是测量到的电流值
 	u8  measureCurrentStringIdx;								//前一项字符串索引
-	u16 inputCurrent[MAX_BYTE_NUM_DISPLAY_CURRENT];				//输入实际测量的标准电流值
+	u8  inputCurrentString[MAX_BYTE_NUM_DISPLAY_CURRENT];		//输入实际测量的标准电流值
 	u8  inputCurrentStringIdx;									//前一项字符串索引
+	u32  timer;													//计数器
+	bool isConnection;											//是否连接
 	bool isAutoZeroButtonDown;									//电流自动校零按键
 	bool isSaveArgButtonDown;									//存储校准参数按键
+	bool isDataPull;											//屏幕数据是否开始下拉
+	bool isDataReced;											//数据是否接收完毕	
 	
 }adjust_Information_TypeDef;
 

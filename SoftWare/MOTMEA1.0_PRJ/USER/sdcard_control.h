@@ -11,8 +11,9 @@
 
 #define INDEX_DATA_HEAD_DEF								0xaa			
 #define INDEX_DATA_HEAD_ADDRESS							0
-#define INDEX_DATA_ADJUST_CUR_BYTE_NUM_ADDRESS			1
-#define INDEX_DATA_ADJUST_CUR_ADDRESS_HIGH				2
+#define INDEX_DATA_ADJUST_CUR_ADDRESS_HIGH				1
+#define INDEX_DATA_ADJUST_CUR_ADDRESS_LOW				2
+#define INDEX_DATA_ADJUST_CUR_SIGN_ADDRESS    			3
 #define INDEX_DATA_PASSWORD_BYTE_NUM_ADDRESS			22
 #define INDEX_DATA_PASSWORD_ADDRESS_HIGH				23
 #define INDEX_DATA_PASSWORD_TIP_BYTE_NUM_ADDRESS		43
@@ -118,8 +119,15 @@
 #define INIT_PASSWORD_TIP_IDX							4
 #define INIT_PASSWORD_TIP								"init"
 
+//
+//³õÊ¼µçÁ÷
+//
+#define INIT_CUR_DEV_SIGN                               0
+#define INIT_CUR_DEV									0
+
 #define INIT_PN_FILE_AD									"0:/1.txt"
 #define PN_FILE_NUM_POSITION							3
+
 
 typedef struct
 {
@@ -136,6 +144,7 @@ void sdcard_PN_file_load(void);
 void sdcard_PN_file_edit(void);
 void sdcard_PN_file_delete(void);
 void sdcard_index_file_password_edit(void);
+void sdcard_index_file_current_edit(void);
 void sdcard_init(void);
 void sdcard_control_handle(void);
 

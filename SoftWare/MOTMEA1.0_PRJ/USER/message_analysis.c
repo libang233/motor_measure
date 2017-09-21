@@ -145,6 +145,7 @@ void parser_moniter_add_buff(void)
 					}
 				}				
 			}
+
 		}
 	}
 }
@@ -531,7 +532,7 @@ bool parser_rec_string_data_deal(u16 IDNum)
 			{
 				if(adjustInformation.inputCurrentStringIdx < MAX_BYTE_NUM_DISPLAY_CURRENT)
 				{
-					adjustInformation.inputCurrent[adjustInformation.inputCurrentStringIdx++] = \
+					adjustInformation.inputCurrentString[adjustInformation.inputCurrentStringIdx++] = \
 						ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_DATA_STRING_VALUE_ADDRESS_HIGH + i];
 				}
 				else
@@ -539,6 +540,7 @@ bool parser_rec_string_data_deal(u16 IDNum)
 					break;
 				}
 			}
+			adjustInformation.isDataReced = true;
 			break;
 			
 		case ID_INPUT_PASSWORD:
@@ -928,6 +930,7 @@ bool parser_rec_gui_button_data_deal(u16 IDNum)
 			
 			case ID_ADJUST_SAVE_BUTTON:
 				adjustInformation.isSaveArgButtonDown = true;
+				adjustInformation.isDataPull	      = true;
 				break;
 			
 			case ID_ADJUST_AUTO_ZERO_BUTTON:

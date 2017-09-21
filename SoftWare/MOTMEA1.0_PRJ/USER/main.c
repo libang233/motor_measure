@@ -23,7 +23,7 @@
  **/
 int main(void)
 {
-	
+			
  	// 系统初始化函数
 	sys_manager_init();
 	

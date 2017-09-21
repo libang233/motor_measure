@@ -30,7 +30,7 @@ u8 textFileBuffer[] = "xixixi";
 void test(void)
 {
 
-	
+    //pull_control_data(ID_ADJUST_REA_CURRNT, FRAME_REC_DATA_STRING_DEF);	
 //	pull_control_data(ID_PN_NUMBER_SELECT, FRAME_REC_DATA_SELECT_DEF);
 //	while(1)
 //	{

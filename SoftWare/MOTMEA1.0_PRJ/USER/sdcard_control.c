@@ -22,7 +22,7 @@ sdcard_Information_TypeDef sdcardInformation;
 /**
 * @ Function Name : sdcard_index_file_load
 * @ Author        : hlb
-* @ Brief         : SD卡数据下载
+* @ Brief         : SD卡引导数据下载
 * @ Date          : 2017.07.23
 * @ Modify        : ...
 **/
@@ -48,12 +48,11 @@ void sdcard_index_file_load(void)
 		}
 	}
 	f_close(file);
+
+
+	adjustInformation.adjustParameter = (buffer[INDEX_DATA_ADJUST_CUR_ADDRESS_HIGH] << 8) + buffer[INDEX_DATA_ADJUST_CUR_ADDRESS_LOW];
+	adjustInformation.signOfadjustParameter = buffer[INDEX_DATA_ADJUST_CUR_SIGN_ADDRESS];
 	
-	adjustInformation.inputCurrentStringIdx = buffer[INDEX_DATA_ADJUST_CUR_BYTE_NUM_ADDRESS];
-	for(i = 0; i < adjustInformation.inputCurrentStringIdx; i++)
-	{
-		adjustInformation.inputCurrent[i] = buffer[INDEX_DATA_ADJUST_CUR_ADDRESS_HIGH + i];
-	}
 	
 	passwordInformation.realPasswordStringIdx = buffer[INDEX_DATA_PASSWORD_BYTE_NUM_ADDRESS];
 	for(i = 0; i < passwordInformation.realPasswordStringIdx; i++)
@@ -96,6 +95,46 @@ void sdcard_index_file_load(void)
 	}
 
 	
+}
+
+/**
+* @ Function Name : sdcard_index_file_current_edit
+* @ Author        : hlb
+* @ Brief         : SD卡引导文件电流编辑
+* @ Date          : 2017.09.18
+* @ Modify        : ...
+**/
+void sdcard_index_file_current_edit(void)
+{
+	u8 i;
+	u8 res;
+	u8 buffer[INDEX_DATA_MAX_BYTE];
+	
+	//清空缓冲区
+	memset(&buffer, 0, INDEX_DATA_MAX_BYTE);
+	
+	f_open(file, "0:/index.txt", FA_OPEN_EXISTING | FA_READ);
+	
+	br = 1;
+	
+	while(1)
+	{
+		res = f_read(file, buffer, INDEX_DATA_MAX_BYTE, &br);
+		if(res || br == 0)
+		{
+			break;
+		}
+	}
+	f_close(file);
+	
+	
+	buffer[INDEX_DATA_ADJUST_CUR_ADDRESS_HIGH] = adjustInformation.adjustParameter >> 8;
+	buffer[INDEX_DATA_ADJUST_CUR_ADDRESS_LOW] = adjustInformation.adjustParameter;
+	buffer[INDEX_DATA_ADJUST_CUR_SIGN_ADDRESS] = adjustInformation.signOfadjustParameter;
+	
+	f_open(file, "0:/index.txt", FA_OPEN_EXISTING | FA_WRITE);
+	f_write(file, buffer, INDEX_DATA_MAX_BYTE, &bw);
+	f_close(file);
 }
 
 /**
@@ -155,7 +194,6 @@ void sdcard_index_file_password_edit(void)
 	{
 		passwordInformation.oldPasswordTip[i] = passwordInformation.newPasswordTip[i];
 	}
-
 }
 	
 	
@@ -656,6 +694,11 @@ void sdcard_index_file_creat(void)
 	
 	memset(&sdInformaIndex, 0, sizeof(sdInformaIndex));
 	
+	//设定初始电流误差
+	sdInformaIndex[INDEX_DATA_ADJUST_CUR_ADDRESS_HIGH] = INIT_CUR_DEV >> 8;
+	sdInformaIndex[INDEX_DATA_ADJUST_CUR_ADDRESS_LOW] = INIT_CUR_DEV;
+	sdInformaIndex[INDEX_DATA_ADJUST_CUR_SIGN_ADDRESS] = INIT_CUR_DEV_SIGN;
+	
 	//设定初始密码
 	sdInformaIndex[INDEX_DATA_PASSWORD_BYTE_NUM_ADDRESS] = INIT_PASSWORD_IDX;
 	for(i = 0; i < INIT_PASSWORD_IDX; i++)
@@ -714,11 +757,12 @@ void sdcard_init_file_creat(void)
 **/ 
 void sdcard_init(void)
 {
+
 	memset(&sdcardInformation, 0, sizeof(sdcardInformation));
 	
 	//初始化SD卡
 	sdcardInformation.sdcardStatus = SD_Init();
-	
+
 	if(sdcardInformation.sdcardStatus == FR_OK)
 	{
 		//为fatfs相关变量申请内存
@@ -729,9 +773,10 @@ void sdcard_init(void)
 		
 		if(sdcardInformation.sdcardStatus == FR_OK)
 		{
+	
 			//打开引导文件
-			sdcardInformation.sdcardStatus = f_open(file, "0:/index.txt", FA_CREATE_NEW | FA_WRITE);
-			
+			sdcardInformation.sdcardStatus = f_open(file, "0:/index.txt", FA_CREATE_NEW | FA_WRITE);	
+
 			if(sdcardInformation.sdcardStatus == FR_OK)
 			{
 				//创建新的文件
