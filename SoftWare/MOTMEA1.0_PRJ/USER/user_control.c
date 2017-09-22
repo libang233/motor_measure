@@ -15,6 +15,7 @@
 #include "password_page_control.h"
 #include "begin_page_control.h"
 #include "adjust_page_control.h"
+#include "debug_page_control.h"
 #include "message_send.h"
  
   
@@ -55,6 +56,7 @@ void user_control_handle(void)
 			break;
 		
 		case PAGE_NUM_DEBUG:
+			debug_page_handle();
 			break;
 		
 		default:

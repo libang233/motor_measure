@@ -26,7 +26,16 @@ Project File Date:  09/19/2017
 
 <h2>Output:</h2>
 Build target 'Target 1'
-".\Objects\MOTORMEASURE_PRJ.axf" - 0 Error(s), 0 Warning(s).
+compiling adjust_page_control.c...
+..\Page\adjust_page_control.c(36): warning:  #167-D: argument of type "u8 *" is incompatible with parameter of type "char *restrict"
+        sprintf(val, "%d", cur);
+..\Page\adjust_page_control.c(68): warning:  #186-D: pointless comparison of unsigned integer with zero
+        for(i = valSize - 1; i >= 0; i--)
+..\Page\adjust_page_control.c: 2 warnings, 0 errors
+linking...
+Program Size: Code=35900 RO-data=175736 RW-data=152 ZI-data=1101616  
+FromELF: creating hex file...
+".\Objects\MOTORMEASURE_PRJ.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
   D:\32file\MOTORMEASURE_PRJ\motor_measure\SoftWare\MOTMEA1.0_PRJ\PROJECT\RTE

@@ -4,6 +4,7 @@
 #include "config.h"
 
 void adjust_page_handle(void);
+void calculate_current_string(u16 cur, u8 *val, u8 *valSize);
 
 #endif
 

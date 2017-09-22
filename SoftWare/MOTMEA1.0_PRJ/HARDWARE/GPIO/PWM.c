@@ -78,6 +78,6 @@ void SetPwm(u16 fre,u16 cycle)
 	// º∆À„’ºø’±»
 	Pulse = (Period+1) * cycle/100;
 	
-	}
+}
 
 

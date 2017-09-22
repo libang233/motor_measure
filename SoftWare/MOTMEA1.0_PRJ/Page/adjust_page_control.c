@@ -16,9 +16,9 @@
 #include "usart.h"
 #include "CUR.h"
  
-#define CUR_PUSH_CYCLE  100000
+#define ADJUST_PUSH_CYCLE  100000
 
-int tt=0;
+int ttt=0;
 
  /**
 * @ Function Name : calculate_current_string
@@ -93,9 +93,9 @@ bool calculate_curent(u16 *cur, u8 *val, u8 valSize)
 void adjust_page_push_cur(void)
 {
 	
-	if(tt++>100)
+	if(ttt++>100)
 	{
-		tt=0;
+		ttt=0;
 	}
 	
 	cur_data = 0;
@@ -116,7 +116,7 @@ void adjust_page_push_cur(void)
 		}
 	}
 	
-	adjustInformation.measureCurrent = tt;
+	adjustInformation.measureCurrent = ttt;
 	
 	//转换字符串
 	calculate_current_string(adjustInformation.measureCurrent, adjustInformation.measureCurrentString, &adjustInformation.measureCurrentStringIdx);
@@ -212,13 +212,14 @@ bool adjust_page_save(void)
  **/
 void adjust_page_init(void)
 {
+	//禁能控件
 	write_control_state(ID_ADJUST_MEA_CURRNT, CONTROL_DISENABLE);
 }	
 	
  /**
 * @ Function Name : adjust_page_handle
 * @ Author        : hlb
-* @ Brief         : 配置界面线程
+* @ Brief         : 校准界面线程
 * @ Date          : 2017.09.18
 * @ Modify        : ...
  **/
@@ -250,7 +251,7 @@ void adjust_page_handle(void)
 		}
 	}
 	
-	if(adjustInformation.timer++ > CUR_PUSH_CYCLE)
+	if(adjustInformation.timer++ > ADJUST_PUSH_CYCLE)
 	{
 		//刷新电流值
 		adjust_page_push_cur();	
@@ -258,9 +259,6 @@ void adjust_page_handle(void)
 		adjustInformation.timer = 0;
 		
 	}
-	
-
-	
 }
  
 

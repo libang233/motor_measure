@@ -25,4 +25,5 @@
 .\objects\user_control.o: ..\Page\password_page_control.h
 .\objects\user_control.o: ..\Page\begin_page_control.h
 .\objects\user_control.o: ..\Page\adjust_page_control.h
+.\objects\user_control.o: ..\Page\debug_page_control.h
 .\objects\user_control.o: ..\USER\message_send.h

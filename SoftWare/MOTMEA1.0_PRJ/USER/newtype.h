@@ -186,14 +186,19 @@ typedef struct
 //
 typedef struct
 {
+	u16 timer;												//刷新计时器
 	u8  button;												//删除料号按键
-	u16 speed[MAX_BYTE_NUM_DISPLAY_SPEED];					//调试界面转速显示
+	u16 speed;
+	u8 speedString[MAX_BYTE_NUM_DISPLAY_SPEED];				//调试界面转速显示
 	u8  speedStringIdx;										//前一项字符串索引
-	u8  current[MAX_BYTE_NUM_DISPLAY_CURRENT];				//调试界面电流显示	
+	u8  currentString[MAX_BYTE_NUM_DISPLAY_CURRENT];		//调试界面电流显示	
+	u16 current;
 	u8  currentStringIdx;									//前一项字符串索引
 	u16 inputPoles;											//调试界面风扇极数输入
-	u8  inputPWMFrequen;									//调试界面pwm信号频率输入
+	u16 inputPWMFrequen;									//调试界面pwm信号频率输入
 	u8  inputPWM;											//调试界面pwm信号占空比输入
+	
+	bool isSetPWM;											//是否需要设置PWM
 	
 }debug_Information_TypeDef;
 

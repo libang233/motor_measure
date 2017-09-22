@@ -868,6 +868,20 @@ bool parser_rec_gui_int_data_deal(u16 IDNum)
 			//更新段号
 			configInformation.isPartUpdate = false;
 			break;
+			
+		case ID_DEBUG_INPUT_POLES:
+			debugInformation.inputPoles = ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_GUI_DATA_INT_ADDRESS_HIGH + 3];
+			break;
+		
+		case ID_DEBUG_INPUT_PWM_FREQ:
+			debugInformation.inputPWMFrequen = ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_GUI_DATA_INT_ADDRESS_HIGH + 3];
+			debugInformation.isSetPWM = true;
+			break;
+		
+		case ID_DEBUG_INPUT_PWM_DUTY:
+			debugInformation.inputPWM = ParserMoniter.Frame_Buffers[ParserMoniter.GetIdx].Buff[FRAME_GUI_DATA_INT_ADDRESS_HIGH + 3];
+			debugInformation.isSetPWM = true;
+			break;
 		
 		default:
 			return false;
